@@ -1,0 +1,61 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+
+    <changeSet id="2" author="Talison Kennedy">
+
+        <createTable tableName="situacoes">
+            <column name="id" type="NUMBER">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="situacao" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+        <insert tableName="situacoes">
+            <column name="id">1</column>
+            <column name="situacao">Aguardando Aprovacao</column>
+        </insert>
+
+        <insert tableName="situacoes">
+            <column name="id">2</column>
+            <column name="situacao">Aprovada</column>
+        </insert>
+
+        <insert tableName="situacoes">
+            <column name="id">3</column>
+            <column name="situacao">Recusada</column>
+        </insert>
+
+        <insert tableName="situacoes">
+            <column name="id">4</column>
+            <column name="situacao">Cancelada</column>
+        </insert>
+
+        <createTable tableName="pre_inscricao">
+            <column name="id" type="NUMBER">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="id_pre_escricao_evento" type="NUMBER">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="situacao" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+<!--        <addPrimaryKey tableName="pre-inscricao" columnNames="id" constraintName="pk_pre_inscricao"/>-->
+        <createSequence sequenceName="sq_pre_inscricao" cycle="false" cacheSize="20" incrementBy="1" startValue="1"/>
+        <addForeignKeyConstraint baseTableName="pre_inscricao" baseColumnNames="id_pre_escricao_evento"
+                                 constraintName="fk_pre_inscricao_evento" referencedTableName="evento"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="pre_inscricao" baseColumnNames="situacao"
+                                 constraintName="fk_situacoes" referencedTableName="situacoes"
+                                 referencedColumnNames="situacao"/>
+
+    </changeSet>
+</databaseChangeLog>
