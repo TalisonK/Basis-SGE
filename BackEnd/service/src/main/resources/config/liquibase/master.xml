@@ -10,7 +10,8 @@
     <include file="config/liquibase/changelog/v1.0_tabela_usuario.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/v1.0_tabela_pre_inscricao.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/v1.0_tabela_perguntas.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/v1.0_tabela_evento_pergunta.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/v1.0_tabela_pre_inscricao.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/v1.0_tabela_usuario_evento.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/v1.0_tabela_inscricao_resposta" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/v1.0_tabela_inscricao_resposta.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

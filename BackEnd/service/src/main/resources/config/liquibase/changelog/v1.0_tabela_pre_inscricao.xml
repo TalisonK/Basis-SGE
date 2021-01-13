@@ -61,7 +61,7 @@
                                  constraintName="fk_inscricao_usuario" referencedTableName="usuario"
                                  referencedColumnNames="id"/>
 
-        <addForeignKeyConstraint baseTableName="pre_inscricao" baseColumnNames="id-situacao"
+        <addForeignKeyConstraint baseTableName="pre_inscricao" baseColumnNames="id_situacao"
                                  constraintName="fk_inscricao_situacao" referencedTableName="tipo_situacao"
                                  referencedColumnNames="id"/>
 
