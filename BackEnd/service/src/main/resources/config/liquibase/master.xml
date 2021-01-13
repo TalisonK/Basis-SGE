@@ -7,6 +7,6 @@
 
     <include file="config/liquibase/changelog/v1.0_criacao_tabela_evento.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/v1.0_tabela_pre_inscricao.xml" relativeToChangelogFile="false"/>
-
+    <include file="config/liquibase/changelog/v1.0_tabela_usuario.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>
