@@ -8,6 +8,7 @@
             <column name="id" type="number"></column>
             <column name="descricao" type="varchar(50)"/>
         </createTable>
+        <addPrimaryKey tableName="tipo_evento" columnNames="id" constraintName="pk_tipo_evento"/>
         <insert tableName="tipo_evento">
             <column name="id">1</column>
             <column name="descricao">WorkShop</column>
@@ -36,6 +37,10 @@
             <column name="id">7</column>
             <column name="descricao">Show Teatral</column>
         </insert>
+        <insert tableName="tipo_evento">
+            <column name="id">8</column>
+            <column name="descricao">Outro</column>
+        </insert>
 
         <createTable tableName="evento">
             <column name="id" type="number">
@@ -62,9 +67,13 @@
             <column name="local" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="id_tipo_evento" type="number">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
         <addPrimaryKey tableName="evento" columnNames="id" constraintName="pk_evento"/>
         <createSequence sequenceName="sq_evento" cycle="false" cacheSize="20" incrementBy="1" startValue="1"/>
+        <addForeignKeyConstraint baseTableName="evento" baseColumnNames="id_tipo_evento" constraintName="fk_tipo_evento" referencedTableName="tipo_evento" referencedColumnNames="id"/>
     </changeSet>
 
 

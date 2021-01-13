@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d84e323e-eed2-4861-b322-a62f6a3233bf" name="Default Changelist" comment="" />
+    <list default="true" id="d84e323e-eed2-4861-b322-a62f6a3233bf" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,6 +30,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/service" />
   </component>
   <component name="RunManager">
     <configuration name="ServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
@@ -61,6 +64,8 @@
       <workItem from="1610481743293" duration="2933000" />
       <workItem from="1610489830428" duration="1689000" />
       <workItem from="1610494152656" duration="3970000" />
+      <workItem from="1610500153237" duration="162000" />
+      <workItem from="1610536436296" duration="116000" />
     </task>
     <servers />
   </component>
