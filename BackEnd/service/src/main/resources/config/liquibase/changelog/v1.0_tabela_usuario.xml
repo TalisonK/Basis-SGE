@@ -7,7 +7,7 @@
     <changeSet id="3" author="thayane.nunes">
         <createTable tableName="usuario">
             <column name="id" type="NUMBER">
-                <constraints nullable="false"/>
+                <constraints nullable="false" unique="true"/>
             </column>
             <column name="nome" type="VARCHAR(255)">
                 <constraints nullable="false"/>
@@ -21,6 +21,7 @@
             <column name="telefone" type="VARCHAR(14)">
             </column>
             <column name="data_nascimento" type="DATE">
+                <constraints nullable="false"/>
             </column>
             <column name="chave" type="VARCHAR(255)">
                 <constraints nullable="false" unique="true"/>

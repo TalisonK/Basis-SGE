@@ -1,0 +1,39 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+
+    <changeSet id="7" author="Talison Kennedy">
+        <createTable tableName="usuario_evento">
+            <column name="id" type="NUMBER">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="id_usuario" type="NUMBER">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="id_evento" type="NUMBER">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="chave_usuario" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="usuario_evento" baseColumnNames="id_usuario"
+                                 constraintName="fk_usuario_EU" referencedTableName="usuario"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="usuario_evento" baseColumnNames="chave_usuario"
+                                 constraintName="fk_chave_usuario_EU" referencedTableName="usuario"
+                                 referencedColumnNames="chave"/>
+
+
+        <addForeignKeyConstraint baseTableName="usuario_evento" baseColumnNames="id_evento"
+                                 constraintName="fk_evento_EU" referencedTableName="evento"
+                                 referencedColumnNames="id"/>
+
+
+    </changeSet>
+</databaseChangeLog>

@@ -4,8 +4,11 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-    <changeSet id="1" author="kayc.drummond">
+    <changeSet id="4" author="kayc.drummond">
         <createTable tableName="pergunta">
+            <column name="id" type="NUMBER">
+                <constraints nullable="false" unique="true"/>
+            </column>
             <column name="titulo" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
@@ -14,8 +17,8 @@
             </column>
         </createTable>
 
-       <!-- <addPrimaryKey tableName="pergunta" columnNames="id" constraintName="pk_pergunta"/>
-        <createSequence sequenceName="sq_pergunta" cycle="false" cacheSize="20" incrementBy="1" startValue="1"/> -->
+        <addPrimaryKey tableName="pergunta" columnNames="id" constraintName="pk_pergunta"/>
+        <createSequence sequenceName="sq_pergunta" cycle="false" cacheSize="20" incrementBy="1" startValue="1"/>
     </changeSet>
 
 </databaseChangeLog>
