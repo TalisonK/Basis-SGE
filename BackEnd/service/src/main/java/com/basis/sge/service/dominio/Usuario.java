@@ -8,13 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity @Getter @Setter @Table(name = "usuario")
 public class Usuario implements Serializable {
 
-    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_usuario")
+    @SequenceGenerator(name = "sq_usuario", allocationSize = 1)
     private Integer id;
 
     @Column(name = "nome")
