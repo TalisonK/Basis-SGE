@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class TipoSituacao implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "situacao")
