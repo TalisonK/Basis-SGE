@@ -5,6 +5,7 @@ import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.servico.dto.EventoDTO;
 
+import com.basis.sge.service.servico.mapper.EventoMapper;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
@@ -20,34 +21,38 @@ import java.util.List;
 public class EventoServico {
 
     private final EventoRepositorio eventoRepositorio;
-
+    private final EventoMapper eventoMapper;
     public List<EventoDTO> listar() {
         List<Evento> listaEvento = eventoRepositorio.findAll();
 
-        return null;
+        return eventoMapper.toDto(listaEvento);
     }
 
 
-    public ResponseEntity<EventoDTO> obterPorId(Integer id){
+    public EventoDTO obterPorId(Integer id){
         Evento evento = eventoRepositorio.getOne(id);
-        return null;
+        return eventoMapper.toDto(evento);
     }
-    /*
+
 
     public EventoDTO criar(EventoDTO eventoDTO) {
-        Evento evento = eventoRepositorio.save(eventoDTO);
-        return null;
+        Evento evento = eventoMapper.toEntity(eventoDTO);
+        Evento eventoSalvo = eventoRepositorio.save(evento);
+
+        return eventoMapper.toDto(eventoSalvo);
     }
 
     public EventoDTO atualizar(EventoDTO eventoDTO) {
 
-        Evento evento = eventoRepositorio.save(eventoDTO);
-        return null;
+        Evento evento = eventoMapper.toEntity(eventoDTO);
+        Evento eventoAtualizado = eventoRepositorio.save(evento);
+
+        return eventoMapper.toDto(eventoAtualizado);
     }
 
 
     public void deletar(Integer id) {
-
-    }*/
+        eventoRepositorio.deleteById(id);
+    }
 
 }

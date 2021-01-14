@@ -25,23 +25,25 @@ public class EventoRecurso {
     private final EventoServico eventoServico;
 
     @GetMapping
-    public List<UsuarioDTO> listar() {
+    public ResponseEntity<List<EventoDTO>> listar() {
 
-        //return ResponseEntity.ok();
-        return null;
+        return ResponseEntity.ok(eventoServico.listar());
+
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<EventoDTO> obterPorId(@PathVariable Integer id){
+
         return null;
     }
 
     @PostMapping
-    public UsuarioDTO criar(@RequestBody UsuarioDTO usuariodto) {
+    public EventoDTO criar(@RequestBody EventoDTO eventodto) {
+
         return null;
     }
     @PutMapping
-    public UsuarioDTO atualizar(@PathVariable Integer id) {
+    public EventoDTO atualizar(@PathVariable Integer id) {
 
         return null;
     }

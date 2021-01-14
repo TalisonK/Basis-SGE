@@ -1,10 +1,14 @@
 package com.basis.sge.service.servico.dto;
 
 import com.basis.sge.service.dominio.TipoEvento;
+import lombok.Getter;
+import lombok.Setter;
 
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 public class EventoDTO {
 
 
