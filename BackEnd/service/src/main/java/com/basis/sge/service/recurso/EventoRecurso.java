@@ -34,23 +34,26 @@ public class EventoRecurso {
     @GetMapping("/{id}")
     public ResponseEntity<EventoDTO> obterPorId(@PathVariable Integer id){
 
-        return null;
+
+        return ResponseEntity.ok(eventoServico.obterPorId(id));
+
+
     }
 
     @PostMapping
-    public EventoDTO criar(@RequestBody EventoDTO eventodto) {
-
-        return null;
+    public ResponseEntity<EventoDTO> criar(@RequestBody EventoDTO eventodto) {
+        EventoDTO eventoDtoCriado = eventoServico.criar(eventodto);
+        return ResponseEntity.ok(eventoDtoCriado);
     }
     @PutMapping
-    public EventoDTO atualizar(@PathVariable Integer id) {
-
-        return null;
+    public ResponseEntity<EventoDTO> atualizar(@RequestBody EventoDTO eventodto) {
+        EventoDTO eventoDtoAtualizado = eventoServico.atualizar(eventodto);
+        return ResponseEntity.ok(eventoDtoAtualizado);
     }
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Integer id) {
-
+        eventoServico.deletar(id);
     }
 
 }

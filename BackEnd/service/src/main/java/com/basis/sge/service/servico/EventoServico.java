@@ -8,7 +8,6 @@ import com.basis.sge.service.servico.dto.EventoDTO;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +21,7 @@ public class EventoServico {
 
     private final EventoRepositorio eventoRepositorio;
     private final EventoMapper eventoMapper;
+
     public List<EventoDTO> listar() {
         List<Evento> listaEvento = eventoRepositorio.findAll();
 
