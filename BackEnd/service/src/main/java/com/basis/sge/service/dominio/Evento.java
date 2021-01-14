@@ -14,19 +14,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name="evento")
 @Getter
 @Setter
-public class Evento {
+public class Evento implements Serializable {
 
     @Id
     @Column(name="id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "sq_evento")
+    @SequenceGenerator(name = "sq_evento", allocationSize = 1)
     private Integer id;
 
     @NotNull
