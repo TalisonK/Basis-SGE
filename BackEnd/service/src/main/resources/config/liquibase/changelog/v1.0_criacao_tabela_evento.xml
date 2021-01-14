@@ -59,13 +59,13 @@
                 <constraints nullable="true"/>
             </column>
             <column name="quantidade_vagas" type="number">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="valor" type="double">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="local" type="varchar(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="true"/>
             </column>
             <column name="id_tipo_evento" type="number">
                 <constraints nullable="false"/>
