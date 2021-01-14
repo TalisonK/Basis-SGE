@@ -72,7 +72,7 @@
             </column>
         </createTable>
         <addPrimaryKey tableName="evento" columnNames="id" constraintName="pk_evento"/>
-        <createSequence sequenceName="sq_evento" cycle="false" cacheSize="20" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="sq_evento" cycle="false" cacheSize="50" incrementBy="1" startValue="1"/>
         <addForeignKeyConstraint baseTableName="evento" baseColumnNames="id_tipo_evento" constraintName="fk_tipo_evento" referencedTableName="tipo_evento" referencedColumnNames="id"/>
     </changeSet>
 
