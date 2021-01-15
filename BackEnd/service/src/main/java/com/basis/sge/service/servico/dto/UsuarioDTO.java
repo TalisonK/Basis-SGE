@@ -1,7 +1,10 @@
 package com.basis.sge.service.servico.dto;
 
-import javax.persistence.Column;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class UsuarioDTO {
     private Integer id;
     private String nome;
