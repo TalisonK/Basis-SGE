@@ -1,5 +1,5 @@
 package com.basis.sge.service.servico;
-
+/**
 
 import com.basis.sge.service.servico.dto.EmailDTO;
 import lombok.RequiredArgsConstructor;
@@ -40,4 +40,4 @@ public class EmailServico {
 
      */
 
-}
+
