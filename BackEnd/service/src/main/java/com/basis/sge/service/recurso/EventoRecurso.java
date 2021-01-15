@@ -6,6 +6,7 @@ import com.basis.sge.service.servico.dto.EventoDTO;
 import com.basis.sge.service.servico.dto.UsuarioDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/evento")
 @RequiredArgsConstructor
 public class EventoRecurso {

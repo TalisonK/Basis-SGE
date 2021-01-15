@@ -5,6 +5,7 @@ import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.servico.dto.EventoDTO;
 
+import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import lombok.RequiredArgsConstructor;
 
@@ -32,7 +33,8 @@ public class EventoServico {
 
 
     public EventoDTO obterPorId(Integer id){
-        Evento evento = eventoRepositorio.getOne(id);
+        Evento evento = eventoRepositorio.findById(id)
+                .orElseThrow(() -> new RegraNegocioException("Usuario não Existe"));
         return eventoMapper.toDto(evento);
     }
 
