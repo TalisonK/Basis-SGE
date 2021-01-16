@@ -14,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.io.Serializable;
 
+//Classe destinada ao mapeaento da entidade InscricaoResposta
 @Entity
 @Table(name = "inscricao_resposta")
 @Getter

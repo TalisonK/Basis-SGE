@@ -11,10 +11,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Date;
 
+//Classe destinada a mapear a entidade Usuario
 @Entity @Getter @Setter @Table(name = "usuario")
 public class Usuario implements Serializable {
 
+    //Id do Usuario é gerado automaticamente
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_usuario")
     @SequenceGenerator(name = "sq_usuario", allocationSize = 1)
     private Integer id;
@@ -32,7 +36,7 @@ public class Usuario implements Serializable {
     private String telefone;
 
     @Column(name = "data_nascimento")
-    private String dataNascimento;
+    private LocalDate dataNascimento;
 
     @Column(name = "chave")
     private String chave;

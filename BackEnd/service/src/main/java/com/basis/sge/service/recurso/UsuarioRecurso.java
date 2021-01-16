@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
+//Classe destinada a controlar a entidade Usuario
 @RestController
 @RequestMapping("/api/usuario")
 @RequiredArgsConstructor
@@ -31,9 +34,9 @@ public class UsuarioRecurso {
         return ResponseEntity.ok(usuarioServico.obterPorId(id));
     }
     @PostMapping
-    public ResponseEntity<UsuarioDTO> criar(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<UsuarioDTO> criar(@RequestBody UsuarioDTO usuarioDTO) throws URISyntaxException {
         UsuarioDTO usuarioGerado = (usuarioServico.criar(usuarioDTO));
-        return ResponseEntity.ok(usuarioGerado);
+        return ResponseEntity.created(new URI("/api/usuario")).body(usuarioServico.criar(usuarioGerado));
     }
     @PutMapping
     public ResponseEntity<UsuarioDTO> atualizar(@RequestBody UsuarioDTO usuarioDTO){

@@ -30,6 +30,7 @@ spring:
     liquibase:
         change-log: classpath:config/liquibase/master.xml
 #        drop-first: true
+
     mail:
         host: smtp.gmail.com
         port: 587
