@@ -27,4 +27,10 @@ public class InscricaoServico {
         Optional<PreInscricao> dto = incrRepo.findById(id);
         return mapper.toDto(dto.orElseThrow(() -> new InscricaoNotFoundException("Inscrição número " + id + " não encontrada!")));
     }
+
+    public PreInscricaoDTO criar(PreInscricaoDTO preInscricaoDTO){
+        PreInscricao preInscricao = mapper.toEntity(preInscricaoDTO);
+        incrRepo.save(preInscricao);
+        return preInscricaoDTO;
+    }
 }

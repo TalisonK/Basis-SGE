@@ -4,9 +4,7 @@ import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,7 +14,18 @@ public class InscricaoRecurso {
 
     @GetMapping
     public ResponseEntity<List<PreInscricaoDTO>> listar(){
-
         return ResponseEntity.ok(servico.listar());
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<PreInscricaoDTO> obterPorID(@PathVariable Integer id){
+        return ResponseEntity.ok(servico.buscar(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<PreInscricaoDTO> criar(@RequestBody PreInscricaoDTO dto){
+        return ResponseEntity.status(201).body(servico.criar(dto));
+    }
+
+
 }

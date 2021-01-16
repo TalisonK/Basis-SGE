@@ -17,5 +17,4 @@ public class ResourceExceptionHandler {
         RegraNegocioException err = new RegraNegocioException(e.getMessage(), e);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
     }
-
 }
