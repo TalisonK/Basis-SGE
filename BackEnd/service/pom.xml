@@ -11,8 +11,8 @@
     <groupId>com.basis.sge</groupId>
     <artifactId>service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>service</name>
-    <description>Sistema de Gestão de Eventos</description>
+    <name>SGE</name>
+    <description>Projeto de Sistema de Gestão de Eventos</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -72,7 +72,7 @@
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-jdk8</artifactId>
+            <artifactId>mapstruct</artifactId>
             <version>1.3.1.Final</version>
         </dependency>
     </dependencies>
@@ -92,11 +92,6 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-
-            </plugin>
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
@@ -108,17 +103,20 @@
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
                             <version>1.3.1.Final</version>
-
                         </path>
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${lombok.version}</version>
-
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
         </plugins>
     </build>
 

@@ -3,11 +3,13 @@ package com.basis.sge.service.servico;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.dto.UsuarioDTO;
+import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
+// import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -22,12 +24,18 @@ public class UsuarioServico {
         return usuarioMapper.toDto(lista);
     }
     public UsuarioDTO obterPorId(Integer id) {
-        Usuario usuario = usuarioRepositorio.getOne(id);
-    //Verificar utilização de Usuário
+        Usuario usuario = usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
         return usuarioMapper.toDto(usuario);
     }
-    public UsuarioDTO criar(UsuarioDTO novoUsuario) {
-        Usuario usuario = usuarioMapper.toEntity(novoUsuario);
+    public UsuarioDTO criar(UsuarioDTO usuarioDTO) {
+        Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
+        /*
+        if(usuarioDTO.getId() == null){
+
+        }
+        //criar gerador de chave aleatorio
+*/
+        usuario.setChave("132345");
         Usuario usuarioCriado = usuarioRepositorio.save(usuario);
         return usuarioMapper.toDto(usuarioCriado);
     }

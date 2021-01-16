@@ -3,6 +3,8 @@ package com.basis.sge.service.servico.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 public class UsuarioDTO {
@@ -11,6 +13,6 @@ public class UsuarioDTO {
     private String cpf;
     private String email;
     private String telefone;
-    private String dataNascimento;
+    private LocalDate dataNascimento;
 
 }
