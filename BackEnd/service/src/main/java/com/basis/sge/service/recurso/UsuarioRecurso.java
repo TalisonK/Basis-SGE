@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -34,7 +35,7 @@ public class UsuarioRecurso {
         return ResponseEntity.ok(usuarioServico.obterPorId(id));
     }
     @PostMapping
-    public ResponseEntity<UsuarioDTO> criar(@RequestBody UsuarioDTO usuarioDTO) throws URISyntaxException {
+    public ResponseEntity<UsuarioDTO> criar(@Valid @RequestBody UsuarioDTO usuarioDTO) throws URISyntaxException {
         UsuarioDTO usuarioGerado = (usuarioServico.criar(usuarioDTO));
         return ResponseEntity.created(new URI("/api/usuario")).body(usuarioServico.criar(usuarioGerado));
     }
