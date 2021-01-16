@@ -15,8 +15,8 @@ import javax.transaction.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class InscricaoServico {
-    private InscricaoRepositorio incrRepo;
-    private InscricaoMapper mapper;
+    private final InscricaoRepositorio incrRepo;
+    private final InscricaoMapper mapper;
 
 
     public List<PreInscricaoDTO> listar(){

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/inscricao")
 public class InscricaoRecurso {
-    private InscricaoServico servico;
+    private final InscricaoServico servico;
 
     @GetMapping
     public ResponseEntity<List<PreInscricaoDTO>> listar(){
