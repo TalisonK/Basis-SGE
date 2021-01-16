@@ -1,5 +1,4 @@
 package com.basis.sge.service.recurso;
-
 import com.basis.sge.service.servico.InscricaoServico;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import java.util.List;
@@ -13,14 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/inscricao")
 public class InscricaoRecurso {
-
-    private InscricaoServico servico;
+    private final InscricaoServico servico;
 
     @GetMapping
     public ResponseEntity<List<PreInscricaoDTO>> listar(){
 
         return ResponseEntity.ok(servico.listar());
     }
-
-
 }
