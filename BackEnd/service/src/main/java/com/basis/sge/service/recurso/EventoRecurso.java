@@ -3,6 +3,7 @@ package com.basis.sge.service.recurso;
 
 import com.basis.sge.service.servico.EventoServico;
 import com.basis.sge.service.servico.dto.EventoDTO;
+import com.basis.sge.service.servico.dto.TipoEventoDTO;
 import com.basis.sge.service.servico.dto.UsuarioDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
 import java.util.List;
 
 
@@ -46,7 +48,7 @@ public class EventoRecurso {
     @PostMapping
     public ResponseEntity<EventoDTO> criar(@RequestBody EventoDTO eventodto) {
         EventoDTO eventoDtoCriado = eventoServico.criar(eventodto);
-        return ResponseEntity.ok(eventoDtoCriado);
+        return ResponseEntity.created(URI.create("/api/evento")).body(eventoDtoCriado);
     }
     @PutMapping
     public ResponseEntity<EventoDTO> atualizar(@RequestBody EventoDTO eventodto) {
