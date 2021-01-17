@@ -1,12 +1,14 @@
 package com.basis.sge.service.recurso;
 
 import com.basis.sge.service.dominio.Usuario;
+import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.UsuarioDTO;
 import com.basis.sge.service.servico.UsuarioServico;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,16 +44,17 @@ public class UsuarioRecurso {
     public ResponseEntity<UsuarioDTO> criar(@Valid @RequestBody UsuarioDTO usuarioDTO) throws URISyntaxException, RegraNegocioException {
         return ResponseEntity.created(new URI("/api/usuario")).body(usuarioServico.criar(usuarioDTO));
     }
-    /*
+
     @PutMapping
     public ResponseEntity<UsuarioDTO> atualizar(@RequestBody UsuarioDTO usuarioDTO){
         UsuarioDTO usuarioAtualizado = usuarioServico.atualizar(usuarioDTO);
         return ResponseEntity.ok(usuarioAtualizado);
-    }*/
+    }
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Integer id){
 
         usuarioServico.deletar(id);
     }
+
 }
