@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
+//Classe destinada ao mapeaento da entidade InscricaoResposta
 @Entity
 @Table(name = "inscricao_resposta")
 @Getter
