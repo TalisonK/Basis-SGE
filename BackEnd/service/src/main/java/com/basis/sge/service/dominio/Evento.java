@@ -53,11 +53,11 @@ public class Evento implements Serializable {
 
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="id_tipo_evento",referencedColumnName = "id")
     private TipoEvento tipoEvento;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "evento_pergunta", joinColumns = {@JoinColumn(name = "id_evento")},
     inverseJoinColumns = {@JoinColumn(name = "id_pergunta")})
     private List<Pergunta> perguntas;

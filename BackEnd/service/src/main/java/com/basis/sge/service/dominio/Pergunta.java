@@ -22,7 +22,7 @@ public class Pergunta implements Serializable {
     @Column(name = "obrigatoriedade")
     private Boolean obrigatoriedade;
 
-    @ManyToMany(mappedBy = "perguntas")
+    @ManyToMany(mappedBy = "perguntas", fetch = FetchType.EAGER)
     private List<Evento> eventos;
 }
 

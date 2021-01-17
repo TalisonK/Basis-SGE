@@ -1,10 +1,13 @@
 package com.basis.sge.service.recurso;
+
 import com.basis.sge.service.servico.InscricaoServico;
+import com.basis.sge.service.servico.dto.InscricaoCriarDTO;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +22,7 @@ public class InscricaoRecurso {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<PreInscricaoDTO> obterPorID(@PathVariable Integer id){
-        return ResponseEntity.ok(servico.buscar(id));
+        return ResponseEntity.ok(servico.obterPorId(id));
     }
 
     @PostMapping
@@ -27,5 +30,13 @@ public class InscricaoRecurso {
         return ResponseEntity.status(201).body(servico.criar(dto));
     }
 
+    @PutMapping
+    public ResponseEntity<PreInscricaoDTO> editar(@RequestBody PreInscricaoDTO dto){
+        return ResponseEntity.ok().body(servico.atualizar(dto));
+    }
 
+    @DeleteMapping
+    public ResponseEntity<PreInscricaoDTO> deletar(@RequestBody PreInscricaoDTO dto){
+        return ResponseEntity.ok().body(servico.deletar(dto));
+    }
 }
