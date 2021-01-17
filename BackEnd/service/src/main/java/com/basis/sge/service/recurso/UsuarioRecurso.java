@@ -1,7 +1,9 @@
 package com.basis.sge.service.recurso;
 
+import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.servico.dto.UsuarioDTO;
 import com.basis.sge.service.servico.UsuarioServico;
+import com.basis.sge.service.servico.exception.RegraNegocioException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,26 +32,26 @@ public class UsuarioRecurso {
         List<UsuarioDTO> lista = usuarioServico.listar();
         return ResponseEntity.ok(lista);
     }
-    @GetMapping({"/id"})
+
+    @GetMapping("/{id}")
     public ResponseEntity<UsuarioDTO>obterPorId(@PathVariable Integer id){
         return ResponseEntity.ok(usuarioServico.obterPorId(id));
     }
+
     @PostMapping
-    public ResponseEntity<UsuarioDTO> criar(@Valid @RequestBody UsuarioDTO usuarioDTO) throws URISyntaxException {
-        UsuarioDTO usuarioGerado = (usuarioServico.criar(usuarioDTO));
-        return ResponseEntity.created(new URI("/api/usuario")).body(usuarioServico.criar(usuarioGerado));
+    public ResponseEntity<UsuarioDTO> criar(@Valid @RequestBody UsuarioDTO usuarioDTO) throws URISyntaxException, RegraNegocioException {
+        return ResponseEntity.created(new URI("/api/usuario")).body(usuarioServico.criar(usuarioDTO));
     }
+    /*
     @PutMapping
     public ResponseEntity<UsuarioDTO> atualizar(@RequestBody UsuarioDTO usuarioDTO){
         UsuarioDTO usuarioAtualizado = usuarioServico.atualizar(usuarioDTO);
         return ResponseEntity.ok(usuarioAtualizado);
-    }
+    }*/
+
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Integer id){
 
         usuarioServico.deletar(id);
     }
-
-
-
 }

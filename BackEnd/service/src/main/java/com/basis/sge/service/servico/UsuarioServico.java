@@ -5,6 +5,7 @@ import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.dto.UsuarioDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.UsuarioMapper;
+import liquibase.pro.packaged.U;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Transactional
 @RequiredArgsConstructor
 public class UsuarioServico {
+
     private final UsuarioRepositorio usuarioRepositorio;
     private final UsuarioMapper usuarioMapper;
 
@@ -31,23 +33,45 @@ public class UsuarioServico {
     }
 
     public UsuarioDTO criar(UsuarioDTO usuarioDTO) {
+        if (usuarioRepositorio.existsByCpf(usuarioDTO.getCpf())) {
+            throw new RegraNegocioException("CPF já cadastrado, tente novamente");
+        }
+        if (usuarioRepositorio.existsByEmail(usuarioDTO.getEmail())) {
+            throw new RegraNegocioException("Email já cadastrado, tente novamente");
+        }
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario.setChave(UUID.randomUUID().toString());
-
-        /*
-
-        //Fazer verificação de cpf e email e colocar as exceções
-        //criar gerador de chave aleatorio
-    */
         Usuario usuarioCriado = usuarioRepositorio.save(usuario);
         return usuarioMapper.toDto(usuarioCriado);
     }
 
+    /*
     public UsuarioDTO atualizar(UsuarioDTO usuarioDTO) {
+        if (!usuarioRepositorio.existsByCpf(usuarioDTO.getCpf())) {
+            throw new RegraNegocioException("Usuário inexistente");
+        }
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         Usuario usuarioAtualizado = usuarioRepositorio.save(usuario);
+
         return usuarioMapper.toDto(usuarioAtualizado);
     }
+
+
+        /*
+        Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
+
+        if (usuario != null && usuario.getId().equals(usuarioDTO.getId())) {
+            usuario.setNome(usuarioDTO.getNome());
+            usuario.setCpf(usuarioDTO.getCpf());
+            usuario.setEmail(usuarioDTO.getEmail());
+            usuario.setTelefone(usuarioDTO.getTelefone());
+            usuario.setDataNascimento(usuarioDTO.getDataNascimento());
+            Usuario usuarioAtualizado = usuarioRepositorio.save(usuario);
+            return usuarioMapper.toDto(usuarioAtualizado);
+        }else {
+            throw new RegraNegocioException("Usuário inexistente, tente novamente");
+
+       */
 
     public void deletar(Integer id) {
         usuarioRepositorio.deleteById(id);

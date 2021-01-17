@@ -19,6 +19,7 @@ public class UsuarioDTO {
 
     @Email @NotNull
     private String email;
+
     private String telefone;
     private LocalDate dataNascimento;
 
