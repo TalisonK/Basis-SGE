@@ -12,15 +12,19 @@ import java.time.LocalDate;
 @Setter
 public class UsuarioDTO {
     private Integer id;
+
     private String nome;
 
-    @CPF @NotNull
+    @CPF
+    @NotNull
     private String cpf;
 
-    @Email @NotNull
+    @Email
+    @NotNull
     private String email;
 
     private String telefone;
+
     private LocalDate dataNascimento;
 
 }

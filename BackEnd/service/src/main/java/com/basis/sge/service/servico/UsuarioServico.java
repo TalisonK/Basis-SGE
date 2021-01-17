@@ -5,12 +5,9 @@ import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.dto.UsuarioDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.UsuarioMapper;
-import liquibase.pro.packaged.U;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
-// import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,7 +30,7 @@ public class UsuarioServico {
     }
 
     public UsuarioDTO criar(UsuarioDTO usuarioDTO) {
-        if (usuarioDTO == null){
+        if (usuarioDTO == null) {
             throw new RegraNegocioException("Dados inválidos");
         }
         if (usuarioRepositorio.existsByCpf(usuarioDTO.getCpf())) {
@@ -48,33 +45,18 @@ public class UsuarioServico {
         return usuarioMapper.toDto(usuarioCriado);
     }
 
-    /*
     public UsuarioDTO atualizar(UsuarioDTO usuarioDTO) {
         if (!usuarioRepositorio.existsByCpf(usuarioDTO.getCpf())) {
             throw new RegraNegocioException("Usuário inexistente");
         }
-        Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
-        Usuario usuarioAtualizado = usuarioRepositorio.save(usuario);
+
+        Usuario usuario = usuarioRepositorio.findById(usuarioDTO.getId()).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
+        Usuario usuarioRecebido = usuarioMapper.toEntity(usuarioDTO);
+        usuarioRecebido.setChave(usuario.getChave());
+        Usuario usuarioAtualizado = usuarioRepositorio.save(usuarioRecebido);
 
         return usuarioMapper.toDto(usuarioAtualizado);
     }
-
-
-        /*
-        Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
-
-        if (usuario != null && usuario.getId().equals(usuarioDTO.getId())) {
-            usuario.setNome(usuarioDTO.getNome());
-            usuario.setCpf(usuarioDTO.getCpf());
-            usuario.setEmail(usuarioDTO.getEmail());
-            usuario.setTelefone(usuarioDTO.getTelefone());
-            usuario.setDataNascimento(usuarioDTO.getDataNascimento());
-            Usuario usuarioAtualizado = usuarioRepositorio.save(usuario);
-            return usuarioMapper.toDto(usuarioAtualizado);
-        }else {
-            throw new RegraNegocioException("Usuário inexistente, tente novamente");
-
-       */
 
     public void deletar(Integer id) {
         usuarioRepositorio.deleteById(id);

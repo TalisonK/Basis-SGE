@@ -30,8 +30,9 @@ public class InscricaoResposta implements Serializable {
     @JoinColumn(name = "id_evento", referencedColumnName = "id")
     private Evento idEvento;
 
-
     @ManyToOne
     @JoinColumn(name = "id_inscricao", referencedColumnName = "id")
     private PreInscricao idInscricao;
+
+    private String resposta;
 }
