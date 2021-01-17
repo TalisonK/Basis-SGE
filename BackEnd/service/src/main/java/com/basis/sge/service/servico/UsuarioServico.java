@@ -33,6 +33,9 @@ public class UsuarioServico {
     }
 
     public UsuarioDTO criar(UsuarioDTO usuarioDTO) {
+        if (usuarioDTO == null){
+            throw new RegraNegocioException("Dados inválidos");
+        }
         if (usuarioRepositorio.existsByCpf(usuarioDTO.getCpf())) {
             throw new RegraNegocioException("CPF já cadastrado, tente novamente");
         }
