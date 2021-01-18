@@ -3,10 +3,6 @@ package com.basis.sge.service.recurso;
 
 import com.basis.sge.service.servico.EventoServico;
 import com.basis.sge.service.servico.dto.EventoDTO;
-import com.basis.sge.service.servico.dto.TipoEventoDTO;
-import com.basis.sge.service.servico.dto.UsuarioDTO;
-import com.basis.sge.service.servico.exception.RegraNegocioException;
-import javafx.beans.binding.ObjectExpression;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
