@@ -2,13 +2,15 @@ package com.basis.sge.service.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity @Getter @Setter @Table(name = "pergunta")
 
+@Entity
+@Getter
+@Setter
+@Table(name = "pergunta")
 public class Pergunta implements Serializable {
 
     @Id
@@ -24,6 +26,8 @@ public class Pergunta implements Serializable {
 
     @ManyToMany(mappedBy = "perguntas")
     private List<Evento> eventos;
+
+    @ManyToMany(mappedBy = "perguntas", fetch = FetchType.LAZY)
+    private List<Evento> eventos;
+
 }
-
-

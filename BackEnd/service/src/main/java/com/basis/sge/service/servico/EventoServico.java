@@ -12,8 +12,8 @@ import java.util.List;
 
 
 @Service
-@Transactional
 @RequiredArgsConstructor
+@Transactional
 public class EventoServico {
 
     private final EventoRepositorio eventoRepositorio;
@@ -61,4 +61,5 @@ public class EventoServico {
             throw new RegraNegocioException("Um evento com esse titulo já existe");
         }
     }
+
 }

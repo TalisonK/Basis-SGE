@@ -53,10 +53,8 @@ public class Evento implements Serializable {
     @Column(name="quantidade_vagas")
     private Integer quantVagas;
 
-
     @Column(name="valor")
     private Double valor;
-
 
     @Column(name="local")
     private String local;
@@ -66,12 +64,13 @@ public class Evento implements Serializable {
     private Boolean tipoInscricao;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="id_tipo_evento",referencedColumnName = "id")
     private TipoEvento tipoEvento;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "evento_pergunta", joinColumns = {@JoinColumn(name = "id_evento")},
-            inverseJoinColumns = {@JoinColumn(name = "id_pergunta")})
+    inverseJoinColumns = {@JoinColumn(name = "id_pergunta")})
     private List<Pergunta> perguntas;
+
 }
