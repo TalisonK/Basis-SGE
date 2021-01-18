@@ -19,14 +19,15 @@ import java.util.List;
 public class TipoEventoServico {
 
     private final TipoEventoRepositorio tipoEventoRepositorio;
+
     private final TipoEventoMapper tipoEventoMapper;
+
 
     public List<TipoEventoDTO> listar() {
         List<TipoEvento> listaTipoEvento = tipoEventoRepositorio.findAll();
 
         return tipoEventoMapper.toDto(listaTipoEvento);
     }
-
 
     public TipoEventoDTO obterPorId(Integer id){
         TipoEvento tipoEvento = tipoEventoRepositorio.findById(id)

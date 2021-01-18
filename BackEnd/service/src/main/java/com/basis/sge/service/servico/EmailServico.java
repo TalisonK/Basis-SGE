@@ -21,7 +21,6 @@ public class EmailServico {
     private final JavaMailSender javaMailSender;
 
 
-
     public void sendMail(EmailDTO emailDTO) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();

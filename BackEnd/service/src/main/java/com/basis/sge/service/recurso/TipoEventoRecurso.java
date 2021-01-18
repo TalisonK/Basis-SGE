@@ -20,6 +20,7 @@ public class TipoEventoRecurso {
 
     private final TipoEventoServico tipoEventoServico;
 
+
     @GetMapping
     private ResponseEntity<List<TipoEventoDTO>> listar(){
         return ResponseEntity.ok(tipoEventoServico.listar());
@@ -30,4 +31,5 @@ public class TipoEventoRecurso {
     private ResponseEntity<TipoEventoDTO> obterPorId(@PathVariable Integer id){
         return ResponseEntity.ok(tipoEventoServico.obterPorId(id));
     }
+
 }

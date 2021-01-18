@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface EventoRepositorio  extends JpaRepository<Evento, Integer> {
 
     Boolean existsByTitulo(String titulo);
+
     Boolean existsByTituloAndIdNot (String titulo, Integer id);
 
 }

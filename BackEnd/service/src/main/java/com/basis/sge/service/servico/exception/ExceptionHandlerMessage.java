@@ -3,7 +3,6 @@ package com.basis.sge.service.servico.exception;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
