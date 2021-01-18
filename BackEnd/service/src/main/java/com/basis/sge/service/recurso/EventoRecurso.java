@@ -1,13 +1,8 @@
 package com.basis.sge.service.recurso;
 
-
 import com.basis.sge.service.servico.EventoServico;
 import com.basis.sge.service.servico.dto.EventoDTO;
-import com.basis.sge.service.servico.dto.TipoEventoDTO;
-import com.basis.sge.service.servico.dto.UsuarioDTO;
-import com.basis.sge.service.servico.exception.RegraNegocioException;
-import javafx.beans.binding.ObjectExpression;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
@@ -27,18 +21,15 @@ import java.util.List;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("/api/evento")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class EventoRecurso {
 
     private final EventoServico eventoServico;
 
 
-
     @GetMapping
     public ResponseEntity<List<EventoDTO>> listar() {
-
         return ResponseEntity.ok(eventoServico.listar());
-
     }
 
     @GetMapping("/{id}")
