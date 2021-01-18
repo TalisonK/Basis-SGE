@@ -20,7 +20,6 @@ public class TipoEvento implements Serializable {
     @Column(name="id")
     private Integer id;
 
-    @NotNull
     @Column(name="descricao")
     private String descricao;
 
