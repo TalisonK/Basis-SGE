@@ -1,30 +1,22 @@
 package com.basis.sge.service.servico;
 
-
 import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.servico.dto.EventoDTO;
-
-import com.basis.sge.service.servico.dto.TipoEventoDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import lombok.RequiredArgsConstructor;
-
-
 import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
-
-
 import javax.transaction.Transactional;
 import java.util.List;
 
+
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class EventoServico {
 
     private final EventoRepositorio eventoRepositorio;
-
     private final EventoMapper eventoMapper;
 
 
@@ -69,5 +61,4 @@ public class EventoServico {
             throw new RegraNegocioException("Um evento com esse titulo já existe");
         }
     }
-
 }

@@ -15,7 +15,6 @@ import java.io.UnsupportedEncodingException;
 public class EmailServico {
 
     private static final String ERROR_TITLE = "error.title";
-
     private final JavaMailSender javaMailSender;
 
 
@@ -36,7 +35,3 @@ public class EmailServico {
         }
     }
 }
-
-
-
-
