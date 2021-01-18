@@ -60,8 +60,11 @@ public class Evento implements Serializable {
     @Column(name="local")
     private String local;
 
-
     @NotNull
+    @Column(name = "tipo_inscricao")
+    private Boolean tipoInscricao;
+
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_tipo_evento",referencedColumnName = "id")
     private TipoEvento tipoEvento;
