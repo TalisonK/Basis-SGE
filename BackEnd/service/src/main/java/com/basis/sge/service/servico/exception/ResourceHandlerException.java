@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.time.LocalDateTime;
 
 @ControllerAdvice
-public class HandlerException {
+public class ResourceHandlerException {
 
     @ExceptionHandler(value = RegraNegocioException.class)
     public ResponseEntity<ExceptionHandlerMessage> handleRegraNegocioException(RegraNegocioException e) {

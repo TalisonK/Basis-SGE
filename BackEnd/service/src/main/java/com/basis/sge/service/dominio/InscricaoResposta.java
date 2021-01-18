@@ -17,17 +17,17 @@ public class InscricaoResposta implements Serializable {
     private IdInscricaoResposta id;
 
     @ManyToOne
-    @MapsId("id_evento")
+    @MapsId("idEvento")
     @JoinColumn(name = "id_evento", referencedColumnName = "id")
     private Evento evento;
 
     @ManyToOne
-    @MapsId("id_inscricao")
+    @MapsId("idPreInscricao")
     @JoinColumn(name = "id_inscricao", referencedColumnName = "id")
     private PreInscricao inscricao;
 
     @ManyToOne
-    @MapsId("id_pergunta")
+    @MapsId("idPergunta")
     @JoinColumn(name = "id_pergunta", referencedColumnName = "id")
     private Pergunta pergunta;
 

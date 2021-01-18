@@ -2,8 +2,8 @@ package com.basis.sge.service.servico;
 
 import com.basis.sge.service.repositorio.TipoSituacaoRepositorio;
 import com.basis.sge.service.servico.dto.TipoSituacaoDTO;
+import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.TipoSituacaoMapper;
-import com.sun.xml.internal.ws.handler.HandlerException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -23,7 +23,7 @@ public class TipoSituacaoServico {
     }
 
     public TipoSituacaoDTO obterPorId(Integer id){
-        return mapper.toDto(rsRepo.findById(id).orElseThrow(() -> new HandlerException("Situação não cadastrada!")));
+        return mapper.toDto(rsRepo.findById(id).orElseThrow(() -> new RegraNegocioException("Situação não cadastrada!")));
     }
 
     public TipoSituacaoDTO criar(TipoSituacaoDTO dto){

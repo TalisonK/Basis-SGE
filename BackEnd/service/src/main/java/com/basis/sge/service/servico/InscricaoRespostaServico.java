@@ -8,10 +8,10 @@ import com.basis.sge.service.repositorio.InscricaoRespostaRepositorio;
 import com.basis.sge.service.servico.dto.InscricaoRespostaDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.InscricaoRespostaMapper;
-import com.sun.xml.internal.ws.handler.HandlerException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 
@@ -26,18 +26,18 @@ public class InscricaoRespostaServico {
     private final InscricaoRespostaMapper inscricaoRespostaMapper;
 
 
-    public List<InscricaoRespostaDTO> listar(){
+    public List<InscricaoRespostaDTO> listar() {
         return inscricaoRespostaMapper.toDto(inscricaoRespostaRepositorio.findAll());
     }
 
-    public InscricaoRespostaDTO obterPorId(IdInscricaoResposta id){
+    public InscricaoRespostaDTO obterPorId(IdInscricaoResposta id) {
 
         if (id == null) {
             throw new RegraNegocioException("Dados inválidos");
         }
 
         return inscricaoRespostaMapper.toDto(inscricaoRespostaRepositorio.findById(id)
-                .orElseThrow(() -> new HandlerException("Inscrição nao encontrada!")));
+                .orElseThrow(() -> new RegraNegocioException("Inscrição nao encontrada!")));
     }
 
     public InscricaoRespostaDTO criar(InscricaoRespostaDTO dto) {
@@ -46,9 +46,7 @@ public class InscricaoRespostaServico {
             throw new RegraNegocioException("Dados inválidos");
         }
 
-        eventoRepositorio.findById(dto.getEvento().getId()).orElseThrow(() -> new HandlerException("Evento não cadastrado"));
-
-
+        eventoRepositorio.findById(dto.getEvento().getId()).orElseThrow(() -> new RegraNegocioException("Evento não cadastrado"));
 
 
         InscricaoResposta ir = new InscricaoResposta();
@@ -67,16 +65,16 @@ public class InscricaoRespostaServico {
         return inscricaoRespostaMapper.toDto(inscricaoRespostaCriada);
     }
 
-    public InscricaoRespostaDTO atualizar(InscricaoRespostaDTO inscricaoRespostaDTO){
+    public InscricaoRespostaDTO atualizar(InscricaoRespostaDTO inscricaoRespostaDTO) {
         if (inscricaoRespostaDTO == null) {
-                throw new RegraNegocioException("Dados inválidos");
-            }
+            throw new RegraNegocioException("Dados inválidos");
+        }
 
         return inscricaoRespostaMapper.toDto(inscricaoRespostaRepositorio
                 .save(inscricaoRespostaMapper.toEntity(inscricaoRespostaDTO)));
     }
 
-    public InscricaoRespostaDTO deletar(InscricaoRespostaDTO inscricaoRespostaDTO){
+    public InscricaoRespostaDTO deletar(InscricaoRespostaDTO inscricaoRespostaDTO) {
 
         if (inscricaoRespostaDTO == null) {
             throw new RegraNegocioException("Dados inválidos");
