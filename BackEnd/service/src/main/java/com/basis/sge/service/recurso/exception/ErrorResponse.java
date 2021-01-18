@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AllArgsConstructor
@@ -17,6 +18,8 @@ public class ErrorResponse {
     private final int code;
 
     private final String status;
+
+    private final LocalDateTime timestamp;
 
     private final String objectName;
 
