@@ -30,15 +30,7 @@ public class UsuarioServico {
     }
 
     public UsuarioDTO criar(UsuarioDTO usuarioDTO) {
-        if (usuarioDTO == null) {
-            throw new RegraNegocioException("Dados inválidos");
-        }
-        if (usuarioRepositorio.existsByCpf(usuarioDTO.getCpf())) {
-            throw new RegraNegocioException("CPF já cadastrado, tente novamente");
-        }
-        if (usuarioRepositorio.existsByEmail(usuarioDTO.getEmail())) {
-            throw new RegraNegocioException("Email já cadastrado, tente novamente");
-        }
+        verificaUsuario(usuarioDTO);
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario.setChave(UUID.randomUUID().toString());
         Usuario usuarioCriado = usuarioRepositorio.save(usuario);
@@ -46,10 +38,7 @@ public class UsuarioServico {
     }
 
     public UsuarioDTO atualizar(UsuarioDTO usuarioDTO) {
-        if (!usuarioRepositorio.existsByCpf(usuarioDTO.getCpf())) {
-            throw new RegraNegocioException("Usuário inexistente");
-        }
-
+        verificaUsuarioAtualizar(usuarioDTO);
         Usuario usuario = usuarioRepositorio.findById(usuarioDTO.getId()).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
         Usuario usuarioRecebido = usuarioMapper.toEntity(usuarioDTO);
         usuarioRecebido.setChave(usuario.getChave());
@@ -59,6 +48,25 @@ public class UsuarioServico {
     }
 
     public void deletar(Integer id) {
+        Usuario usuario = usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuário inexistente"));
         usuarioRepositorio.deleteById(id);
+    }
+
+    public void verificaUsuario(UsuarioDTO usuarioDTO) {
+        if (usuarioDTO == null) {
+            throw new RegraNegocioException("Dados inválidos");
+        }
+        if (usuarioRepositorio.existsByCpf(usuarioDTO.getCpf())) {
+            throw new RegraNegocioException("CPF já cadastrado, tente novamente");
+        }
+        if (usuarioRepositorio.existsByEmail(usuarioDTO.getEmail())) {
+            throw new RegraNegocioException("Email já cadastrado, tente novamente");
+        }
+    }
+
+    public void verificaUsuarioAtualizar(UsuarioDTO usuarioDTO){
+        if (usuarioRepositorio.existsByCpfAndIdNot(usuarioDTO.getCpf(), usuarioDTO.getId())){
+            throw new RegraNegocioException("CPF já cadastrado");
+        }
     }
 }

@@ -46,7 +46,7 @@ public class UsuarioRecurso {
     }
 
     @PutMapping
-    public ResponseEntity<UsuarioDTO> atualizar(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<UsuarioDTO> atualizar(@Valid @RequestBody UsuarioDTO usuarioDTO){
         UsuarioDTO usuarioAtualizado = usuarioServico.atualizar(usuarioDTO);
         return ResponseEntity.ok(usuarioAtualizado);
     }
