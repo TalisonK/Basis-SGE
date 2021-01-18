@@ -18,5 +18,4 @@ public class ObjectError {
 
     private final Object parameter;
 
-
 }
