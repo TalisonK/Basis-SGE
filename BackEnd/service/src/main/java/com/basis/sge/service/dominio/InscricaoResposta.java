@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class InscricaoResposta implements Serializable {
 
     @EmbeddedId
-    private IdInscricaoResposta idInscricaoResposta;
+    private IdInscricaoResposta id;
 
     @ManyToOne
     @MapsId("id_evento")

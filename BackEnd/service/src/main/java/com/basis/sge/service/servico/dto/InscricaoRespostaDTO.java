@@ -1,6 +1,7 @@
 package com.basis.sge.service.servico.dto;
 
 import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.Pergunta;
 import com.basis.sge.service.dominio.PreInscricao;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,9 +10,9 @@ import lombok.Setter;
 @Setter
 public class InscricaoRespostaDTO {
 
-    private Integer id;
-    private Evento idEvento;
-    private PreInscricao idInscricao;
+    private Evento evento;
+    private PreInscricao inscricao;
+    private Pergunta pergunta;
     private String resposta;
 
 }
