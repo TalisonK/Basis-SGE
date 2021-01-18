@@ -64,7 +64,7 @@ public class Evento implements Serializable {
     private Boolean tipoInscricao;
 
     @NotNull
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(name="id_tipo_evento",referencedColumnName = "id")
     private TipoEvento tipoEvento;
 

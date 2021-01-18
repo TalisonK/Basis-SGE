@@ -29,5 +29,19 @@ spring:
   liquibase:
     change-log: classpath:/config/liquibase/master.xml
 #        drop-first: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sapedteste@gmail.com
+    password: spedteste123
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          quitwait: false
 server:
   port: 8080
