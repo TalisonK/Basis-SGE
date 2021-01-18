@@ -2,7 +2,6 @@ package com.basis.sge.service.servico;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
-import com.basis.sge.service.servico.exception.InscricaoNotFoundException;
 import com.basis.sge.service.servico.mapper.InscricaoMapper;
 import java.util.List;
 import java.util.Optional;

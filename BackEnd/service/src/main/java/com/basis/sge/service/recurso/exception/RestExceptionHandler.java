@@ -9,6 +9,7 @@ import org.springframework.web.client.ResponseErrorHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     private ErrorResponse getErrorResponse(MethodArgumentNotValidException ex, HttpStatus status, List<ObjectError> errors) {
         return new ErrorResponse("Requisição possui campos inválidos", status.value(),
-                status.getReasonPhrase(), ex.getBindingResult().getObjectName(), errors);
+                status.getReasonPhrase(), ex.getBindingResult().getObjectName(), errors, LocalDateTime.now());
     }
 
     private List<ObjectError> getErrors(MethodArgumentNotValidException ex) {
