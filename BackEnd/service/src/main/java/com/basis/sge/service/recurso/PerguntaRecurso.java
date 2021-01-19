@@ -26,6 +26,7 @@ public class PerguntaRecurso {
 
     @GetMapping
     public ResponseEntity<List<PerguntaDTO>> listar() {
+
         return ResponseEntity.ok(perguntaServico.listar());
     }
 
