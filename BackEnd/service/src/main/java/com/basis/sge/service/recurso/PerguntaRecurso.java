@@ -25,7 +25,7 @@ public class PerguntaRecurso {
     private final PerguntaServico perguntaServico;
 
     @GetMapping
-    public ResponseEntity<List<PerguntaDTO> listar() {
+    public ResponseEntity<List<PerguntaDTO>> listar() {
         return ResponseEntity.ok(perguntaServico.listar());
     }
 
