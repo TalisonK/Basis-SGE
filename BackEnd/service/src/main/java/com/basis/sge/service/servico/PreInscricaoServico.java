@@ -28,7 +28,6 @@ public class PreInscricaoServico {
         return mapper.toDto(dto.orElseThrow(() -> new RegraNegocioException("Inscrição número " + id + " não encontrada!")));
     }
 
-//todo Corrigir o erro "detached entity passed to persist"
     public PreInscricaoDTO criar(PreInscricaoDTO dto){
 
         PreInscricao preInscricao = mapper.toEntity(dto);
