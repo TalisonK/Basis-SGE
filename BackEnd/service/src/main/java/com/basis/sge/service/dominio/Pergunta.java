@@ -24,7 +24,4 @@ public class Pergunta implements Serializable {
     @Column(name = "obrigatoriedade")
     private Boolean obrigatoriedade;
 
-    @ManyToMany(mappedBy = "perguntas", fetch = FetchType.LAZY)
-    private List<Evento> eventos;
-
 }
