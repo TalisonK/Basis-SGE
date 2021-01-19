@@ -1,7 +1,9 @@
 package com.basis.sge.service.servico;
 
 import com.basis.sge.service.servico.dto.EmailDTO;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -12,11 +14,12 @@ import java.io.UnsupportedEncodingException;
 
 @Service
 @RequiredArgsConstructor
+@Getter
+@Setter
 public class EmailServico {
 
     private static final String ERROR_TITLE = "error.title";
     private final JavaMailSender javaMailSender;
-
 
     public void sendMail(EmailDTO emailDTO) {
         try {

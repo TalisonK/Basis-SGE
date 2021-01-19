@@ -2,12 +2,15 @@ package com.basis.sge.service.servico;
 
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.repositorio.UsuarioRepositorio;
+import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.UsuarioDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +21,7 @@ public class UsuarioServico {
 
     private final UsuarioRepositorio usuarioRepositorio;
     private final UsuarioMapper usuarioMapper;
+    private final EmailServico emailServico;
 
     public List<UsuarioDTO> listar() {
         List lista = usuarioRepositorio.findAll();
@@ -34,6 +38,12 @@ public class UsuarioServico {
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario.setChave(UUID.randomUUID().toString());
         Usuario usuarioCriado = usuarioRepositorio.save(usuario);
+
+        emailServico.sendMail( new EmailDTO(
+                usuarioDTO.getEmail(),
+                "Seu cadastro foi feito, sua chave é: "+ usuario.getChave(),
+                "Cadastro efetuado com sucesso"
+        ));
         return usuarioMapper.toDto(usuarioCriado);
     }
 

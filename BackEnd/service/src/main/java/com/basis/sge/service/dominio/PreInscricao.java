@@ -1,5 +1,6 @@
 package com.basis.sge.service.dominio;
 
+import com.basis.sge.service.servico.dto.UsuarioDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,6 +40,8 @@ public class PreInscricao implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_situacao", referencedColumnName = "id")
     private TipoSituacao situacao;
+
+
 
 
 
