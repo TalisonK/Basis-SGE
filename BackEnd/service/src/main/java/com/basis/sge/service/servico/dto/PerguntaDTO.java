@@ -9,6 +9,7 @@ import javax.persistence.Column;
 @Setter
 public class PerguntaDTO {
 
+    private Integer id;
     private String titulo;
     private Boolean obrigatoriedade;
 
