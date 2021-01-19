@@ -14,7 +14,7 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class InscricaoServico {
+public class PreInscricaoServico {
     private final InscricaoRepositorio incrRepo;
     private final InscricaoMapper mapper;
 
