@@ -19,8 +19,6 @@ public class ErrorResponse {
 
     private final String status;
 
-    private final LocalDateTime timestamp;
-
     private final String objectName;
 
     private final List<ObjectError> errors;

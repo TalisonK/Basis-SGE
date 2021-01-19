@@ -26,20 +26,4 @@ public class TipoSituacaoRecurso {
     public ResponseEntity<TipoSituacaoDTO> obterPorID(@PathVariable Integer id){
         return ResponseEntity.ok(servico.obterPorId(id));
     }
-
-    @PostMapping
-    public ResponseEntity<TipoSituacaoDTO> criar(@RequestBody TipoSituacaoDTO dto){
-        return ResponseEntity.status(201).body(servico.criar(dto));
-    }
-
-    @PutMapping
-    public ResponseEntity<TipoSituacaoDTO> editar(@RequestBody TipoSituacaoDTO dto){
-        return ResponseEntity.ok().body(servico.atualizar(dto));
-    }
-
-    @DeleteMapping
-    public ResponseEntity<TipoSituacaoDTO> deletar(@RequestBody TipoSituacaoDTO dto){
-        return ResponseEntity.ok().body(servico.deletar(dto));
-    }
-
 }
