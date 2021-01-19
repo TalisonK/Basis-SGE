@@ -11,7 +11,7 @@ import lombok.Setter;
 public class PreInscricaoDTO {
 
     private Integer id;
-    private Usuario usuario;
-    private Evento evento;
-    private TipoSituacao situacao;
+    private Integer idUsuario;
+    private Integer idEvento;
+    private Integer idSituacao;
 }

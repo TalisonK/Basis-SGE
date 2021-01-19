@@ -1,5 +1,5 @@
 package com.basis.sge.service.recurso;
-import com.basis.sge.service.servico.InscricaoServico;
+import com.basis.sge.service.servico.PreInscricaoServico;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/inscricao")
 public class InscricaoRecurso {
-    private final InscricaoServico servico;
+    private final PreInscricaoServico servico;
 
     @GetMapping
     public ResponseEntity<List<PreInscricaoDTO>> listar(){

@@ -1,5 +1,6 @@
 package com.basis.sge.service.dominio;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,14 @@ import java.io.Serializable;
 @Setter
 public class IdInscricaoResposta implements Serializable {
 
+    public IdInscricaoResposta() {
+    }
+
+    public IdInscricaoResposta(Integer idPergunta, Integer idEvento, Integer idPreInscricao) {
+        this.idPergunta = idPergunta;
+        this.idEvento = idEvento;
+        this.idPreInscricao = idPreInscricao;
+    }
 
     @Column(name = "id_pergunta")
     private Integer idPergunta;

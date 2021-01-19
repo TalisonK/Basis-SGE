@@ -5,6 +5,7 @@ import com.basis.sge.service.dominio.InscricaoResposta;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRespostaRepositorio;
+import com.basis.sge.service.repositorio.PerguntaRepositorio;
 import com.basis.sge.service.servico.dto.InscricaoRespostaDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.InscricaoRespostaMapper;
@@ -22,6 +23,7 @@ public class InscricaoRespostaServico {
     private final InscricaoRespostaRepositorio inscricaoRespostaRepositorio;
     private final EventoRepositorio eventoRepositorio;
     private final InscricaoRepositorio inscricaoRepositorio;
+    private final PerguntaRepositorio perguntaRepositorio;
     private final InscricaoRespostaMapper inscricaoRespostaMapper;
 
 
@@ -29,6 +31,7 @@ public class InscricaoRespostaServico {
         return inscricaoRespostaMapper.toDto(inscricaoRespostaRepositorio.findAll());
     }
 
+    //todo tentar fazer um com id composto
     public InscricaoRespostaDTO obterPorId(IdInscricaoResposta id) {
 
         if (id == null) {
@@ -44,19 +47,23 @@ public class InscricaoRespostaServico {
         if (dto == null) {
             throw new RegraNegocioException("Dados inválidos");
         }
-        eventoRepositorio.findById(dto.getEvento().getId()).orElseThrow(() -> new RegraNegocioException("Evento não cadastrado"));
 
+        eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(
+                () -> new RegraNegocioException("Evento não cadastrado"));
 
         InscricaoResposta ir = new InscricaoResposta();
-        IdInscricaoResposta id = new IdInscricaoResposta();
-        id.setIdEvento(dto.getEvento().getId());
-        id.setIdPreInscricao(dto.getInscricao().getId());
-        id.setIdPergunta(dto.getPergunta().getId());
+        IdInscricaoResposta id = new IdInscricaoResposta(dto.getIdPergunta(),dto.getIdEvento(),dto.getIdInscricao());
 
         ir.setId(id);
-        ir.setEvento(dto.getEvento());
-        ir.setInscricao(dto.getInscricao());
-        ir.setPergunta(dto.getPergunta());
+        ir.setEvento(eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(
+                () -> new RegraNegocioException("Evento não cadastrado!")));
+
+        ir.setInscricao(inscricaoRepositorio.findById(dto.getIdInscricao()).orElseThrow(
+                () -> new RegraNegocioException("inscrição passada não existe!")));
+
+        ir.setPergunta(perguntaRepositorio.findById(dto.getIdPergunta()).orElseThrow(
+                () -> new RegraNegocioException("Pergunta não cadastrada")));
+
         ir.setResposta(dto.getResposta());
 
         InscricaoResposta inscricaoRespostaCriada = inscricaoRespostaRepositorio.save(ir);

@@ -10,9 +10,9 @@ import lombok.Setter;
 @Setter
 public class InscricaoRespostaDTO {
 
-    private Evento evento;
-    private PreInscricao inscricao;
-    private Pergunta pergunta;
+    private Integer idEvento;
+    private Integer idInscricao;
+    private Integer idPergunta;
     private String resposta;
 
 }
