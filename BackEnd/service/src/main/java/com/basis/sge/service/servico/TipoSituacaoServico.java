@@ -25,18 +25,4 @@ public class TipoSituacaoServico {
     public TipoSituacaoDTO obterPorId(Integer id){
         return mapper.toDto(rsRepo.findById(id).orElseThrow(() -> new RegraNegocioException("Situação não cadastrada!")));
     }
-
-    public TipoSituacaoDTO criar(TipoSituacaoDTO dto){
-        return mapper.toDto(rsRepo.save(mapper.toEntity(dto)));
-    }
-
-    public TipoSituacaoDTO atualizar(TipoSituacaoDTO dto){
-        return mapper.toDto(rsRepo.save(mapper.toEntity(dto)));
-    }
-
-    public TipoSituacaoDTO deletar(TipoSituacaoDTO dto){
-        rsRepo.delete(mapper.toEntity(dto));
-        return dto;
-    }
-
 }

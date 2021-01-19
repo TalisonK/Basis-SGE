@@ -17,4 +17,5 @@ public interface EventoMapper extends  EntityMapper<EventoDTO, Evento> {
     @Mapping(source = "tipoEvento.id",target = "idTipoEvento")
     EventoDTO toDto(Evento evento);
 
+
 }
