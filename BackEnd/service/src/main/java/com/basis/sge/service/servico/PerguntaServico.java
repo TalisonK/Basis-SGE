@@ -21,7 +21,7 @@ public class PerguntaServico {
 
     public List<PerguntaDTO> listar() {
         List<Pergunta> listaPergunta = perguntaRepositorio.findAll();
-        return perguntaMapper.toDto(lista);
+        return perguntaMapper.toDto(listaPergunta);
     }
     public PerguntaDTO obterPorId(Integer id) {
         Pergunta pergunta = perguntaRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Pergunta inexistente!"));
@@ -29,8 +29,12 @@ public class PerguntaServico {
         return perguntaMapper.toDto(pergunta);
     }
     public PerguntaDTO criar(PerguntaDTO novaPergunta) {
-        if (perguntaRepositorio.existByTitle(novaPergunta.getTitulo())){
+        if (perguntaRepositorio.existsByTitulo(novaPergunta.getTitulo())){
             throw new RegraNegocioException("Pergunta já cadastrada!");
+        }
+        if (novaPergunta.getTitulo() == null) {
+            throw new RegraNegocioException("Título inválido!");
+        }
 
         Pergunta pergunta = perguntaMapper.toEntity(novaPergunta);
         Pergunta perguntaCriada = perguntaRepositorio.save(pergunta);
