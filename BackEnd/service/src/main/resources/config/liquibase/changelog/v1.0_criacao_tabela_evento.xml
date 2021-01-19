@@ -67,6 +67,9 @@
             <column name="local" type="varchar(255)">
                 <constraints nullable="true"/>
             </column>
+            <column name="tipo_inscricao" type="boolean">
+                <constraints nullable="false"/>
+            </column>
             <column name="id_tipo_evento" type="number">
                 <constraints nullable="false"/>
             </column>
