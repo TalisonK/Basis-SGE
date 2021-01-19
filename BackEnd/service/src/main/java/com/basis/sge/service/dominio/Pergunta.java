@@ -12,13 +12,15 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-@Entity @Getter @Setter @Table(name = "pergunta")
-
+@Entity
+@Getter
+@Setter
+@Table(name = "pergunta")
 public class Pergunta implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pergunta")
-    @SequenceGenerator(name = "sq_pergunta")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_pergunta")
+    @SequenceGenerator(name = "sq_pergunta", allocationSize = 1)
     private Integer Id;
 
     @Column(name = "titulo")
