@@ -68,9 +68,4 @@ public class Evento implements Serializable {
     @JoinColumn(name="id_tipo_evento",referencedColumnName = "id")
     private TipoEvento tipoEvento;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "evento_pergunta", joinColumns = {@JoinColumn(name = "id_evento")},
-    inverseJoinColumns = {@JoinColumn(name = "id_pergunta")})
-    private List<Pergunta> perguntas;
-
 }
