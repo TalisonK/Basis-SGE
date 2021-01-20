@@ -4,6 +4,7 @@ import com.basis.sge.service.servico.EventoServico;
 import com.basis.sge.service.servico.dto.EventoDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/evento")
 @AllArgsConstructor
 public class EventoRecurso {
@@ -25,12 +27,9 @@ public class EventoRecurso {
     private final EventoServico eventoServico;
 
 
-
     @GetMapping
     public ResponseEntity<List<EventoDTO>> listar() {
-
         return ResponseEntity.ok(eventoServico.listar());
-
     }
 
     @GetMapping("/{id}")

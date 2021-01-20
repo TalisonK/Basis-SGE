@@ -2,23 +2,20 @@ package com.basis.sge.service.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
-@Entity @Getter @Setter @Table(name = "pergunta")
 
+@Entity
+@Getter
+@Setter
+@Table(name = "pergunta")
 public class Pergunta implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pergunta")
-    @SequenceGenerator(name = "sq_pergunta")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sq_pergunta")
+    @SequenceGenerator(name = "sq_pergunta", allocationSize = 1)
     private Integer Id;
 
     @Column(name = "titulo")
@@ -26,6 +23,5 @@ public class Pergunta implements Serializable {
 
     @Column(name = "obrigatoriedade")
     private Boolean obrigatoriedade;
+
 }
-
-

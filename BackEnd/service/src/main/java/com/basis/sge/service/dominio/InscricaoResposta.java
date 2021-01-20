@@ -2,37 +2,34 @@ package com.basis.sge.service.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
-//Classe destinada ao mapeaento da entidade InscricaoResposta
+
 @Entity
 @Table(name = "inscricao_resposta")
 @Getter
 @Setter
 public class InscricaoResposta implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @EmbeddedId
+    private IdInscricaoResposta id;
 
     @ManyToOne
+    @MapsId("idEvento")
     @JoinColumn(name = "id_evento", referencedColumnName = "id")
-    private Evento idEvento;
+    private Evento evento;
 
     @ManyToOne
+    @MapsId("idPreInscricao")
     @JoinColumn(name = "id_inscricao", referencedColumnName = "id")
-    private PreInscricao idInscricao;
+    private PreInscricao inscricao;
 
+    @ManyToOne
+    @MapsId("idPergunta")
+    @JoinColumn(name = "id_pergunta", referencedColumnName = "id")
+    private Pergunta pergunta;
+
+    @Column(name = "resposta")
     private String resposta;
 }

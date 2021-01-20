@@ -26,7 +26,7 @@ public class UsuarioDTO {
     private String email;
 
     private String telefone;
-
+  
     @NotNull
     private LocalDate dataNascimento;
 
