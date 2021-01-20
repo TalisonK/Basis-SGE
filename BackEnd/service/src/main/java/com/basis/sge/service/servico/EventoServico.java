@@ -7,7 +7,6 @@ import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.TipoEventoRepositorio;
-import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.EventoDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
@@ -16,12 +15,13 @@ import lombok.RequiredArgsConstructor;
 
 
 import org.springframework.stereotype.Service;
-//import org.springframework.transaction.annotation.Transactional;
+
 
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.Email;
-import java.util.Iterator;
+
+import java.util.ArrayList;
+
 import java.util.List;
 
 @Service
@@ -39,7 +39,6 @@ public class EventoServico {
 
     private final EmailServico emailServico;
 
-    private final UsuarioRepositorio usuarioRepositorio;
 
     public List<EventoDTO> listar() {
         List<Evento> listaEvento = eventoRepositorio.findAll();
@@ -88,14 +87,15 @@ public class EventoServico {
     public void notificarInscritos(String titulo,Integer id) {
 
         List<PreInscricao> inscricoes = inscricaoRepositorio.findAllByEventoId(id);
+        List<String> distinatarios = new ArrayList();
         inscricoes.forEach((inscricao) -> {
             Usuario usuarioInscrito = inscricao.getUsuario();
-            //Usuario usuarioInscrito = usuarioRepositorio.findById(inscricao.getUsuario().getId()).orElseThrow(() -> new RegraNegocioException("Usuáriovv não encontrado"));
-            EmailDTO mail = new EmailDTO(usuarioInscrito.getEmail(),
-                    "Senhor "+ usuarioInscrito.getNome() +" O evento " + titulo + " foi atualizado, verifique sua inscrição.",
-                    "Evento Atualizado");
-            emailServico.sendMail(mail);
+            distinatarios.add(usuarioInscrito.getEmail());
         });
+        EmailDTO mail = new EmailDTO("kenouen1@gmail.com",
+                " O evento " + titulo + " foi atualizado, verifique sua inscrição.",
+                "Evento Atualizado",distinatarios);
+        emailServico.sendMail(mail);
     }
 
     // valida dados de evento, com exceção das datas
