@@ -66,6 +66,9 @@ public class UsuarioServico {
         if (usuarioDTO == null) {
             throw new RegraNegocioException("Dados inválidos");
         }
+        if (usuarioDTO.getNome() == null) {
+            throw new RegraNegocioException("Existem campos a serem preenchidos");
+        }
         if (usuarioRepositorio.existsByCpf(usuarioDTO.getCpf())) {
             throw new RegraNegocioException("CPF já cadastrado, tente novamente");
         }
