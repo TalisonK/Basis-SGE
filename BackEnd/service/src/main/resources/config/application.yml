@@ -7,7 +7,6 @@ application:
 spring:
     application:
         name: sgeservice
-
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:postgresql://localhost:5432/sge
@@ -34,7 +33,6 @@ spring:
     liquibase:
         change-log: classpath:config/liquibase/master.xml
 #        drop-first: true
-
     mail:
         host: smtp.gmail.com
         port: 587

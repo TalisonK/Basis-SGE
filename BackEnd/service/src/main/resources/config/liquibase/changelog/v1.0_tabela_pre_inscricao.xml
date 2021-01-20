@@ -4,7 +4,6 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-
     <changeSet id="8" author="Talison Kennedy">
 
         <createTable tableName="tipo_situacao">
@@ -51,7 +50,6 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-
 
         <addPrimaryKey tableName="pre_inscricao" columnNames="id" constraintName="pk_pre_inscricao"/>
 
