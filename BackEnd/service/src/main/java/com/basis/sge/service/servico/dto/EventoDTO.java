@@ -45,6 +45,7 @@ public class EventoDTO implements Serializable {
     private Boolean tipoInscricao;
 
     @NotNull
+    @Valid
     private Integer idTipoEvento;
 
     private List<EventoPerguntaDTO> perguntas;

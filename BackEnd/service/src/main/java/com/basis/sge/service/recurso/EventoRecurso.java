@@ -19,7 +19,6 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/evento")
 @AllArgsConstructor
 public class EventoRecurso {

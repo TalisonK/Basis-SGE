@@ -13,7 +13,7 @@ import java.io.Serializable;
 public class TipoEventoDTO implements Serializable {
 
     @NotNull
-    @NotBlank(message = "Tipo Evento deve esta presente em Evento")
+    @NotBlank(message = "Tipo Evento deve estar presente em Evento")
     private Integer id;
 
     private String descricao;
