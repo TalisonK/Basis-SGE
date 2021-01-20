@@ -1,5 +1,8 @@
 application:
     appName: sge
+    mail:
+        endereco-remetente:  kenouen1@gmail.com
+        nome-remetente: Grupo 5
 
 spring:
     application:
@@ -9,6 +12,9 @@ spring:
         url: jdbc:postgresql://localhost:5432/sge
         username: sge
         password: sge
+        hikari:
+            poolName: Hikari
+            auto-commit: false
     jackson:
         date-format: yyyy-MM-dd
         deserialization:
@@ -27,5 +33,19 @@ spring:
     liquibase:
         change-log: classpath:config/liquibase/master.xml
 #        drop-first: true
+    mail:
+        host: smtp.gmail.com
+        port: 587
+        username: kenouen1@gmail.com
+        password: 17527talison
+
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+                        required: true
+                    quitwait: false
 server:
     port: 8080

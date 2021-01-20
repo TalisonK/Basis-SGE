@@ -1,0 +1,28 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+
+    <changeSet id="5" author="Talison Kennedy">
+        <createTable tableName="evento_pergunta">
+            <column name="id_evento" type="NUMBER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_pergunta" type="NUMBER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="evento_pergunta" columnNames="id_evento, id_pergunta" constraintName="pk_evento_pergunta"/>
+
+        <addForeignKeyConstraint baseTableName="evento_pergunta" baseColumnNames="id_evento"
+                                 constraintName="fk_id_evento_EP" referencedTableName="evento"
+                                 referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="evento_pergunta" baseColumnNames="id_pergunta"
+                                 constraintName="fk_id_pergunta_EP" referencedTableName="pergunta"
+                                 referencedColumnNames="id"/>
+
+    </changeSet>
+</databaseChangeLog>

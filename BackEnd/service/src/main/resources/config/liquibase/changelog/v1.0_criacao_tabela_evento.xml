@@ -1,0 +1,83 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="1" author="joao.santos">
+        <createTable tableName="tipo_evento">
+            <column name="id" type="number"/>
+            <column name="descricao" type="varchar(50)"/>
+        </createTable>
+        <addPrimaryKey tableName="tipo_evento" columnNames="id" constraintName="pk_tipo_evento"/>
+        <insert tableName="tipo_evento">
+            <column name="id">1</column>
+            <column name="descricao">WorkShop</column>
+        </insert>
+        <insert tableName="tipo_evento">
+            <column name="id">2</column>
+            <column name="descricao">Palestra</column>
+        </insert>
+        <insert tableName="tipo_evento">
+            <column name="id">3</column>
+            <column name="descricao">Treinamento</column>
+        </insert>
+        <insert tableName="tipo_evento">
+            <column name="id">4</column>
+            <column name="descricao">Minicurso</column>
+        </insert>
+        <insert tableName="tipo_evento">
+            <column name="id">5</column>
+            <column name="descricao">Show Musical</column>
+        </insert>
+        <insert tableName="tipo_evento">
+            <column name="id">6</column>
+            <column name="descricao">Stand Up Comedy</column>
+        </insert>
+        <insert tableName="tipo_evento">
+            <column name="id">7</column>
+            <column name="descricao">Show Teatral</column>
+        </insert>
+        <insert tableName="tipo_evento">
+            <column name="id">8</column>
+            <column name="descricao">Outro</column>
+        </insert>
+
+        <createTable tableName="evento">
+            <column name="id" type="number">
+                <constraints nullable="false"/>
+            </column>
+            <column name="titulo" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_inicio" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="data_fim" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="descricao" type="text">
+                <constraints nullable="true"/>
+            </column>
+            <column name="quantidade_vagas" type="number">
+                <constraints nullable="true"/>
+            </column>
+            <column name="valor" type="double">
+                <constraints nullable="true"/>
+            </column>
+            <column name="local" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="tipo_inscricao" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id_tipo_evento" type="number">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="evento" columnNames="id" constraintName="pk_evento"/>
+        <createSequence sequenceName="sq_evento" cycle="false" cacheSize="50" incrementBy="1" startValue="1"/>
+        <addForeignKeyConstraint baseTableName="evento" baseColumnNames="id_tipo_evento" constraintName="fk_tipo_evento" referencedTableName="tipo_evento" referencedColumnNames="id"/>
+    </changeSet>
+
+
+</databaseChangeLog>
