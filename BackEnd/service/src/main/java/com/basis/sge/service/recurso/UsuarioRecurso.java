@@ -53,7 +53,6 @@ public class UsuarioRecurso {
 
     @DeleteMapping("/{id}")
     public void deletar(@PathVariable Integer id){
-
         usuarioServico.deletar(id);
     }
 
