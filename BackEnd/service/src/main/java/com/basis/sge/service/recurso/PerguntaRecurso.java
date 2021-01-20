@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,7 +27,6 @@ public class PerguntaRecurso {
 
     @GetMapping
     public ResponseEntity<List<PerguntaDTO>> listar() {
-
         return ResponseEntity.ok(perguntaServico.listar());
     }
 
@@ -42,7 +42,7 @@ public class PerguntaRecurso {
     }
 
     @PutMapping
-    public ResponseEntity<PerguntaDTO> atualizar(@RequestBody PerguntaDTO perguntadto) {
+    public ResponseEntity<PerguntaDTO> atualizar(@Valid @RequestBody PerguntaDTO perguntadto) {
         PerguntaDTO perguntaDtoAtualizado = perguntaServico.atualizar(perguntadto);
         return ResponseEntity.ok(perguntaDtoAtualizado);
     }
