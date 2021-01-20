@@ -2,19 +2,8 @@ package com.basis.sge.service.dominio;
 
 import lombok.Getter;
 import lombok.Setter;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -45,7 +34,6 @@ public class Evento implements Serializable {
     @Column(name="data_fim")
     private LocalDateTime dataFim;
 
-
     @Column(name="descricao")
     private String descricao;
 
@@ -68,4 +56,6 @@ public class Evento implements Serializable {
     @JoinColumn(name="id_tipo_evento",referencedColumnName = "id")
     private TipoEvento tipoEvento;
 
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "evento")
+    private List<EventoPergunta> perguntas;
 }

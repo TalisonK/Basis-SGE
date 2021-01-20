@@ -6,12 +6,13 @@ import org.hibernate.validator.constraints.br.CPF;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
 @Getter
 @Setter
-public class UsuarioDTO {
+public class UsuarioDTO implements Serializable {
     private Integer id;
     private String nome;
 

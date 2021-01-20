@@ -10,11 +10,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
-public class EventoDTO {
+public class EventoDTO implements Serializable {
 
     private Integer id;
 
@@ -44,5 +46,7 @@ public class EventoDTO {
 
     @NotNull
     private Integer idTipoEvento;
+
+    private List<EventoPerguntaDTO> perguntas;
 
 }
