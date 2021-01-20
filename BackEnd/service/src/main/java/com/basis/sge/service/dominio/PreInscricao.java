@@ -1,12 +1,11 @@
 package com.basis.sge.service.dominio;
 
-import com.basis.sge.service.servico.dto.UsuarioDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+
 
 @Entity
 @Table(name = "pre_inscricao")
@@ -23,18 +22,12 @@ public class PreInscricao implements Serializable {
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private Usuario usuario;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_evento", referencedColumnName = "id")
     private Evento evento;
 
     @ManyToOne
     @JoinColumn(name = "id_situacao", referencedColumnName = "id")
     private TipoSituacao situacao;
-
-
-
-
-
-
 
 }
