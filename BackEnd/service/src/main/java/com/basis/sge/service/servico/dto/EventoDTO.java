@@ -43,6 +43,7 @@ public class EventoDTO {
     private Boolean tipoInscricao;
 
     @NotNull
+    @Valid
     private Integer idTipoEvento;
 
 }

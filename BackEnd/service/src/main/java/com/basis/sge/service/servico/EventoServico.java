@@ -45,9 +45,9 @@ public class EventoServico {
     }
 
     public EventoDTO criar(EventoDTO eventoDTO) {
+        validaEvento(eventoDTO);
         validaTitulo(eventoDTO.getTitulo());
-        validaTipoEvento(eventoDTO.getIdTipoEvento());
-
+        eventoDTO.setId(null);
         Evento evento = eventoMapper.toEntity(eventoDTO);
         Evento eventoSalvo = eventoRepositorio.save(evento);
 
@@ -55,9 +55,9 @@ public class EventoServico {
     }
 
     public EventoDTO atualizar(EventoDTO eventoDTO) {
-        validaTitulo(eventoDTO.getTitulo());
-        validaTipoEvento(eventoDTO.getIdTipoEvento());
-
+        validaEvento(eventoDTO);
+        validaTitulo(eventoDTO.getTitulo(), eventoDTO.getId());
+        validaIdEvento(eventoDTO.getId());
         Evento evento = eventoMapper.toEntity(eventoDTO);
         Evento eventoAtualizado = eventoRepositorio.save(evento);
 
@@ -69,7 +69,36 @@ public class EventoServico {
         eventoRepositorio.deleteById(id);
     }
 
-    //Verifica se o titulo do evento já existe ou esta vazio, em caso positivo solta a exceção
+
+    public void validaEvento(EventoDTO eventoDTO){
+        validaString(eventoDTO.getLocal());
+        validaString(eventoDTO.getDescricao());
+        validaNumero(eventoDTO.getValor());
+        validaNumero(eventoDTO.getQuantVagas());
+        validaTipoEvento(eventoDTO.getIdTipoEvento());
+
+    }
+
+    //verifica se uma string é menor que 3 caracteres, em caso não nulo
+    public void validaString(String palavra){
+        if (palavra!=null && palavra.length() < 3){
+            throw new RegraNegocioException("Campo deve ter pelo menos 2 caracteres");
+        }
+    }
+
+    //verifica se o numero é negativo caso não seja nulo
+    public void validaNumero(Number num){
+        if (num!=null && num.doubleValue()<0){
+            throw new RegraNegocioException("Este Campo deve ser maior que 0");
+        }
+    }
+
+    //Verifica se o titulo do evento já existe
+    public void validaTitulo(String titulo,Integer id){
+        if (eventoRepositorio.existsByTituloAndIdNot(titulo,id)){
+            throw new RegraNegocioException("Um evento com esse titulo já existe");
+        }
+    }
     public void validaTitulo(String titulo){
         if (eventoRepositorio.existsByTitulo(titulo)){
             throw new RegraNegocioException("Um evento com esse titulo já existe");

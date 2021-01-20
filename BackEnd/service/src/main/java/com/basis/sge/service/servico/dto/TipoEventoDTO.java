@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class TipoEventoDTO {
 
     @NotNull
-    @NotBlank(message = "Tipo Evento deve esta presente em Evento")
+    @NotBlank(message = "Tipo Evento deve estar presente em Evento")
     private Integer id;
 
     private String descricao;
