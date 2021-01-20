@@ -2,11 +2,14 @@ package com.basis.sge.service.servico;
 
 
 import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.PreInscricao;
+import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.repositorio.EventoRepositorio;
+import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.TipoEventoRepositorio;
+import com.basis.sge.service.repositorio.UsuarioRepositorio;
+import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.EventoDTO;
-
-import com.basis.sge.service.servico.dto.TipoEventoDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +20,8 @@ import org.springframework.stereotype.Service;
 
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.Email;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -30,6 +35,11 @@ public class EventoServico {
 
     private final EventoMapper eventoMapper;
 
+    private final InscricaoRepositorio inscricaoRepositorio;
+
+    private final EmailServico emailServico;
+
+    private final UsuarioRepositorio usuarioRepositorio;
 
     public List<EventoDTO> listar() {
         List<Evento> listaEvento = eventoRepositorio.findAll();
@@ -58,8 +68,11 @@ public class EventoServico {
         validaEvento(eventoDTO);
         validaTitulo(eventoDTO.getTitulo(), eventoDTO.getId());
         validaIdEvento(eventoDTO.getId());
+
         Evento evento = eventoMapper.toEntity(eventoDTO);
         Evento eventoAtualizado = eventoRepositorio.save(evento);
+
+        notificarInscritos(evento.getTitulo(),evento.getId());
 
         return eventoMapper.toDto(eventoAtualizado);
     }
@@ -69,7 +82,23 @@ public class EventoServico {
         eventoRepositorio.deleteById(id);
     }
 
+    //---------------------------------------------------------------------
+    //funções de validação e notificação
 
+    public void notificarInscritos(String titulo,Integer id) {
+
+        List<PreInscricao> inscricoes = inscricaoRepositorio.findAllByEventoId(id);
+        inscricoes.forEach((inscricao) -> {
+            Usuario usuarioInscrito = inscricao.getUsuario();
+            //Usuario usuarioInscrito = usuarioRepositorio.findById(inscricao.getUsuario().getId()).orElseThrow(() -> new RegraNegocioException("Usuáriovv não encontrado"));
+            EmailDTO mail = new EmailDTO(usuarioInscrito.getEmail(),
+                    "Senhor "+ usuarioInscrito.getNome() +" O evento " + titulo + " foi atualizado, verifique sua inscrição.",
+                    "Evento Atualizado");
+            emailServico.sendMail(mail);
+        });
+    }
+
+    // valida dados de evento, com exceção das datas
     public void validaEvento(EventoDTO eventoDTO){
         validaString(eventoDTO.getLocal());
         validaString(eventoDTO.getDescricao());

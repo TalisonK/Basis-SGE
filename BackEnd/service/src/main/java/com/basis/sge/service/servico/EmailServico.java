@@ -1,5 +1,6 @@
 package com.basis.sge.service.servico;
 
+import com.basis.sge.service.configuracao.ApplicationProperties;
 import com.basis.sge.service.servico.dto.EmailDTO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +22,14 @@ public class EmailServico {
     private static final String ERROR_TITLE = "error.title";
     private final JavaMailSender javaMailSender;
 
+    private final ApplicationProperties properties;
+
     public void sendMail(EmailDTO emailDTO) {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage, false, "UTF-8");
-            message.setTo(emailDTO.getDestinatario());
-            message.setFrom("sapedteste@gmail.com", "Sistema de Gerenciamento de Evento");
+            message.setTo("kenouen1@gmail.com");
+            message.setFrom(emailDTO.getDestinatario(), "Sistema de Gerenciamento de Evento");
             message.setSubject(emailDTO.getAssunto());
             for (String s : emailDTO.getCopias()) {
                 message.addCc(s);
