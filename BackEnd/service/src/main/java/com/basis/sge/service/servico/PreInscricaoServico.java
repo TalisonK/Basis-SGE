@@ -28,6 +28,12 @@ public class PreInscricaoServico {
         return mapper.toDto(dto.orElseThrow(() -> new RegraNegocioException("Inscrição número " + id + " não encontrada!")));
     }
 
+    public void idEmUso(Integer id){
+        if(!incrRepo.findById(id).isPresent()){
+            throw new RegraNegocioException("Inscrição não cadastrada!");
+        }
+    }
+
     public PreInscricaoDTO criar(PreInscricaoDTO dto){
 
         PreInscricao preInscricao = mapper.toEntity(dto);
@@ -39,8 +45,7 @@ public class PreInscricaoServico {
         return mapper.toDto(incrRepo.save(mapper.toEntity(dto)));
     }
 
-    public PreInscricaoDTO deletar(PreInscricaoDTO dto) {
-        incrRepo.delete(mapper.toEntity(dto));
-        return dto;
+    public void deletar(Integer id) {
+        incrRepo.deleteById(id);
     }
 }

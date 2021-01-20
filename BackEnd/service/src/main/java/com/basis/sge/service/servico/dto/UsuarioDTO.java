@@ -4,26 +4,31 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.br.CPF;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 
 @Getter
 @Setter
-public class UsuarioDTO {
+public class UsuarioDTO implements Serializable {
     private Integer id;
+
+    @NotNull @NotBlank
     private String nome;
 
     @CPF
-    @NotNull
+    @NotNull @NotBlank
     private String cpf;
 
     @Email
-    @NotNull
+    @NotNull @NotBlank
     private String email;
-   // @Pattern("(\\d{2}) \\d{4}-\\d{4}")
+
     private String telefone;
-    private String dataNascimento;
+  
+    @NotNull
+    private LocalDate dataNascimento;
 
 }

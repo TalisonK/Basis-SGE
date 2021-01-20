@@ -29,23 +29,42 @@ public class PerguntaServico {
         return perguntaMapper.toDto(pergunta);
     }
     public PerguntaDTO criar(PerguntaDTO novaPergunta) {
-        if (perguntaRepositorio.existsByTitulo(novaPergunta.getTitulo())){
-            throw new RegraNegocioException("Pergunta já cadastrada!");
-        }
-        if (novaPergunta.getTitulo() == null) {
-            throw new RegraNegocioException("Título inválido!");
-        }
-
+        validaTitulo(novaPergunta.getTitulo());
+        validaObrigatoriedade(novaPergunta.getObrigatoriedade());
         Pergunta pergunta = perguntaMapper.toEntity(novaPergunta);
         Pergunta perguntaCriada = perguntaRepositorio.save(pergunta);
 
         return perguntaMapper.toDto(perguntaCriada);
     }
     public PerguntaDTO atualizar(PerguntaDTO perguntaDTO) {
-        Pergunta pergunta = perguntaMapper.toEntity(perguntaDTO);
+        validaTitulo(perguntaDTO.getTitulo());
+        validaObrigatoriedade(perguntaDTO.getObrigatoriedade());
+        Pergunta pergunta = perguntaRepositorio.findById(perguntaDTO.getId()).orElseThrow(() -> new RegraNegocioException("Pergunta não encontrada!"));
+        Pergunta perguntaRecebida = perguntaMapper.toEntity(perguntaDTO);
+        perguntaRecebida.setId (pergunta.getId());
         Pergunta perguntaAtualizada = perguntaRepositorio.save(pergunta);
 
         return perguntaMapper.toDto(perguntaAtualizada);
+    }
+    //verifica se um titulo é menor que 3 caracteres, em caso não nulo
+    //verifica se o titulo já existe
+    // verifica se o titulo é não nulo
+    public void validaTitulo(String titulo){
+        if (titulo!=null && titulo.length() < 3){
+            throw new RegraNegocioException("Campo deve ter pelo menos 2 caracteres");
+        }
+        if (perguntaRepositorio.existsByTitulo(titulo)){
+            throw new RegraNegocioException(("Pergunta já cadastrada!"));
+        }
+        if (titulo == null){
+            throw new RegraNegocioException(("Título inválido!"));
+        }
+    }
+    public void validaObrigatoriedade(Boolean obrigatoriedade) {
+       if (obrigatoriedade == null) {
+            throw new RegraNegocioException("Campo não pode ser nulo!");
+       }
+
     }
     public void deletar(Integer id) {
         perguntaRepositorio.deleteById(id);

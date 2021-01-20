@@ -1,9 +1,10 @@
 package com.basis.sge.service.servico;
 
-
 import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
+import com.basis.sge.service.dominio.EventoPergunta;
+import com.basis.sge.service.repositorio.EventoPerguntaRepositorio;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.TipoEventoRepositorio;
@@ -12,17 +13,11 @@ import com.basis.sge.service.servico.dto.EventoDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import lombok.RequiredArgsConstructor;
-
-
 import org.springframework.stereotype.Service;
-
-
-
 import javax.transaction.Transactional;
-
 import java.util.ArrayList;
-
 import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +25,9 @@ import java.util.List;
 public class EventoServico {
 
     private final EventoRepositorio eventoRepositorio;
-
+  
+    private final EventoPerguntaRepositorio eventoPerguntaRepositorio;
+  
     private final TipoEventoRepositorio tipoEventoRepositorio;
 
     private final EventoMapper eventoMapper;
@@ -58,9 +55,18 @@ public class EventoServico {
         validaTitulo(eventoDTO.getTitulo());
         eventoDTO.setId(null);
         Evento evento = eventoMapper.toEntity(eventoDTO);
-        Evento eventoSalvo = eventoRepositorio.save(evento);
 
-        return eventoMapper.toDto(eventoSalvo);
+        List<EventoPergunta> perguntas = evento.getPerguntas();
+
+        evento.setPerguntas(new ArrayList<>());
+        eventoRepositorio.save(evento);
+
+        perguntas.forEach(pergunta -> {
+            pergunta.setEvento(evento);
+        });
+
+        eventoPerguntaRepositorio.saveAll(perguntas);
+        return eventoMapper.toDto(evento);
     }
 
     public EventoDTO atualizar(EventoDTO eventoDTO) {

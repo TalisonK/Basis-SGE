@@ -6,9 +6,11 @@ import com.basis.sge.service.dominio.PreInscricao;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
-public class InscricaoRespostaDTO {
+public class InscricaoRespostaDTO implements Serializable {
 
     private Integer idEvento;
     private Integer idInscricao;
