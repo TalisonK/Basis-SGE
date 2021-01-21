@@ -73,7 +73,7 @@ public abstract class ConstrutorDeEntidade<E> {
      * @param id id
      * @return entidade persistida
      */
-    protected abstract E obterPorId(Long id);
+    protected abstract E obterPorId(Integer id);
 
     /**
      * Is customizado boolean.
