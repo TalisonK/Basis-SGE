@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -47,6 +48,7 @@ public class PreInscricaoBuilder extends ConstrutorDeEntidade<PreInscricao>{
         evento.setDataInicio(LocalDateTime.now());
         evento.setTipoEvento(new TipoEvento());
         evento.getTipoEvento().setId(1);
+        evento.setPerguntas(new ArrayList<>());
 
         preInscricao.setEvento(evento);
 

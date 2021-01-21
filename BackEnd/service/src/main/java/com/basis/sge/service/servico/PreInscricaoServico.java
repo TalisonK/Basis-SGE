@@ -7,6 +7,7 @@ import com.basis.sge.service.servico.mapper.InscricaoMapper;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
@@ -46,6 +47,12 @@ public class PreInscricaoServico {
     }
 
     public void deletar(Integer id) {
-        incrRepo.deleteById(id);
+
+        try{
+            incrRepo.deleteById(id);
+        }
+        catch (Exception e){
+            throw new RegraNegocioException("Impossivel detar, inscriçao nao cadastrada!");
+        }
     }
 }
