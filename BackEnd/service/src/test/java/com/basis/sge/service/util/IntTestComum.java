@@ -1,6 +1,7 @@
 package com.basis.sge.service.util;
 
 
+import com.basis.sge.service.ServiceApplication;
 import com.basis.sge.service.ServiceApplicationTests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,9 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
 
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
-import org.springframework.test.context.ContextConfiguration;
+
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,7 +22,7 @@ import javax.persistence.EntityManager;
 
 
 
-@SpringBootTest(classes = ServiceApplicationTests.class)
+@SpringBootTest(classes = ServiceApplication.class)
 @ExtendWith(SpringExtension.class)
 public abstract class IntTestComum {
 

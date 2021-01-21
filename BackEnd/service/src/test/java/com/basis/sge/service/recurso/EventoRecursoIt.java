@@ -8,30 +8,34 @@ import com.basis.sge.service.servico.mapper.EventoMapper;
 
 import com.basis.sge.service.util.IntTestComum;
 import com.basis.sge.service.util.TestUtil;
+
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.transaction.annotation.Transactional;
 
 
-
-import javax.transaction.Transactional;
-
+import static net.bytebuddy.matcher.ElementMatchers.is;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 
 @RunWith(SpringRunner.class)
 @Transactional
-@Component
 public class EventoRecursoIt extends IntTestComum{
 
     @Autowired
@@ -51,7 +55,7 @@ public class EventoRecursoIt extends IntTestComum{
 
     @Test
     public void listaTest() throws Exception {
-        //eventoBuilder.construir();
+        eventoBuilder.construir();
         getMockMvc().perform(get("/api/evento")).andExpect(status().isOk());
     }
 
@@ -70,13 +74,15 @@ public class EventoRecursoIt extends IntTestComum{
     public void atualizarTest() throws Exception {
 
         Evento evento = eventoBuilder.construir();
-        evento.setTitulo("Atualizando");
+        Integer idEvento = evento.getId();
+        evento.setTitulo("Atualizado");
 
 
         getMockMvc().perform(put("/api/evento")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(evento))))
                 .andExpect(status().isOk());
+
     }
 
     @Test

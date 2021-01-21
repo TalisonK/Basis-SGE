@@ -61,10 +61,10 @@ public class EventoServico {
 
         List<EventoPergunta> perguntas = evento.getPerguntas();
 
-        evento.setPerguntas(new ArrayList<EventoPergunta>());
+        evento.setPerguntas(perguntas);
         eventoRepositorio.save(evento);
 
-        if(perguntas!=null) {
+        if(perguntas!=null && !perguntas.isEmpty()) {
             perguntas.forEach(pergunta -> {
                 pergunta.setEvento(evento);
             });
@@ -76,7 +76,7 @@ public class EventoServico {
 
     public EventoDTO atualizar(EventoDTO eventoDTO) {
         validaEvento(eventoDTO);
-        validaTitulo(eventoDTO.getTitulo(), eventoDTO.getId());
+        //validaTitulo(eventoDTO.getTitulo(), eventoDTO.getId());
         validaIdEvento(eventoDTO.getId());
 
         Evento evento = eventoMapper.toEntity(eventoDTO);
