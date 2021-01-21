@@ -1,6 +1,7 @@
 package com.basis.sge.service.servico;
 
 import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.Pergunta;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.dominio.EventoPergunta;
@@ -16,7 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+
 import java.util.List;
+
 
 
 @Service
@@ -58,14 +61,16 @@ public class EventoServico {
 
         List<EventoPergunta> perguntas = evento.getPerguntas();
 
-        evento.setPerguntas(new ArrayList<>());
+        evento.setPerguntas(new ArrayList<EventoPergunta>());
         eventoRepositorio.save(evento);
 
-        perguntas.forEach(pergunta -> {
-            pergunta.setEvento(evento);
-        });
+        if(perguntas!=null) {
+            perguntas.forEach(pergunta -> {
+                pergunta.setEvento(evento);
+            });
+            eventoPerguntaRepositorio.saveAll(perguntas);
+        }
 
-        eventoPerguntaRepositorio.saveAll(perguntas);
         return eventoMapper.toDto(evento);
     }
 
@@ -77,7 +82,7 @@ public class EventoServico {
         Evento evento = eventoMapper.toEntity(eventoDTO);
         Evento eventoAtualizado = eventoRepositorio.save(evento);
 
-        notificarInscritos(evento.getTitulo(),evento.getId());
+        //notificarInscritos(evento.getTitulo(),evento.getId());
 
         return eventoMapper.toDto(eventoAtualizado);
     }
