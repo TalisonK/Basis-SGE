@@ -1,6 +1,10 @@
 package com.basis.sge.service.servico;
 import com.basis.sge.service.dominio.PreInscricao;
+import com.basis.sge.service.dominio.Usuario;
+import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
+import com.basis.sge.service.repositorio.TipoSituacaoRepositorio;
+import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.InscricaoMapper;
@@ -17,6 +21,10 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class PreInscricaoServico {
     private final InscricaoRepositorio incrRepo;
+    private final EventoRepositorio eventoRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
+    private final TipoSituacaoRepositorio tsrepo;
+
     private final InscricaoMapper mapper;
 
 
@@ -38,6 +46,11 @@ public class PreInscricaoServico {
     public PreInscricaoDTO criar(PreInscricaoDTO dto){
 
         PreInscricao preInscricao = mapper.toEntity(dto);
+
+        usuarioRepositorio.findById(dto.getIdUsuario()).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
+        eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(() -> new RegraNegocioException("Evento nao Cadastrado!"));
+        tsrepo.findById(dto.getIdSituacao()).orElseThrow(() -> new RegraNegocioException("Inscrição inexistente!"));
+
         incrRepo.save(preInscricao);
         return mapper.toDto(preInscricao);
     }
