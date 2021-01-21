@@ -10,9 +10,9 @@ import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -21,9 +21,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
-public class UsuarioRecursoIT extends IntTestComum {
+public class UsuarioRecursoPositivosIT extends IntTestComum {
 
     @Autowired
     private UsuarioBuilder usuarioBuilder;
@@ -50,15 +50,16 @@ public class UsuarioRecursoIT extends IntTestComum {
     public void obterPorId() throws Exception {
 
         Usuario usuario = usuarioBuilder.construir();
+
         getMockMvc().perform(get("/api/usuario/" + usuario.getId()))
                 .andExpect(status().isOk());
     }
 
- 
     @Test
     public void criarTest() throws Exception {
 
         Usuario usuario = usuarioBuilder.construirEntidade();
+
         getMockMvc().perform(post("/api/usuario")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
@@ -68,6 +69,7 @@ public class UsuarioRecursoIT extends IntTestComum {
 
     @Test
     public void atualizarTest() throws Exception {
+
         Usuario usuario = usuarioBuilder.construir();
 
         usuario.setTelefone("8398898989");
@@ -85,6 +87,4 @@ public class UsuarioRecursoIT extends IntTestComum {
 
         Assert.assertEquals(0, usuarioRepositorio.findAll().size());
     }
-
-
 }
