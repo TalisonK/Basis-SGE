@@ -20,7 +20,9 @@ import java.util.UUID;
 public class UsuarioServico {
 
     private final UsuarioRepositorio usuarioRepositorio;
+
     private final UsuarioMapper usuarioMapper;
+
     private final EmailServico emailServico;
 
     public List<UsuarioDTO> listar() {
