@@ -76,7 +76,7 @@ public class EventoServico {
 
     public EventoDTO atualizar(EventoDTO eventoDTO) {
         validaEvento(eventoDTO);
-        //validaTitulo(eventoDTO.getTitulo(), eventoDTO.getId());
+        validaTitulo(eventoDTO.getTitulo(), eventoDTO.getId());
         validaIdEvento(eventoDTO.getId());
 
         Evento evento = eventoMapper.toEntity(eventoDTO);
@@ -111,19 +111,10 @@ public class EventoServico {
 
     // valida dados de evento, com exceção das datas
     public void validaEvento(EventoDTO eventoDTO){
-        validaString(eventoDTO.getLocal());
-        validaString(eventoDTO.getDescricao());
         validaNumero(eventoDTO.getValor());
         validaNumero(eventoDTO.getQuantVagas());
         validaTipoEvento(eventoDTO.getIdTipoEvento());
 
-    }
-
-    //verifica se uma string é menor que 3 caracteres, em caso não nulo
-    public void validaString(String palavra){
-        if (palavra!=null && palavra.length() < 3){
-            throw new RegraNegocioException("Campo deve ter pelo menos 2 caracteres");
-        }
     }
 
     //verifica se o numero é negativo caso não seja nulo

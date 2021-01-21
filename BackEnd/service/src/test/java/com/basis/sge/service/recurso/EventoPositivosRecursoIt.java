@@ -9,9 +9,11 @@ import com.basis.sge.service.util.TestUtil;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
 import org.springframework.transaction.annotation.Transactional;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -21,9 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @Transactional
-public class EventoRecursoIt extends IntTestComum{
+public class EventoPositivosRecursoIt extends IntTestComum{
 
     @Autowired
     private EventoBuilder eventoBuilder;
@@ -80,7 +82,6 @@ public class EventoRecursoIt extends IntTestComum{
         Assert.assertEquals(0,eventoRepositorio.findAll().size());
     }
 
-    @Test
     public void ObterPorIdTest() throws Exception {
         Evento evento = eventoBuilder.construir();
         Integer idEvento = evento.getId();
@@ -88,15 +89,8 @@ public class EventoRecursoIt extends IntTestComum{
 
     }
 
+    //=========================================================================================================
 
-    @Test
-    public void criarEventoMesmoTituloTest(){
 
-    }
-
-    @Test
-    public void criarEventoComNumerosNegativosTest(){
-
-    }
 
 }

@@ -82,4 +82,7 @@ public class EventoBuilder extends ConstrutorDeEntidade<Evento> {
     {
         return eventoMapper.toDto(Evento);
     }
+    public Evento criar(Evento evento){
+        return eventoRepositorio.save(evento);
+    }
 }
