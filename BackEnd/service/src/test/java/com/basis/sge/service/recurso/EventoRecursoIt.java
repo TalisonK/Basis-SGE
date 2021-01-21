@@ -3,33 +3,20 @@ package com.basis.sge.service.recurso;
 import com.basis.sge.service.builder.EventoBuilder;
 import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.repositorio.EventoRepositorio;
-
 import com.basis.sge.service.servico.mapper.EventoMapper;
-
 import com.basis.sge.service.util.IntTestComum;
 import com.basis.sge.service.util.TestUtil;
-
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
-
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.transaction.annotation.Transactional;
-
-
-import static net.bytebuddy.matcher.ElementMatchers.is;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
