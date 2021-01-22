@@ -1,6 +1,6 @@
 package com.basis.sge.service.util;
 
-import com.basis.srs.SistemaDeReservasDeSalasApplication;
+import com.basis.sge.service.ServiceApplication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.persistence.EntityManager;
 
-@SpringBootTest(classes = SistemaDeReservasDeSalasApplication.class)
+@SpringBootTest(classes = ServiceApplication.class)
 @ExtendWith(SpringExtension.class)
 public abstract class IntTestComum {
 

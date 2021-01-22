@@ -7,6 +7,8 @@ import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.PerguntaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;  //corpo da requisição, envia dados pro servidor
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -23,9 +25,9 @@ public class PerguntaServico {
         List<Pergunta> listaPergunta = perguntaRepositorio.findAll();
         return perguntaMapper.toDto(listaPergunta);
     }
-    public PerguntaDTO obterPorId(Integer id) {
+    @GetMapping
+    public PerguntaDTO obterPorId(@RequestBody Integer id) {
         Pergunta pergunta = perguntaRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Pergunta inexistente!"));
-
         return perguntaMapper.toDto(pergunta);
     }
     public PerguntaDTO criar(PerguntaDTO novaPergunta) {
@@ -33,7 +35,6 @@ public class PerguntaServico {
         validaObrigatoriedade(novaPergunta.getObrigatoriedade());
         Pergunta pergunta = perguntaMapper.toEntity(novaPergunta);
         Pergunta perguntaCriada = perguntaRepositorio.save(pergunta);
-
         return perguntaMapper.toDto(perguntaCriada);
     }
     public PerguntaDTO atualizar(PerguntaDTO perguntaDTO) {
@@ -43,12 +44,11 @@ public class PerguntaServico {
         Pergunta perguntaRecebida = perguntaMapper.toEntity(perguntaDTO);
         perguntaRecebida.setId (pergunta.getId());
         Pergunta perguntaAtualizada = perguntaRepositorio.save(pergunta);
-
         return perguntaMapper.toDto(perguntaAtualizada);
     }
     //verifica se um titulo é menor que 3 caracteres, em caso não nulo
     //verifica se o titulo já existe
-    // verifica se o titulo é não nulo
+    //verifica se o titulo é não nulo
     public void validaTitulo(String titulo){
         if (titulo!=null && titulo.length() < 3){
             throw new RegraNegocioException("Campo deve ter pelo menos 2 caracteres");
@@ -64,7 +64,6 @@ public class PerguntaServico {
        if (obrigatoriedade == null) {
             throw new RegraNegocioException("Campo não pode ser nulo!");
        }
-
     }
     public void deletar(Integer id) {
         perguntaRepositorio.deleteById(id);
