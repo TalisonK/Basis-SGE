@@ -64,13 +64,7 @@ public class PreInscricaoServico {
         incrRepo.save(preInscricao);
 
         System.out.println("Enviando Email!");
-        emailServico.sendMail(
-                new EmailDTO(
-                    usuario.getEmail(),
-                    "Inscrição bem sucedida, sua chave para acesso e atualização é: " + usuario.getChave(),
-                    "Inscrição efetuado com sucesso"
-                )
-        );
+        //emailServico.sendMail(new EmailDTO(usuario.getEmail(), "Inscrição bem sucedida, sua chave para acesso e atualização é: " + usuario.getChave(), "Inscrição efetuado com sucesso"));
 
         return mapper.toDto(preInscricao);
     }

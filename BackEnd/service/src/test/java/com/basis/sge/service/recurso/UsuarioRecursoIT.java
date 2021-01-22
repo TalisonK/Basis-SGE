@@ -84,10 +84,11 @@ public class UsuarioRecursoIT extends IntTestComum {
     public void deletarTest() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
+        /*
         Pergunta pergunta = perguntaBuilder.construir();
         Evento evento = eventoBuilder.construir();
         Inscricao inscricao = inscricaoBuilder();
-
+        */
         getMockMvc().perform(delete("/api/usuarios/"+usuario.getId()))
                 .andExpect(status().isOk());
 
