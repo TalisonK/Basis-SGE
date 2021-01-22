@@ -8,7 +8,6 @@ import com.basis.sge.service.servico.exception.RegraNegocioException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +21,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
-//Classe destinada a controlar a entidade Usuario
+
 @RestController
-@RequestMapping("/api/usuario")
+@RequestMapping("/api/usuarios")
 @RequiredArgsConstructor
 public class UsuarioRecurso {
     private final UsuarioServico usuarioServico;
@@ -42,7 +41,7 @@ public class UsuarioRecurso {
 
     @PostMapping
     public ResponseEntity<UsuarioDTO> criar(@Valid @RequestBody UsuarioDTO usuarioDTO) throws URISyntaxException, RegraNegocioException {
-        return ResponseEntity.created(new URI("/api/usuario")).body(usuarioServico.criar(usuarioDTO));
+        return ResponseEntity.created(new URI("/api/usuarios")).body(usuarioServico.criar(usuarioDTO));
     }
 
     @PutMapping
