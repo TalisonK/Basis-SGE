@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,27 +29,27 @@ public class InscricaoRespostaRecurso {
         return ResponseEntity.ok().body(inscricaoRespostaServico.listar());
     }
 
-    /*
-    @GetMapping("/{idEvento}/{idInscricao}/{idPergunta}/")
-    public ResponseEntity<List<InscricaoRespostaDTO>> obterPorId(@PathVariable("idEvento") Integer idEvento,
-                                                                 @PathVariable("idInscricao") Integer idInscricao,
-                                                                 @PathVariable("idPergunta") Integer idPergunta) {
 
-        return ResponseEntity.ok().body(inscricaoRespostaServico.listar());
-    }*/
+    @DeleteMapping(value="/{idInscricao}/{idPergunta}")
+    public void deletar(@PathVariable Integer idInscricao, @PathVariable Integer idPergunta) {
+
+        inscricaoRespostaServico.deletar(idInscricao,idPergunta);
+
+    }
+
+    @GetMapping(value="/{idInscricao}/{idPergunta}")
+    public ResponseEntity<InscricaoRespostaDTO> obterPorId(@PathVariable Integer idInscricao, @PathVariable Integer idPergunta) {
+
+        return ResponseEntity.ok(inscricaoRespostaServico.obterPorId(idInscricao,idPergunta));
+
+    }
 
     @PostMapping
     public ResponseEntity<InscricaoRespostaDTO> criar(@RequestBody InscricaoRespostaDTO inscricaoRespostaDTO){
         return ResponseEntity.status(201).body(inscricaoRespostaServico.criar(inscricaoRespostaDTO));
     }
 
-    @PutMapping
-    public ResponseEntity<InscricaoRespostaDTO> atualizar(@RequestBody InscricaoRespostaDTO inscricaoRespostaDTO) {
-        return ResponseEntity.status(201).body(inscricaoRespostaServico.atualizar(inscricaoRespostaDTO));
-    }
 
-    @DeleteMapping
-    public ResponseEntity<InscricaoRespostaDTO> deletar(@RequestBody InscricaoRespostaDTO inscricaoRespostaDTO) {
-        return ResponseEntity.ok().body(inscricaoRespostaServico.deletar(inscricaoRespostaDTO));
-    }
+
+
 }

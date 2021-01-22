@@ -4,6 +4,7 @@ import com.basis.sge.service.builder.EventoBuilder;
 import com.basis.sge.service.builder.EventoPerguntaBuilder;
 import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.dominio.EventoPergunta;
+import com.basis.sge.service.repositorio.EventoPerguntaRepositorio;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import com.basis.sge.service.util.IntTestComum;
@@ -42,10 +43,13 @@ public class EventoRecursoIt extends IntTestComum{
     @Autowired
     private EventoPerguntaBuilder eventoPerguntaBuilder;
 
+    @Autowired
+    private EventoPerguntaRepositorio eventoPerguntaRepositorio;
 
     @BeforeEach
     public void inicializar() {
         eventoRepositorio.deleteAll();
+        eventoPerguntaRepositorio.deleteAll();
     }
 
     @Test
