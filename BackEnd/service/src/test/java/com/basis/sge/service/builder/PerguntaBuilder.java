@@ -25,7 +25,7 @@ public class PerguntaBuilder extends ConstrutorDeEntidade<Pergunta>{
     @Override
     public Pergunta construirEntidade() throws ParseException {
         Pergunta pergunta = new Pergunta();
-        pergunta.setTitulo("Pergunta???");
+        pergunta.setTitulo("Pergunta?????");
         pergunta.setObrigatoriedade(true);
         return pergunta;
     }
