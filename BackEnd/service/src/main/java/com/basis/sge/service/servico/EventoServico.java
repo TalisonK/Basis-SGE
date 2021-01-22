@@ -66,7 +66,10 @@ public class EventoServico {
         });
 
         eventoPerguntaRepositorio.saveAll(perguntas);
-        return eventoMapper.toDto(evento);
+
+        Evento evento1 = eventoRepositorio.findById(evento.getId()).orElseThrow(() -> new RegraNegocioException("Erro ao cadastrar o evento!"));
+
+        return eventoMapper.toDto(evento1);
     }
 
     public EventoDTO atualizar(EventoDTO eventoDTO) {

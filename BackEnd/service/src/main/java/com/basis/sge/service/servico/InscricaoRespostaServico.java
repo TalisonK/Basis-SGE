@@ -34,8 +34,7 @@ public class InscricaoRespostaServico {
         return inscricaoRespostaMapper.toDto(inscricaoRespostaRepositorio.findAll());
     }
 
-    @GetMapping
-    public InscricaoRespostaDTO obterPorId(@RequestBody IdInscricaoResposta id) {
+    public InscricaoRespostaDTO obterPorId(IdInscricaoResposta id) {
 
         if (id == null) {
             throw new RegraNegocioException("Dados inválidos");
