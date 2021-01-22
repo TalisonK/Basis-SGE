@@ -1,14 +1,19 @@
 package com.basis.sge.service.recurso;
 
+import com.basis.sge.service.builder.EventoBuilder;
+import com.basis.sge.service.builder.PerguntaBuilder;
+import com.basis.sge.service.builder.PreInscricaoBuilder;
 import com.basis.sge.service.builder.UsuarioBuilder;
 import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.dominio.Pergunta;
+import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.mapper.UsuarioMapper;
 import com.basis.sge.service.util.IntTestComum;
 import com.basis.sge.service.util.TestUtil;
 import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 
 import org.junit.jupiter.api.Test;
@@ -29,6 +34,15 @@ public class UsuarioRecursoIT extends IntTestComum {
 
     @Autowired
     private UsuarioBuilder usuarioBuilder;
+
+    @Autowired
+    private PerguntaBuilder perguntaBuilder;
+
+    @Autowired
+    private PreInscricaoBuilder inscricaoBuilder;
+
+    @Autowired
+    private EventoBuilder eventoBuilder;
 
     @Autowired
     private UsuarioMapper usuarioMapper;
@@ -65,7 +79,7 @@ public class UsuarioRecursoIT extends IntTestComum {
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
                 .andExpect(status().isCreated());
-        Assert.assertEquals(1, usuarioRepositorio.findAll().size());
+        Assertions.assertEquals(1, usuarioRepositorio.findAll().size());
     }
 
     @Test
@@ -86,7 +100,7 @@ public class UsuarioRecursoIT extends IntTestComum {
         Usuario usuario = usuarioBuilder.construir();
         Pergunta pergunta = perguntaBuilder.construir();
         Evento evento = eventoBuilder.construir();
-        Inscricao inscricao = inscricaoBuilder();
+        PreInscricao inscricao = inscricaoBuilder.construir();
 
         getMockMvc().perform(delete("/api/usuarios/"+usuario.getId()))
                 .andExpect(status().isOk());

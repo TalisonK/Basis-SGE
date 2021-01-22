@@ -83,7 +83,7 @@ public class PreInscricaoServico {
 
         inscricaoRespostaMapper.toEntity(irServico.listar()).forEach(inscricaoResposta -> {
             if (inscricaoResposta.getInscricao().getId().equals(id)) {
-                irServico.deletar(inscricaoResposta.getResposta(), inscricaoResposta.getInscricao());
+                irServico.deletar(inscricaoResposta.getPergunta().getId(), inscricaoResposta.getInscricao().getId());
             }
         });
 

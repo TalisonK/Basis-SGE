@@ -67,6 +67,7 @@ public class EventoServico {
                 pergunta.setEvento(evento);
             });
             eventoPerguntaRepositorio.saveAll(perguntas);
+        }
 
         return eventoMapper.toDto(evento);
     }
@@ -146,5 +147,4 @@ public class EventoServico {
             throw new RegraNegocioException("Evento Não Existe");
         }
     }
-
 }
