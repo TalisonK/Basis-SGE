@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringRunner;
 import javax.transaction.Transactional;
+import java.text.ParseException;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -22,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @Transactional
-public class PreInscricaoRecursoPositivosIT extends IntTestComum {
+public class PreInscricaoRecursoIT extends IntTestComum {
 
     @Autowired
     private PreInscricaoBuilder builder = new PreInscricaoBuilder();
@@ -44,7 +46,6 @@ public class PreInscricaoRecursoPositivosIT extends IntTestComum {
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(mapper.toDto(preInscricao))))
                 .andExpect(status().isCreated());
-
     }
 
     @Test
@@ -56,15 +57,12 @@ public class PreInscricaoRecursoPositivosIT extends IntTestComum {
                     .contentType(TestUtil.APPLICATION_JSON_UTF8)
                     .content(TestUtil.convertObjectToJsonBytes(mapper.toDto(preInscricao))))
                     .andExpect(status().isOk());
-
-
     }
 
     @Test
     public void atualizar() throws Exception{
 
         PreInscricao preInscricao = builder.construir();
-
         preInscricao.getSituacao().setId(2);
 
         getMockMvc().perform(put("/api/inscricao")
@@ -77,8 +75,6 @@ public class PreInscricaoRecursoPositivosIT extends IntTestComum {
     public void deletar() throws Exception{
 
         PreInscricao preInscricao = builder.construir();
-
-
         getMockMvc().perform(delete("/api/inscricao/" + preInscricao.getId())
                     .contentType(TestUtil.APPLICATION_JSON_UTF8)
                     .content(TestUtil.convertObjectToJsonBytes(mapper.toDto(preInscricao))));
@@ -87,7 +83,47 @@ public class PreInscricaoRecursoPositivosIT extends IntTestComum {
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(mapper.toDto(preInscricao))))
                 .andExpect(status().isBadRequest());
-        ;
+    }
+
+
+    @Test
+    public void obterPorIdComIdErrado() throws Exception {
+        getMockMvc().perform(get("/api/inscricao/78"))
+                    .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void criarComValoresInvalidos() throws Exception {
+
+        //Teste de Evento Invalido
+        PreInscricao preInscricao = builder.construirEntidade();
+        builder.buildDependencias(preInscricao);
+        preInscricao.getEvento().setId(245);
+
+        getMockMvc().perform(post("/api/inscricao")
+                    .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                    .content(TestUtil.convertObjectToJsonBytes(mapper.toDto(preInscricao))))
+                    .andExpect(status().isBadRequest());
+
+        // Teste de Usuario Invalido
+        preInscricao = builder.construirEntidade();
+        builder.buildDependencias(preInscricao);
+        preInscricao.getUsuario().setId(245);
+
+        getMockMvc().perform(post("/api/inscricao")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(mapper.toDto(preInscricao))))
+                .andExpect(status().isBadRequest());
+
+        //Teste de Situacao invalida
+        preInscricao = builder.construirEntidade();
+        builder.buildDependencias(preInscricao);
+        preInscricao.getSituacao().setId(245);
+
+        getMockMvc().perform(post("/api/inscricao")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(mapper.toDto(preInscricao))))
+                .andExpect(status().isBadRequest());
     }
 
 }
