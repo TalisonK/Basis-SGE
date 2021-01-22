@@ -33,7 +33,7 @@ public class PerguntaRecursoIT extends IntTestComum {
 
     @Autowired
     private PerguntaRepositorio perguntaRepositorio;
-//RESOLVER
+
     @BeforeEach
     public void inicializar(){
         perguntaRepositorio.deleteAll();
@@ -55,6 +55,14 @@ public class PerguntaRecursoIT extends IntTestComum {
                 .andExpect(status().isCreated());
     }
 
+    @Test //TESTE POST NEGATIVO
+    public void criarMesmoTest() throws Exception {
+        Pergunta pergunta = perguntaBuilder.construir();
+        Integer idPergunta = pergunta.getId() + 1;
+        getMockMvc().perform(post("/api/pergunta"))
+                .andExpect(status().isBadRequest());
+    }
+
     @Test
     public void atualizarTest() throws Exception{
         Pergunta pergunta = perguntaBuilder.construir();
@@ -65,14 +73,72 @@ public class PerguntaRecursoIT extends IntTestComum {
                 .andExpect(status().isOk());
     }
 
+    @Test //TESTE PUT/ATUALIZAR NEGATIVO PARA
+    public void tituloExistenteTest() throws Exception{
+        Pergunta pergunta = perguntaBuilder.construir();
+        Pergunta pergunta2 = perguntaBuilder.construirEntidade();
+        pergunta2.setTitulo("Pergunta?????");
+        getMockMvc().perform(put("/api/pergunta")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(perguntaMapper.toDto(pergunta))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test //TESTE PUT/ATUALIZAR NEGATIVO PARA TITULO NAO NULO, MENOR QUE TRES CARACTERES
+    public void tituloNaoNuloMenorQueTres() throws Exception{
+        Pergunta pergunta = perguntaBuilder.construir();
+        pergunta.setTitulo("PE");
+        getMockMvc().perform(put("/api/pergunta")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(perguntaMapper.toDto(pergunta))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test //TESTE PUT/ATUALIZAR NEGATIVO PARA TITULO NULO
+    public void tituloNuloTest() throws  Exception{
+        Pergunta pergunta = perguntaBuilder.construir();
+        pergunta.setTitulo(null);
+        getMockMvc().perform(put("/api/pergunta")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(perguntaMapper.toDto(pergunta))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test //TESTE PUT/ATUALIZAR NEGATIVO DE OBRIGATORIEDADE NULA
+    public void obrigatoriedadeNulaTeste() throws  Exception{
+        Pergunta pergunta = perguntaBuilder.construir();
+        pergunta.setObrigatoriedade(null);
+        getMockMvc().perform(put("/api/pergunta")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(perguntaMapper.toDto(pergunta))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test //TESTE NEGATIVO ID DE PERGUNTA INEXISTENTE
+    public void perguntaIdInexistente() throws Exception{
+        Pergunta pergunta = perguntaBuilder.construir();
+        Integer idPergunta = pergunta.getId() + 1;
+        getMockMvc().perform(put("/api/pergunta")
+                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+                .content(TestUtil.convertObjectToJsonBytes(perguntaMapper.toDto(pergunta))))
+                .andExpect(status().isBadRequest());
+    }
+
     @Test
     public void deletarTest() throws Exception {
         Pergunta pergunta = perguntaBuilder.construir();
-
         Integer idPergunta = pergunta.getId();
         getMockMvc().perform(delete("/api/pergunta/"+idPergunta))
                 .andExpect(status().isOk());
         Assert.assertEquals(0,perguntaRepositorio.findAll().size());
+    }
+
+    @Test //TESTE NEGATIVO DELETE
+    public void deletarPerguntaInexistente() throws Exception {
+        Pergunta pergunta = perguntaBuilder.construir();
+        Integer idPergunta = pergunta.getId() + 1;
+        getMockMvc().perform(delete("/api/pergunta/" +idPergunta))
+                .andExpect(status().isBadRequest());
     }
 
     @Test

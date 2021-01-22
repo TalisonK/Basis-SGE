@@ -25,11 +25,12 @@ public class PerguntaServico {
         List<Pergunta> listaPergunta = perguntaRepositorio.findAll();
         return perguntaMapper.toDto(listaPergunta);
     }
-    @GetMapping
+
     public PerguntaDTO obterPorId(@RequestBody Integer id) {
         Pergunta pergunta = perguntaRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Pergunta inexistente!"));
         return perguntaMapper.toDto(pergunta);
     }
+
     public PerguntaDTO criar(PerguntaDTO novaPergunta) {
         validaTitulo(novaPergunta.getTitulo());
         validaObrigatoriedade(novaPergunta.getObrigatoriedade());
@@ -37,6 +38,7 @@ public class PerguntaServico {
         Pergunta perguntaCriada = perguntaRepositorio.save(pergunta);
         return perguntaMapper.toDto(perguntaCriada);
     }
+
     public PerguntaDTO atualizar(PerguntaDTO perguntaDTO) {
         validaTitulo(perguntaDTO.getTitulo());
         validaObrigatoriedade(perguntaDTO.getObrigatoriedade());
@@ -44,6 +46,7 @@ public class PerguntaServico {
         Pergunta perguntaRecebida = perguntaMapper.toEntity(perguntaDTO);
         perguntaRecebida.setId (pergunta.getId());
         Pergunta perguntaAtualizada = perguntaRepositorio.save(pergunta);
+
         return perguntaMapper.toDto(perguntaAtualizada);
     }
     //verifica se um titulo é menor que 3 caracteres, em caso não nulo
@@ -66,6 +69,7 @@ public class PerguntaServico {
        }
     }
     public void deletar(Integer id) {
+        Pergunta pergunta = perguntaRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Pergunta inexistente"));
         perguntaRepositorio.deleteById(id);
     }
 }
