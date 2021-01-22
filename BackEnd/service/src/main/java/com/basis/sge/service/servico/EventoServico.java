@@ -51,25 +51,31 @@ public class EventoServico {
     }
 
     public EventoDTO criar(EventoDTO eventoDTO) {
-        validaEvento(eventoDTO);
-        validaTitulo(eventoDTO.getTitulo());
-        eventoDTO.setId(null);
-        Evento evento = eventoMapper.toEntity(eventoDTO);
+        try{
+            validaEvento(eventoDTO);
+            validaTitulo(eventoDTO.getTitulo());
+            eventoDTO.setId(null);
+            Evento evento = eventoMapper.toEntity(eventoDTO);
 
-        List<EventoPergunta> perguntas = evento.getPerguntas();
+            List<EventoPergunta> perguntas = evento.getPerguntas();
 
-        evento.setPerguntas(new ArrayList<>());
-        eventoRepositorio.save(evento);
+            evento.setPerguntas(new ArrayList<>());
+            eventoRepositorio.save(evento);
 
-        perguntas.forEach(pergunta -> {
-            pergunta.setEvento(evento);
-        });
+            perguntas.forEach(pergunta -> {
+                pergunta.setEvento(evento);
+            });
 
-        eventoPerguntaRepositorio.saveAll(perguntas);
+            eventoPerguntaRepositorio.saveAll(perguntas);
 
-        Evento evento1 = eventoRepositorio.findById(evento.getId()).orElseThrow(() -> new RegraNegocioException("Erro ao cadastrar o evento!"));
+            Evento evento1 = eventoRepositorio.findById(evento.getId()).orElseThrow(() -> new RegraNegocioException("Erro ao cadastrar o evento!"));
 
-        return eventoMapper.toDto(evento1);
+            return eventoMapper.toDto(evento1);
+        }
+        catch (Exception e){
+            throw new RegraNegocioException("Erro ao cadastrar evento. Erro = " + e.getMessage());
+        }
+
     }
 
     public EventoDTO atualizar(EventoDTO eventoDTO) {
