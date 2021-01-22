@@ -34,7 +34,7 @@ public class InscricaoRespostaServico {
         return inscricaoRespostaMapper.toDto(inscricaoRespostaRepositorio.findAll());
     }
 
-    @GetMapping
+    @GetMapping(value = "")
     public InscricaoRespostaDTO obterPorId(@RequestBody IdInscricaoResposta id) {
 
         if (id == null) {
