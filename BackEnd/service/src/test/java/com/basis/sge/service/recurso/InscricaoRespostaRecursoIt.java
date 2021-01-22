@@ -15,6 +15,7 @@ import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import com.basis.sge.service.util.TestUtil;
 import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -62,6 +63,7 @@ public class InscricaoRespostaRecursoIt extends IntTestComum {
         usuarioRepositorio.deleteAll();
     }
 
+
     @Test
     public void listaTest() throws Exception {
 
@@ -77,6 +79,25 @@ public class InscricaoRespostaRecursoIt extends IntTestComum {
                 .content(TestUtil.convertObjectToJsonBytes(inscricaoRespostaMapper.toDto(inscricaoResposta))))
                 .andExpect(status().isCreated());
         Assert.assertEquals(1,inscricaoRespostaRepositorio.findAll().size());
+    }
+
+    @Test
+    public void obterPorIdTest() throws Exception {
+        InscricaoResposta inscricaoResposta = inscricaoRespostaBuilder.construir();
+        Integer idInscricao = inscricaoResposta.getInscricao().getId();
+        Integer idPergunta = inscricaoResposta.getPergunta().getId();
+        getMockMvc().perform(get("/api/inscricaoResposta/"+idInscricao+"/"+idPergunta))
+                .andExpect(status().isOk());
+
+    }
+    @Test
+    public void deletePorIdTest() throws Exception {
+        InscricaoResposta inscricaoResposta = inscricaoRespostaBuilder.construir();
+        Integer idInscricao = inscricaoResposta.getInscricao().getId();
+        Integer idPergunta = inscricaoResposta.getPergunta().getId();
+        getMockMvc().perform(delete("/api/inscricaoResposta/"+idInscricao+"/"+idPergunta))
+                .andExpect(status().isOk());
+        Assert.assertEquals(0,inscricaoRespostaRepositorio.findAll().size());
     }
 
 }
