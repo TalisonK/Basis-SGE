@@ -1,6 +1,7 @@
 package com.basis.sge.service.servico;
 
 import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.Pergunta;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.dominio.EventoPergunta;
@@ -51,7 +52,6 @@ public class EventoServico {
     }
 
     public EventoDTO criar(EventoDTO eventoDTO) {
-        try{
             validaEvento(eventoDTO);
             validaTitulo(eventoDTO.getTitulo());
             eventoDTO.setId(null);
@@ -62,20 +62,13 @@ public class EventoServico {
             evento.setPerguntas(new ArrayList<>());
             eventoRepositorio.save(evento);
 
+        if(perguntas!=null && !perguntas.isEmpty()) {
             perguntas.forEach(pergunta -> {
                 pergunta.setEvento(evento);
             });
-
             eventoPerguntaRepositorio.saveAll(perguntas);
 
-            Evento evento1 = eventoRepositorio.findById(evento.getId()).orElseThrow(() -> new RegraNegocioException("Erro ao cadastrar o evento!"));
-
-            return eventoMapper.toDto(evento1);
-        }
-        catch (Exception e){
-            throw new RegraNegocioException("Erro ao cadastrar evento. Erro = " + e.getMessage());
-        }
-
+        return eventoMapper.toDto(evento);
     }
 
     public EventoDTO atualizar(EventoDTO eventoDTO) {
@@ -86,7 +79,7 @@ public class EventoServico {
         Evento evento = eventoMapper.toEntity(eventoDTO);
         Evento eventoAtualizado = eventoRepositorio.save(evento);
 
-        notificarInscritos(evento.getTitulo(),evento.getId());
+        //notificarInscritos(evento.getTitulo(),evento.getId());
 
         return eventoMapper.toDto(eventoAtualizado);
     }
@@ -115,19 +108,10 @@ public class EventoServico {
 
     // valida dados de evento, com exceção das datas
     public void validaEvento(EventoDTO eventoDTO){
-        validaString(eventoDTO.getLocal());
-        validaString(eventoDTO.getDescricao());
         validaNumero(eventoDTO.getValor());
         validaNumero(eventoDTO.getQuantVagas());
         validaTipoEvento(eventoDTO.getIdTipoEvento());
 
-    }
-
-    //verifica se uma string é menor que 3 caracteres, em caso não nulo
-    public void validaString(String palavra){
-        if (palavra!=null && palavra.length() < 3){
-            throw new RegraNegocioException("Campo deve ter pelo menos 2 caracteres");
-        }
     }
 
     //verifica se o numero é negativo caso não seja nulo

@@ -12,6 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import javax.persistence.EntityManager;
 
+
 @SpringBootTest(classes = ServiceApplication.class)
 @ExtendWith(SpringExtension.class)
 public abstract class IntTestComum {
@@ -24,6 +25,9 @@ public abstract class IntTestComum {
 
     private MockMvc mockMvc;
 
+    public IntTestComum() {
+    }
+  
     protected MockMvc getMockMvc() {
         return mockMvc;
     }

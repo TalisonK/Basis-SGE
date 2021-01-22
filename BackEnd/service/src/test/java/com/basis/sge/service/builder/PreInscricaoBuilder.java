@@ -16,7 +16,6 @@ import java.util.Collection;
 
 
 @Component
-
 public class PreInscricaoBuilder extends ConstrutorDeEntidade<PreInscricao>{
 
     @Autowired
