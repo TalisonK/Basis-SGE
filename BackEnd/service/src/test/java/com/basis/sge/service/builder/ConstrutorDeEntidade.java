@@ -20,7 +20,7 @@ public abstract class ConstrutorDeEntidade<E> {
      * @return entidade construída
      * @throws ParseException Exceção a ser lançada
      */
-    public E construir() throws ParseException {
+    public E construir() throws Exception {
         final E entidade = construirEntidade();
         if (isCustomizado()) {
             customizacao.executar(entidade);
@@ -47,7 +47,7 @@ public abstract class ConstrutorDeEntidade<E> {
      * @return entidade construída
      * @throws ParseException Exceção a ser lançada
      */
-    protected abstract E construirEntidade() throws ParseException;
+    protected abstract E construirEntidade() throws Exception;
 
     /**
      * Este método deve persistir e retornar a entidade recebida no parametro

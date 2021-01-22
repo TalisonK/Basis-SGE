@@ -1,6 +1,7 @@
 package com.basis.sge.service.servico;
 
 import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.Pergunta;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.dominio.EventoPergunta;
@@ -51,21 +52,22 @@ public class EventoServico {
     }
 
     public EventoDTO criar(EventoDTO eventoDTO) {
-        validaEvento(eventoDTO);
-        validaTitulo(eventoDTO.getTitulo());
-        eventoDTO.setId(null);
-        Evento evento = eventoMapper.toEntity(eventoDTO);
+            validaEvento(eventoDTO);
+            validaTitulo(eventoDTO.getTitulo());
+            eventoDTO.setId(null);
+            Evento evento = eventoMapper.toEntity(eventoDTO);
 
-        List<EventoPergunta> perguntas = evento.getPerguntas();
+            List<EventoPergunta> perguntas = evento.getPerguntas();
 
-        evento.setPerguntas(new ArrayList<>());
-        eventoRepositorio.save(evento);
+            evento.setPerguntas(new ArrayList<>());
+            eventoRepositorio.save(evento);
 
-        perguntas.forEach(pergunta -> {
-            pergunta.setEvento(evento);
-        });
+        if(perguntas!=null && !perguntas.isEmpty()) {
+            perguntas.forEach(pergunta -> {
+                pergunta.setEvento(evento);
+            });
+            eventoPerguntaRepositorio.saveAll(perguntas);
 
-        eventoPerguntaRepositorio.saveAll(perguntas);
         return eventoMapper.toDto(evento);
     }
 
@@ -77,7 +79,7 @@ public class EventoServico {
         Evento evento = eventoMapper.toEntity(eventoDTO);
         Evento eventoAtualizado = eventoRepositorio.save(evento);
 
-        notificarInscritos(evento.getTitulo(),evento.getId());
+        //notificarInscritos(evento.getTitulo(),evento.getId());
 
         return eventoMapper.toDto(eventoAtualizado);
     }
@@ -106,19 +108,10 @@ public class EventoServico {
 
     // valida dados de evento, com exceção das datas
     public void validaEvento(EventoDTO eventoDTO){
-        validaString(eventoDTO.getLocal());
-        validaString(eventoDTO.getDescricao());
         validaNumero(eventoDTO.getValor());
         validaNumero(eventoDTO.getQuantVagas());
         validaTipoEvento(eventoDTO.getIdTipoEvento());
 
-    }
-
-    //verifica se uma string é menor que 3 caracteres, em caso não nulo
-    public void validaString(String palavra){
-        if (palavra!=null && palavra.length() < 3){
-            throw new RegraNegocioException("Campo deve ter pelo menos 2 caracteres");
-        }
     }
 
     //verifica se o numero é negativo caso não seja nulo
