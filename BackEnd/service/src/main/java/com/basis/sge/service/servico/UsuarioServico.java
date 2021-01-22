@@ -26,17 +26,21 @@ public class UsuarioServico {
     private final EmailServico emailServico;
 
     public List<UsuarioDTO> listar() {
+
         List lista = usuarioRepositorio.findAll();
         return usuarioMapper.toDto(lista);
     }
 
     public UsuarioDTO obterPorId(Integer id) {
+
         Usuario usuario = usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
         return usuarioMapper.toDto(usuario);
     }
 
     public UsuarioDTO criar(UsuarioDTO usuarioDTO) {
+
         verificaUsuario(usuarioDTO);
+
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario.setChave(UUID.randomUUID().toString());
         Usuario usuarioCriado = usuarioRepositorio.save(usuario);
@@ -44,13 +48,15 @@ public class UsuarioServico {
         emailServico.sendMail( new EmailDTO(
                 usuarioDTO.getEmail(),
                 "Seu cadastro foi feito, sua chave é: "+ usuario.getChave(),
-                "Cadastro efetuado com sucesso"
-        ));
+                "Cadastro efetuado com sucesso" ));
+
         return usuarioMapper.toDto(usuarioCriado);
     }
 
     public UsuarioDTO atualizar(UsuarioDTO usuarioDTO) {
+
         verificaUsuarioAtualizar(usuarioDTO);
+
         Usuario usuario = usuarioRepositorio.findById(usuarioDTO.getId()).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
         Usuario usuarioRecebido = usuarioMapper.toEntity(usuarioDTO);
         usuarioRecebido.setChave(usuario.getChave());
@@ -60,11 +66,13 @@ public class UsuarioServico {
     }
 
     public void deletar(Integer id) {
+
         Usuario usuario = usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuário inexistente"));
         usuarioRepositorio.deleteById(id);
     }
 
     public void verificaUsuario(UsuarioDTO usuarioDTO) {
+
         if (usuarioDTO == null) {
             throw new RegraNegocioException("Dados inválidos");
         }
@@ -80,6 +88,7 @@ public class UsuarioServico {
     }
 
     public void verificaUsuarioAtualizar(UsuarioDTO usuarioDTO){
+
         if (usuarioRepositorio.existsByCpfAndIdNot(usuarioDTO.getCpf(), usuarioDTO.getId())){
             throw new RegraNegocioException("CPF já cadastrado");
         }

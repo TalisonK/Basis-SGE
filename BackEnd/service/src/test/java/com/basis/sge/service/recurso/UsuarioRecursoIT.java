@@ -81,14 +81,18 @@ public class UsuarioRecursoIT extends IntTestComum {
     public void deletarTest() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
-        getMockMvc().perform(delete("/api/usuarios/"+usuario.getId())).andExpect(status().isOk());
+
+        getMockMvc().perform(delete("/api/usuarios/"+usuario.getId()))
+                .andExpect(status().isOk());
 
         Assert.assertEquals(0, usuarioRepositorio.findAll().size());
     }
 
     @Test
     public void obterPorIdInexistente() throws Exception{
+
         Usuario usuario = usuarioBuilder.construir();
+
         Integer idUsuario = usuario.getId()+1;
         getMockMvc().perform(get("/api/usuarios/" + idUsuario))
                 .andExpect(status().isBadRequest());
@@ -96,7 +100,9 @@ public class UsuarioRecursoIT extends IntTestComum {
 
     @Test
     public void deletarIdInexistente()throws Exception{
+
         Usuario usuario = usuarioBuilder.construir();
+
         Integer idUsuario = usuario.getId()+1;
         getMockMvc().perform(delete("/api/usuarios/"+ idUsuario))
                 .andExpect(status().isBadRequest());
@@ -104,24 +110,28 @@ public class UsuarioRecursoIT extends IntTestComum {
 
     @Test
     public void criarUsuarioExistente()throws Exception{
+
         Usuario usuario = usuarioBuilder.construir();
         verificaUsuario(usuario);
     }
 
     @Test
     public void criarUsuarioNulo() throws Exception{
+
         Usuario usuario = null;
         verificaUsuario(usuario);
     }
 
     @Test
     public void criarUsuarioNomeInvalido() throws Exception{
+
         Usuario usuario = usuarioBuilder.construir();
         usuario.setNome("");
         verificaUsuario(usuario);
     }
     @Test
     public void criarUsuarioCpfExistente() throws Exception{
+
         Usuario usuario = usuarioBuilder.construir();
         Usuario usuario2 = usuarioBuilder.construirEntidade();
         usuario2.setCpf(usuario.getCpf());
@@ -130,6 +140,7 @@ public class UsuarioRecursoIT extends IntTestComum {
 
     @Test
     public void criarUsuarioEmailExistente() throws Exception{
+
         Usuario usuario = usuarioBuilder.construir();
         Usuario usuario2 = usuarioBuilder.construirEntidade();
         usuario2.setEmail(usuario.getEmail());
@@ -138,24 +149,24 @@ public class UsuarioRecursoIT extends IntTestComum {
 
     @Test
     public void atualizarUsuarioCpf() throws Exception{
+
         Usuario usuario = usuarioBuilder.construir();
         Usuario usuario2 = usuarioBuilder.construirEntidade();
-        usuario2.setCpf("05260961013");
-        usuario2.setEmail("thayanenns@gmail.com");
-        Usuario usuario3 = usuarioBuilder.construirEntidade();
-        usuario3.setCpf(usuario2.getCpf());
-        usuario3.setEmail(usuario2.getEmail());
-        verificaUsuarioPut(usuario3);
 
+        usuario2.setId(usuario.getId() + 2);
+        usuario2.setTelefone("8399889888");
+        verificaUsuarioPut(usuario2);
     }
 
     public void verificaUsuario(Usuario usuario) throws Exception{
+
         getMockMvc().perform(post("/api/usuarios/")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
                 .andExpect(status().isBadRequest());
     }
     public void verificaUsuarioPut(Usuario usuario) throws Exception{
+
         getMockMvc().perform(put("/api/usuarios/")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))

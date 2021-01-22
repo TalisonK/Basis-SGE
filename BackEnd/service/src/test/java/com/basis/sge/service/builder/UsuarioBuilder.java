@@ -52,6 +52,7 @@ public class UsuarioBuilder extends ConstrutorDeEntidade<Usuario> {
 
     @Override
     public Usuario obterPorId(Integer id) {
+
         Usuario usuario = usuarioRepositorio.findById(id).orElse(null);
         return usuario;
     }
