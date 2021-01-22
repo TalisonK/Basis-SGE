@@ -7,12 +7,12 @@ import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.UsuarioDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
+import com.basis.sge.service.servico.mapper.InscricaoMapper;
 import com.basis.sge.service.servico.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,16 +20,17 @@ import java.util.UUID;
 @Transactional
 @RequiredArgsConstructor
 public class UsuarioServico {
-
-    private final UsuarioRepositorio usuarioRepositorio;
-
-    private final UsuarioMapper usuarioMapper;
-
+  
+    private final PreInscricaoServico preInscricaoServico;
     private final EmailServico emailServico;
-
-    private InscricaoRepositorio inscricaoRepositorio;
-
     private PreInscricaoServico inscricaoServico;
+  
+    private final UsuarioRepositorio usuarioRepositorio;
+    private InscricaoRepositorio inscricaoRepositorio;
+  
+    private final InscricaoMapper inscricaoMapper;
+    private final UsuarioMapper usuarioMapper;
+    
 
     public List<UsuarioDTO> listar() {
 
@@ -72,6 +73,9 @@ public class UsuarioServico {
     }
 
     public void deletar(Integer id) {
+
+        inscricaoMapper.toEntity(preInscricaoServico.listar())
+                .forEach((inscricao) -> {if(inscricao.getUsuario().getId().equals(id)) {preInscricaoServico.deletar(inscricao.getId());}});
 
         Usuario usuario = usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuário inexistente"));
 

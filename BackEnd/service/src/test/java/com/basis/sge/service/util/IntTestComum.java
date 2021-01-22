@@ -25,7 +25,6 @@ public abstract class IntTestComum {
     private MockMvc mockMvc;
 
     protected MockMvc getMockMvc() {
-
         return mockMvc;
     }
 

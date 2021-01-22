@@ -6,6 +6,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface InscricaoRespostaRepositorio extends JpaRepository<InscricaoResposta, IdInscricaoResposta> {
-
-}
+public interface InscricaoRespostaRepositorio extends JpaRepository<InscricaoResposta, IdInscricaoResposta> {}
