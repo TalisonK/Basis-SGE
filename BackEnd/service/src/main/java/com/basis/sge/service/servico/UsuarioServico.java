@@ -1,6 +1,8 @@
 package com.basis.sge.service.servico;
 
+import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
+import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.UsuarioDTO;
@@ -24,6 +26,10 @@ public class UsuarioServico {
     private final UsuarioMapper usuarioMapper;
 
     private final EmailServico emailServico;
+
+    private InscricaoRepositorio inscricaoRepositorio;
+
+    private PreInscricaoServico inscricaoServico;
 
     public List<UsuarioDTO> listar() {
 
@@ -68,6 +74,7 @@ public class UsuarioServico {
     public void deletar(Integer id) {
 
         Usuario usuario = usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuário inexistente"));
+
         usuarioRepositorio.deleteById(id);
     }
 

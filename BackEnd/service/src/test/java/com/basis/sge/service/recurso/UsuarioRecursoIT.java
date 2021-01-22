@@ -1,6 +1,8 @@
 package com.basis.sge.service.recurso;
 
 import com.basis.sge.service.builder.UsuarioBuilder;
+import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.Pergunta;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.mapper.UsuarioMapper;
@@ -33,6 +35,7 @@ public class UsuarioRecursoIT extends IntTestComum {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+
 
     @BeforeEach
     public void inicializar() {
@@ -81,6 +84,9 @@ public class UsuarioRecursoIT extends IntTestComum {
     public void deletarTest() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
+        Pergunta pergunta = perguntaBuilder.construir();
+        Evento evento = eventoBuilder.construir();
+        Inscricao inscricao = inscricaoBuilder();
 
         getMockMvc().perform(delete("/api/usuarios/"+usuario.getId()))
                 .andExpect(status().isOk());

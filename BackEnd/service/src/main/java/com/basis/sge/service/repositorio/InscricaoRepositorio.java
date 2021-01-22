@@ -1,5 +1,6 @@
 package com.basis.sge.service.repositorio;
 
+import com.basis.sge.service.dominio.InscricaoResposta;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,4 +13,6 @@ public interface InscricaoRepositorio extends JpaRepository<PreInscricao, Intege
 
 
     List<PreInscricao> findAllByEventoId(Integer id_evento);
+
+    List<PreInscricao> findAllByUsuarioId(Integer id);
 }
