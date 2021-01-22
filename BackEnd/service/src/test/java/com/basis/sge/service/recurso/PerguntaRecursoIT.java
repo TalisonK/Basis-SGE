@@ -73,7 +73,7 @@ public class PerguntaRecursoIT extends IntTestComum {
                 .andExpect(status().isOk());
     }
 
-    @Test //TESTE PUT/ATUALIZAR NEGATIVO PARA
+    @Test //TESTE PUT/ATUALIZAR NEGATIVO PARA TITULO INEXISTENTE
     public void tituloExistenteTest() throws Exception{
         Pergunta pergunta = perguntaBuilder.construir();
         Pergunta pergunta2 = perguntaBuilder.construirEntidade();
@@ -147,5 +147,12 @@ public class PerguntaRecursoIT extends IntTestComum {
         Integer idPergunta = pergunta.getId();
         getMockMvc().perform(get("/api/pergunta/"+idPergunta))
                 .andExpect(status().isOk());
+    }
+    @Test // TESTE NEGATIVO PARA GET OBTER POR ID INEXISTENTE
+    public void ObterPorIdInexistenteTest() throws Exception {
+        Pergunta pergunta = perguntaBuilder.construir();
+        Integer idPergunta = pergunta.getId() + 1;
+        getMockMvc().perform(get("/api/pergunta/" +idPergunta))
+                .andExpect(status().isBadRequest());
     }
 }
