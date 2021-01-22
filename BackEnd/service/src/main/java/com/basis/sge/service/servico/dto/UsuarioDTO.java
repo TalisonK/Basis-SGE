@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class UsuarioDTO implements Serializable {
+
     private Integer id;
 
     @NotNull @NotBlank

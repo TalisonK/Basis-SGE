@@ -1,12 +1,23 @@
 package com.basis.sge.service.servico;
+import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.dominio.PreInscricao;
+import com.basis.sge.service.dominio.TipoSituacao;
+import com.basis.sge.service.dominio.Usuario;
+import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
+import com.basis.sge.service.repositorio.InscricaoRespostaRepositorio;
+import com.basis.sge.service.repositorio.TipoSituacaoRepositorio;
+import com.basis.sge.service.repositorio.UsuarioRepositorio;
+import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.InscricaoMapper;
 import java.util.List;
 import java.util.Optional;
+
+import com.basis.sge.service.servico.mapper.InscricaoRespostaMapper;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
@@ -16,7 +27,15 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class PreInscricaoServico {
     private final InscricaoRepositorio incrRepo;
+    private final EventoRepositorio eventoRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
+    private final InscricaoRespostaServico irServico;
+    private final TipoSituacaoRepositorio tsrepo;
+
     private final InscricaoMapper mapper;
+    private final InscricaoRespostaMapper inscricaoRespostaMapper;
+
+    private final EmailServico emailServico;
 
 
     public List<PreInscricaoDTO> listar(){
@@ -37,7 +56,22 @@ public class PreInscricaoServico {
     public PreInscricaoDTO criar(PreInscricaoDTO dto){
 
         PreInscricao preInscricao = mapper.toEntity(dto);
+
+        Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
+        Evento evento = eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(() -> new RegraNegocioException("Evento nao Cadastrado!"));
+        TipoSituacao situacao = tsrepo.findById(dto.getIdSituacao()).orElseThrow(() -> new RegraNegocioException("Inscrição inexistente!"));
+
         incrRepo.save(preInscricao);
+
+        System.out.println("Enviando Email!");
+        emailServico.sendMail(
+                new EmailDTO(
+                    usuario.getEmail(),
+                    "Inscrição bem sucedida, sua chave para acesso e atualização é: " + usuario.getChave(),
+                    "Inscrição efetuado com sucesso"
+                )
+        );
+
         return mapper.toDto(preInscricao);
     }
 
@@ -46,6 +80,20 @@ public class PreInscricaoServico {
     }
 
     public void deletar(Integer id) {
-        incrRepo.deleteById(id);
+
+        inscricaoRespostaMapper.toEntity(irServico.listar()).forEach(inscricaoResposta -> {
+            if (inscricaoResposta.getInscricao().getId().equals(id)) {
+                //todo Na espera de joao
+                //irServico.deletar(inscricaoResposta.getResposta(), inscricaoResposta.getInscricao());
+            }
+        });
+
+
+        try{
+            incrRepo.deleteById(id);
+        }
+        catch (Exception e){
+            throw new RegraNegocioException("Impossivel detar, inscriçao nao cadastrada!");
+        }
     }
 }
