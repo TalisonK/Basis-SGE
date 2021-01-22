@@ -27,7 +27,7 @@ public class InscricaoRespostaRecurso {
     public ResponseEntity<List<InscricaoRespostaDTO>> listar() {
         return ResponseEntity.ok().body(inscricaoRespostaServico.listar());
     }
-    
+
     /*
     @GetMapping("/{idEvento}/{idInscricao}/{idPergunta}/")
     public ResponseEntity<List<InscricaoRespostaDTO>> obterPorId(@PathVariable("idEvento") Integer idEvento,

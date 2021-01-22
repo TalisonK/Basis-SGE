@@ -38,12 +38,12 @@ public class UsuarioServico {
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario.setChave(UUID.randomUUID().toString());
         Usuario usuarioCriado = usuarioRepositorio.save(usuario);
-
+        /*
         emailServico.sendMail( new EmailDTO(
                 usuarioDTO.getEmail(),
                 "Seu cadastro foi feito, sua chave é: "+ usuario.getChave(),
                 "Cadastro efetuado com sucesso"
-        ));
+        ));*/
         return usuarioMapper.toDto(usuarioCriado);
     }
 

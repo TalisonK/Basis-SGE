@@ -61,7 +61,7 @@ public class EventoServico {
 
         List<EventoPergunta> perguntas = evento.getPerguntas();
 
-        evento.setPerguntas(perguntas);
+        evento.setPerguntas(new ArrayList<>());
         eventoRepositorio.save(evento);
 
         if(perguntas!=null && !perguntas.isEmpty()) {

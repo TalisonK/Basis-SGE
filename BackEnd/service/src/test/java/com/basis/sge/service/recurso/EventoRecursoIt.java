@@ -1,9 +1,10 @@
 package com.basis.sge.service.recurso;
 
 import com.basis.sge.service.builder.EventoBuilder;
+import com.basis.sge.service.builder.EventoPerguntaBuilder;
 import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.EventoPergunta;
 import com.basis.sge.service.repositorio.EventoRepositorio;
-import com.basis.sge.service.servico.PerguntaServico;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import com.basis.sge.service.util.IntTestComum;
 import com.basis.sge.service.util.TestUtil;
@@ -11,16 +12,17 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 import org.springframework.transaction.annotation.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 
 
@@ -38,7 +40,7 @@ public class EventoRecursoIt extends IntTestComum{
     private EventoRepositorio eventoRepositorio;
 
     @Autowired
-    private PerguntaServico perguntaServico;
+    private EventoPerguntaBuilder eventoPerguntaBuilder;
 
 
     @BeforeEach
@@ -70,7 +72,6 @@ public class EventoRecursoIt extends IntTestComum{
         Integer idEvento = evento.getId();
         evento.setTitulo("Atualizado");
 
-
         getMockMvc().perform(put("/api/evento")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(evento))))
@@ -93,22 +94,25 @@ public class EventoRecursoIt extends IntTestComum{
         getMockMvc().perform(get("/api/evento/"+idEvento)).andExpect(status().isOk());
 
     }
-
     //=========================================================================================================
     //Teste de Evento com perguntas
-
-    //@Test
+    @Test
     public void criarEventoComPerguntas() throws Exception{
+
+        List<EventoPergunta> perguntaList = new ArrayList<>();
+        EventoPergunta eventoPergunta = eventoPerguntaBuilder.construirEntidade();
         Evento evento = eventoBuilder.construirEntidade();
 
+        eventoPergunta.setEvento(evento);
+        perguntaList.add(eventoPergunta);
+        evento.setPerguntas(perguntaList);
 
         getMockMvc().perform(post("/api/evento")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
-                .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(eventoNovo))))
-                .andExpect(status().isBadRequest());
+                .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(evento))))
+                .andExpect(status().isCreated());
+        Assert.assertEquals(1,eventoRepositorio.findAll().size());
     }
-
-
 
     //=========================================================================================================
     //Testes para Bad Requests

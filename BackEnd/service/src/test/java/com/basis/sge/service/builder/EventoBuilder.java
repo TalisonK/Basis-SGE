@@ -28,6 +28,8 @@ public class EventoBuilder extends ConstrutorDeEntidade<Evento> {
     @Autowired
     private EventoRepositorio eventoRepositorio;
 
+
+
     @Override
     public Evento construirEntidade() throws Exception
     {
