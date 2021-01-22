@@ -13,8 +13,7 @@ import java.io.Serializable;
 @Setter
 public class IdInscricaoResposta implements Serializable {
 
-    public IdInscricaoResposta() {
-    }
+    public IdInscricaoResposta() { }
 
     public IdInscricaoResposta(Integer idPergunta, Integer idEvento, Integer idPreInscricao) {
         this.idPergunta = idPergunta;

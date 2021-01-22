@@ -14,6 +14,9 @@ import com.basis.sge.service.servico.mapper.InscricaoRespostaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.List;
 
 
@@ -31,6 +34,17 @@ public class InscricaoRespostaServico {
 
     public List<InscricaoRespostaDTO> listar(){
         return inscricaoRespostaMapper.toDto(inscricaoRespostaRepositorio.findAll());
+    }
+
+    @GetMapping(value = "")
+    public InscricaoRespostaDTO obterPorId(@RequestBody IdInscricaoResposta id) {
+
+        if (id == null) {
+            throw new RegraNegocioException("Dados inválidos");
+        }
+
+        return inscricaoRespostaMapper.toDto(inscricaoRespostaRepositorio.findById(id)
+                .orElseThrow(() -> new RegraNegocioException("Inscrição nao encontrada!")));
     }
 
     public InscricaoRespostaDTO criar(InscricaoRespostaDTO dto) {

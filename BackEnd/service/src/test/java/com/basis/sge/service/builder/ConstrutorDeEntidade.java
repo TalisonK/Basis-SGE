@@ -47,7 +47,7 @@ public abstract class ConstrutorDeEntidade<E> {
      * @return entidade construída
      * @throws ParseException Exceção a ser lançada
      */
-    protected abstract E construirEntidade() throws ParseException, Exception;
+    protected abstract E construirEntidade() throws Exception;
 
     /**
      * Este método deve persistir e retornar a entidade recebida no parametro
