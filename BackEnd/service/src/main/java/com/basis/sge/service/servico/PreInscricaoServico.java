@@ -12,6 +12,8 @@ import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.InscricaoMapper;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,17 +69,12 @@ public class PreInscricaoServico {
             }
         });
 
-
         incrRepo.save(preInscricao);
 
-        System.out.println("Enviando Email!");
-        emailServico.sendMail(
-                new EmailDTO(
-                    usuario.getEmail(),
-                    "Inscrição bem sucedida, sua chave para acesso e atualização é: " + usuario.getChave(),
-                    "Inscrição efetuado com sucesso"
-                )
-        );
+        emailServico.rabbitSendMail(usuario.getEmail(),
+                    "Inscrição efetuado com sucesso",
+                     "Inscrição bem sucedida, sua chave para acesso e atualização é: " + usuario.getChave(),
+                            new ArrayList<>());
 
         return mapper.toDto(preInscricao);
     }
@@ -93,7 +90,6 @@ public class PreInscricaoServico {
                 irServico.deletar(inscricaoResposta.getPergunta().getId(), inscricaoResposta.getInscricao().getId());
             }
         });
-
 
         try{
             incrRepo.deleteById(id);

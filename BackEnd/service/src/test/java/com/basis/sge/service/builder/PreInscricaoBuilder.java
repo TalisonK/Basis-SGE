@@ -4,7 +4,10 @@ import com.basis.sge.service.dominio.*;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.UsuarioRepositorio;
+import com.basis.sge.service.servico.EventoServico;
+import com.basis.sge.service.servico.PreInscricaoServico;
 import com.basis.sge.service.servico.UsuarioServico;
+import com.basis.sge.service.servico.mapper.EventoMapper;
 import com.basis.sge.service.servico.mapper.InscricaoMapper;
 import com.basis.sge.service.servico.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +27,7 @@ public class PreInscricaoBuilder extends ConstrutorDeEntidade<PreInscricao>{
     private InscricaoRepositorio inscricaoRepositorio;
 
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private PreInscricaoServico preInscricaoServico;
 
     @Autowired
     private UsuarioBuilder usuarioBuilder;
@@ -39,10 +42,16 @@ public class PreInscricaoBuilder extends ConstrutorDeEntidade<PreInscricao>{
     private EventoRepositorio eventoRepositorio;
 
     @Autowired
+    private EventoServico eventoServico;
+
+    @Autowired
     private EventoBuilder eventoBuilder;
 
     @Autowired
     private InscricaoMapper mapper;
+
+    @Autowired
+    private EventoMapper eventoMapper;
 
 
     @Override
@@ -67,11 +76,12 @@ public class PreInscricaoBuilder extends ConstrutorDeEntidade<PreInscricao>{
     @Override
     protected PreInscricao persistir(PreInscricao entidade) {
 
-        usuarioRepositorio.save(entidade.getUsuario());
+        usuarioServico.criar(usuarioMapper.toDto(entidade.getUsuario()));
 
-        eventoRepositorio.save(entidade.getEvento());
+        eventoServico.criar(eventoMapper.toDto(entidade.getEvento()));
 
         return inscricaoRepositorio.save(entidade);
+
     }
 
     @Override
@@ -88,6 +98,7 @@ public class PreInscricaoBuilder extends ConstrutorDeEntidade<PreInscricao>{
     public void buildDependencias(PreInscricao preInscricao){
 
         usuarioServico.criar(usuarioMapper.toDto(preInscricao.getUsuario()));
+
         eventoRepositorio.save(preInscricao.getEvento());
 
     }

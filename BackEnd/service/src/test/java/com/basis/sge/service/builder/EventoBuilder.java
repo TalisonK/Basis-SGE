@@ -45,7 +45,7 @@ public class EventoBuilder extends ConstrutorDeEntidade<Evento> {
         TipoEvento tipoEvento = new TipoEvento();
         tipoEvento.setId(1);
         evento.setTipoEvento(tipoEvento);
-        evento.setPerguntas(new ArrayList<EventoPergunta>());
+        evento.setPerguntas(new ArrayList<>());
 
         return evento;
     }

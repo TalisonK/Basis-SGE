@@ -128,8 +128,6 @@ public class UsuarioRecursoIT extends IntTestComum {
 
         preInscricaoServico.criar(inscricaoMapper.toDto(preInscricao));
 
-
-
         getMockMvc().perform(delete("/api/usuarios/" + usuario.getId()))
                 .andExpect(status().isOk());
 
