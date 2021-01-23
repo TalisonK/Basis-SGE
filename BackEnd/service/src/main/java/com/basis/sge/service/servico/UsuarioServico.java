@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,10 +23,10 @@ public class UsuarioServico {
   
     private final PreInscricaoServico preInscricaoServico;
     private final EmailServico emailServico;
-    private PreInscricaoServico inscricaoServico;
+    private final PreInscricaoServico inscricaoServico;
   
     private final UsuarioRepositorio usuarioRepositorio;
-    private InscricaoRepositorio inscricaoRepositorio;
+    private final InscricaoRepositorio inscricaoRepositorio;
   
     private final InscricaoMapper inscricaoMapper;
     private final UsuarioMapper usuarioMapper;
@@ -50,10 +51,11 @@ public class UsuarioServico {
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
         usuario.setChave(UUID.randomUUID().toString());
         Usuario usuarioCriado = usuarioRepositorio.save(usuario);
-        emailServico.sendMail( new EmailDTO(
-                usuarioDTO.getEmail(),
+
+        emailServico.rabbitSendMail( usuarioDTO.getEmail(),
+                "Cadastro efetuado com sucesso",
                 "Seu cadastro foi feito, sua chave é: "+ usuario.getChave(),
-             "Cadastro efetuado com sucesso" ));
+                new ArrayList<>());
 
         return usuarioMapper.toDto(usuarioCriado);
     }
@@ -72,8 +74,7 @@ public class UsuarioServico {
 
     public void deletar(Integer id) {
 
-        inscricaoMapper.toEntity(preInscricaoServico.listar())
-                .forEach((inscricao) -> {if(inscricao.getUsuario().getId().equals(id)) {preInscricaoServico.deletar(inscricao.getId());}});
+        inscricaoRepositorio.deleteByUsuario(usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuario não cadastrado!")));
 
         Usuario usuario = usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuário inexistente"));
 

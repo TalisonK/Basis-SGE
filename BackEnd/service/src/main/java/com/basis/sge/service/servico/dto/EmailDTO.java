@@ -19,17 +19,4 @@ public class EmailDTO implements Serializable {
     private String assunto;
 
     private List<String> copias = new ArrayList<>();
-
-    public EmailDTO(String destinatario, String corpo, String assunto, List<String> copias) {
-        this.destinatario = destinatario;
-        this.corpo = corpo;
-        this.assunto = assunto;
-        this.copias = copias;
-    }
-    public EmailDTO(String destinatario, String corpo, String assunto) {
-        this.destinatario = destinatario;
-        this.corpo = corpo;
-        this.assunto = assunto;
-
-    }
 }
