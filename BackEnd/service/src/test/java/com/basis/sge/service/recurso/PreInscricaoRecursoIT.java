@@ -126,4 +126,22 @@ public class PreInscricaoRecursoIT extends IntTestComum {
                 .andExpect(status().isBadRequest());
     }
 
+//    @Test
+//    public void inscricaoDuplicada() throws Exception {
+//
+//        PreInscricao inscricao = builder.construirEntidade();
+//        builder.buildDependencias(inscricao);
+//
+//        getMockMvc().perform(post("/api/inscricao")
+//                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//                .content(TestUtil.convertObjectToJsonBytes(mapper.toDto(inscricao))))
+//                .andExpect(status().isOk());
+//
+//        getMockMvc().perform(post("/api/inscricao")
+//                .contentType(TestUtil.APPLICATION_JSON_UTF8)
+//                .content(TestUtil.convertObjectToJsonBytes(mapper.toDto(inscricao))))
+//                .andExpect(status().isBadRequest());
+//
+//    }
+
 }

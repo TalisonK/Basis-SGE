@@ -130,7 +130,8 @@ public class PerguntaRecursoIT extends IntTestComum {
         Integer idPergunta = pergunta.getId();
         getMockMvc().perform(delete("/api/pergunta/"+idPergunta))
                 .andExpect(status().isOk());
-        Assert.assertEquals(0,perguntaRepositorio.findAll().size());
+        getMockMvc().perform(delete("/api/pergunta/"+idPergunta))
+                .andExpect(status().isBadRequest());
     }
 
     @Test //TESTE NEGATIVO DELETE

@@ -61,6 +61,13 @@ public class PreInscricaoServico {
         Evento evento = eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(() -> new RegraNegocioException("Evento nao Cadastrado!"));
         TipoSituacao situacao = tsrepo.findById(dto.getIdSituacao()).orElseThrow(() -> new RegraNegocioException("Inscrição inexistente!"));
 
+        incrRepo.findAllByUsuarioId(usuario.getId()).forEach(inscricao -> {
+            if (inscricao.getEvento().getId().equals(evento.getId())){
+                throw new RegraNegocioException("Usuario já cadastrado no evento");
+            }
+        });
+
+
         incrRepo.save(preInscricao);
 
         System.out.println("Enviando Email!");
