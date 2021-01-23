@@ -11,6 +11,7 @@ import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import com.basis.sge.service.util.TestUtil;
 import org.junit.Assert;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -62,6 +63,7 @@ public class InscricaoRespostaRecursoIt extends IntTestComum {
         inscricaoRepositorio.deleteAll();
 
     }
+
 
     @Test
     public void listaTest() throws Exception {
