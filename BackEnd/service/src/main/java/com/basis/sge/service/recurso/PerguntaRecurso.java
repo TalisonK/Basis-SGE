@@ -38,7 +38,7 @@ public class PerguntaRecurso {
     @PostMapping
     public ResponseEntity<PerguntaDTO> criar(@RequestBody PerguntaDTO perguntaDTO) {
         PerguntaDTO perguntaDtoCriado = perguntaServico.criar(perguntaDTO);
-        return ResponseEntity.ok(perguntaDtoCriado);
+        return ResponseEntity.status(201).body(perguntaDtoCriado);
     }
 
     @PutMapping

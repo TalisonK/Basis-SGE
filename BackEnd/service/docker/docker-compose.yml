@@ -5,3 +5,10 @@ services:
       file: postgresql.yml
       service: sge-postgresql
     container_name: sge-postgresql
+
+  sge-rabbitmq:
+    extends:
+      file: rabbitmq.yml
+      service: rabbitmq
+    container_name: sge-rabbitmq
+

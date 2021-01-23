@@ -3,15 +3,11 @@ package com.basis.sge.service.recurso;
 import com.basis.sge.service.builder.EventoPerguntaBuilder;
 import com.basis.sge.service.builder.InscricaoRespostaBuilder;
 import com.basis.sge.service.dominio.InscricaoResposta;
-import com.basis.sge.service.repositorio.EventoPerguntaRepositorio;
-import com.basis.sge.service.repositorio.InscricaoRespostaRepositorio;
-import com.basis.sge.service.repositorio.PerguntaRepositorio;
-import com.basis.sge.service.repositorio.UsuarioRepositorio;
+import com.basis.sge.service.repositorio.*;
 import com.basis.sge.service.servico.mapper.InscricaoRespostaMapper;
 import com.basis.sge.service.util.IntTestComum;
 import com.basis.sge.service.builder.EventoBuilder;
 import com.basis.sge.service.dominio.Evento;
-import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import com.basis.sge.service.util.TestUtil;
 import org.junit.Assert;
@@ -54,6 +50,9 @@ public class InscricaoRespostaRecursoIt extends IntTestComum {
     @Autowired
     private EventoPerguntaRepositorio eventoPerguntaRepositorio;
 
+    @Autowired
+    private InscricaoRepositorio inscricaoRepositorio;
+
     @BeforeEach
     public void inicializar() {
         inscricaoRespostaRepositorio.deleteAll();
@@ -61,6 +60,8 @@ public class InscricaoRespostaRecursoIt extends IntTestComum {
         perguntaRepositorio.deleteAll();
         eventoRepositorio.deleteAll();
         usuarioRepositorio.deleteAll();
+        inscricaoRepositorio.deleteAll();
+
     }
 
 

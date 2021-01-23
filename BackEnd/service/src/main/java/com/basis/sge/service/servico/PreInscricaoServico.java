@@ -12,6 +12,8 @@ import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.InscricaoMapper;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,10 +63,18 @@ public class PreInscricaoServico {
         Evento evento = eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(() -> new RegraNegocioException("Evento nao Cadastrado!"));
         TipoSituacao situacao = tsrepo.findById(dto.getIdSituacao()).orElseThrow(() -> new RegraNegocioException("Inscrição inexistente!"));
 
+        incrRepo.findAllByUsuarioId(usuario.getId()).forEach(inscricao -> {
+            if (inscricao.getEvento().getId().equals(evento.getId())){
+                throw new RegraNegocioException("Usuario já cadastrado no evento");
+            }
+        });
+
         incrRepo.save(preInscricao);
 
-        System.out.println("Enviando Email!");
-        //emailServico.sendMail(new EmailDTO(usuario.getEmail(), "Inscrição bem sucedida, sua chave para acesso e atualização é: " + usuario.getChave(), "Inscrição efetuado com sucesso"));
+        emailServico.rabbitSendMail(usuario.getEmail(),
+                    "Inscrição efetuado com sucesso",
+                     "Inscrição bem sucedida, sua chave para acesso e atualização é: " + usuario.getChave(),
+                            new ArrayList<>());
 
         return mapper.toDto(preInscricao);
     }
@@ -77,11 +87,9 @@ public class PreInscricaoServico {
 
         inscricaoRespostaMapper.toEntity(irServico.listar()).forEach(inscricaoResposta -> {
             if (inscricaoResposta.getInscricao().getId().equals(id)) {
-                //todo Na espera de joao
-                //irServico.deletar(inscricaoResposta.getResposta(), inscricaoResposta.getInscricao());
+                irServico.deletar(inscricaoResposta.getPergunta().getId(), inscricaoResposta.getInscricao().getId());
             }
         });
-
 
         try{
             incrRepo.deleteById(id);

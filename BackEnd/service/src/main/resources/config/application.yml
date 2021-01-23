@@ -1,8 +1,8 @@
 application:
     appName: sge
     mail:
-        endereco-remetente:  kenouen1@gmail.com
-        nome-remetente: Grupo 5
+        endereco-remetente: kenouen1@gmail.com
+        nome-remetente: Grupo-5
 
 spring:
     application:
@@ -47,5 +47,15 @@ spring:
                         enable: true
                         required: true
                     quitwait: false
+
+    rabbitmq:
+        username: mqadmin
+        password: senhamqadmin123
+
+    cloud:
+        stream:
+            bindings:
+                mailer:
+                    destination: mailer
 server:
     port: 8080
