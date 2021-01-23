@@ -1,0 +1,11 @@
+version: '2'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    environment:
+      RABBITMQ_ERLANG_COOKIE: O_cookie_secreto_mais_seguro_que_existe
+      RABBITMQ_DEFAULT_USER: mqadmin
+      RABBITMQ_DEFAULT_PASS: senhamqadmin123
+    ports:
+      - 5672:5672
+      - 15672:15672

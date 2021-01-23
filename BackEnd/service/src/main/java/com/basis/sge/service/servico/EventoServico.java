@@ -52,21 +52,22 @@ public class EventoServico {
     }
 
     public EventoDTO criar(EventoDTO eventoDTO) {
-            validaEvento(eventoDTO);
-            validaTitulo(eventoDTO.getTitulo());
-            eventoDTO.setId(null);
-            Evento evento = eventoMapper.toEntity(eventoDTO);
+        validaEvento(eventoDTO);
+        validaTitulo(eventoDTO.getTitulo());
+        eventoDTO.setId(null);
+        Evento evento = eventoMapper.toEntity(eventoDTO);
 
-            List<EventoPergunta> perguntas = evento.getPerguntas();
+        List<EventoPergunta> perguntas = evento.getPerguntas();
 
-            evento.setPerguntas(new ArrayList<>());
-            eventoRepositorio.save(evento);
+        evento.setPerguntas(new ArrayList<>());
+        eventoRepositorio.save(evento);
 
         if(perguntas!=null && !perguntas.isEmpty()) {
             perguntas.forEach(pergunta -> {
                 pergunta.setEvento(evento);
             });
             eventoPerguntaRepositorio.saveAll(perguntas);
+        }
 
         return eventoMapper.toDto(evento);
     }
@@ -95,15 +96,15 @@ public class EventoServico {
     public void notificarInscritos(String titulo,Integer id) {
 
         List<PreInscricao> inscricoes = inscricaoRepositorio.findAllByEventoId(id);
-        List<String> distinatarios = new ArrayList();
+        List<String> destinatarios = new ArrayList();
         inscricoes.forEach((inscricao) -> {
             Usuario usuarioInscrito = inscricao.getUsuario();
-            distinatarios.add(usuarioInscrito.getEmail());
+            destinatarios.add(usuarioInscrito.getEmail());
         });
-        EmailDTO mail = new EmailDTO("kenouen1@gmail.com",
+
+        emailServico.rabbitSendMail("kenouen1@gmail.com",
                 " O evento " + titulo + " foi atualizado, verifique sua inscrição.",
-                "Evento Atualizado",distinatarios);
-        emailServico.sendMail(mail);
+                "Evento Atualizado",destinatarios);
     }
 
     // valida dados de evento, com exceção das datas
@@ -146,5 +147,4 @@ public class EventoServico {
             throw new RegraNegocioException("Evento Não Existe");
         }
     }
-
 }
