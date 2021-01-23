@@ -26,9 +26,9 @@ import java.util.List;
 public class EventoServico {
 
     private final EventoRepositorio eventoRepositorio;
-  
+
     private final EventoPerguntaRepositorio eventoPerguntaRepositorio;
-  
+
     private final TipoEventoRepositorio tipoEventoRepositorio;
 
     private final EventoMapper eventoMapper;
