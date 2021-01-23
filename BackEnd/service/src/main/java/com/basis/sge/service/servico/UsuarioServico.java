@@ -1,6 +1,5 @@
 package com.basis.sge.service.servico;
 
-import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.UsuarioRepositorio;

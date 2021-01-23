@@ -5,6 +5,7 @@ import com.basis.sge.service.builder.PerguntaBuilder;
 import com.basis.sge.service.builder.PreInscricaoBuilder;
 import com.basis.sge.service.builder.UsuarioBuilder;
 import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.EventoPergunta;
 import com.basis.sge.service.dominio.Pergunta;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
@@ -28,6 +29,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -71,10 +75,11 @@ public class UsuarioRecursoIT extends IntTestComum {
 
     @Autowired
     private InscricaoMapper inscricaoMapper;
-
+  
 
     @BeforeEach
     public void inicializar() {
+        //apagar repositorios.
         usuarioRepositorio.deleteAll();
     }
 
@@ -83,6 +88,7 @@ public class UsuarioRecursoIT extends IntTestComum {
         getMockMvc().perform(get("/api/usuarios"))
                 .andExpect(status().isOk());
     }
+  
     @Test
     public void obterPorId() throws Exception {
 
@@ -219,5 +225,4 @@ public class UsuarioRecursoIT extends IntTestComum {
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
                 .andExpect(status().isBadRequest());
     }
-
 }
