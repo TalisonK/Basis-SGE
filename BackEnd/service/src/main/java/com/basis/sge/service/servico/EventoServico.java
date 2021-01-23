@@ -26,9 +26,9 @@ import java.util.List;
 public class EventoServico {
 
     private final EventoRepositorio eventoRepositorio;
-  
+
     private final EventoPerguntaRepositorio eventoPerguntaRepositorio;
-  
+
     private final TipoEventoRepositorio tipoEventoRepositorio;
 
     private final EventoMapper eventoMapper;
@@ -67,6 +67,7 @@ public class EventoServico {
                 pergunta.setEvento(evento);
             });
             eventoPerguntaRepositorio.saveAll(perguntas);
+        }
 
         return eventoMapper.toDto(evento);
     }
@@ -148,3 +149,4 @@ public class EventoServico {
     }
 
 }
+

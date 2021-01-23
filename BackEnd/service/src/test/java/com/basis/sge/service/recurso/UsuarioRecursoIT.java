@@ -1,8 +1,11 @@
 package com.basis.sge.service.recurso;
 
+import com.basis.sge.service.builder.EventoBuilder;
+import com.basis.sge.service.builder.PerguntaBuilder;
 import com.basis.sge.service.builder.PreInscricaoBuilder;
 import com.basis.sge.service.builder.UsuarioBuilder;
 import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.EventoPergunta;
 import com.basis.sge.service.dominio.Pergunta;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
@@ -19,6 +22,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -33,21 +39,26 @@ public class UsuarioRecursoIT extends IntTestComum {
     private UsuarioBuilder usuarioBuilder;
 
     @Autowired
+    private UsuarioMapper usuarioMapper;
+
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
+
+    @Autowired
     private PerguntaBuilder perguntaBuilder;
 
     @Autowired
     private PreInscricaoBuilder preInscricaoBuilder;
 
     @Autowired
-    private UsuarioMapper usuarioMapper;
-
-    @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private EventoBuilder eventoBuilder;
 
 
     @BeforeEach
     public void inicializar() {
+        //apagar repositorios.
         usuarioRepositorio.deleteAll();
+
     }
 
     @Test
@@ -88,20 +99,23 @@ public class UsuarioRecursoIT extends IntTestComum {
                 .andExpect(status().isOk());
     }
 
-
     @Test
     public void deletarTest() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
-        Pergunta pergunta = perguntaBuilder.construir();
+        List<Pergunta> perguntaList = new ArrayList<>();
+        perguntaList.add(perguntaBuilder.construirEntidade());
         Evento evento = eventoBuilder.construir();
         PreInscricao inscricao = preInscricaoBuilder.construir();
+        inscricao.setUsuario(usuario);
+
 
         getMockMvc().perform(delete("/api/usuarios/"+usuario.getId()))
                 .andExpect(status().isOk());
 
         Assert.assertEquals(0, usuarioRepositorio.findAll().size());
     }
+
 
     @Test
     public void obterPorIdInexistente() throws Exception{

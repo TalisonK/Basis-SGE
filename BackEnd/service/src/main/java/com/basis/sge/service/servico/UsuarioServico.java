@@ -1,6 +1,5 @@
 package com.basis.sge.service.servico;
 
-import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.UsuarioRepositorio;
@@ -54,7 +53,7 @@ public class UsuarioServico {
         emailServico.sendMail( new EmailDTO(
                 usuarioDTO.getEmail(),
                 "Seu cadastro foi feito, sua chave é: "+ usuario.getChave(),
-                "Cadastro efetuado com sucesso" ));
+             "Cadastro efetuado com sucesso" ));
 
         return usuarioMapper.toDto(usuarioCriado);
     }
