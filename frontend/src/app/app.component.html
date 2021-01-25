@@ -1,0 +1,35 @@
+<block-ui>
+    <div class="layout-wrapper"
+    [ngClass]="{ 'layout-compact': layoutCompact }"
+    (click)="onLayoutClick()">
+    <div #layoutContainer
+        class="layout-container"
+        [ngClass]="{
+            'menu-layout-static': !menuService.isOverlay(),
+            'menu-layout-overlay': menuService.isOverlay(),
+            'layout-menu-overlay-active': menuService.overlayMenuActive,
+            'menu-layout-horizontal': menuService.isHorizontal(),
+            'menu-layout-slim': menuService.isSlim(),
+            'layout-menu-static-inactive': menuService.staticMenuDesktopInactive,
+            'layout-menu-static-active': menuService.staticMenuMobileActive
+        }">
+        <app-topbar></app-topbar>
+
+        <div class="layout-menu" [ngClass]="{ 'layout-menu-dark': darkMenu }" (click)="onMenuClick($event)">
+            <p-scrollPanel #scrollPanel [style]="{ height: '100%' }">
+                <app-menu></app-menu>
+            </p-scrollPanel>
+        </div>
+
+        <div class="layout-main">
+            <breadcrumb></breadcrumb>
+            <div class="layout-content">
+                <router-outlet></router-outlet>
+                <app-footer></app-footer>
+            </div>
+        </div>
+        <basis-page-notification></basis-page-notification>
+        <div class="layout-mask"></div>
+    </div>
+</div>
+</block-ui>
