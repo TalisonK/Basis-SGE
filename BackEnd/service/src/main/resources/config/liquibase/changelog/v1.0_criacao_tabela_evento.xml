@@ -49,6 +49,9 @@
             <column name="titulo" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="chave_usuario" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
             <column name="data_inicio" type="timestamp">
                 <constraints nullable="false"/>
             </column>
