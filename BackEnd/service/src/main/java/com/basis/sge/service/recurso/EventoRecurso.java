@@ -43,6 +43,7 @@ public class EventoRecurso {
         EventoDTO eventoDtoCriado = eventoServico.criar(eventodto);
         return ResponseEntity.created(URI.create("/api/evento")).body(eventoDtoCriado);
     }
+
     @PutMapping
     public ResponseEntity<EventoDTO> atualizar(@RequestBody @Valid EventoDTO eventodto) {
         EventoDTO eventoDtoAtualizado = eventoServico.atualizar(eventodto);
