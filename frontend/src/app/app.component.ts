@@ -40,6 +40,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     @ViewChild('scrollPanel', { static: true }) layoutMenuScrollerViewChild: ScrollPanel;
 
+    
     rippleInitListener: EventListenerOrEventListenerObject;
 
     rippleMouseDownListener: EventListenerOrEventListenerObject;
