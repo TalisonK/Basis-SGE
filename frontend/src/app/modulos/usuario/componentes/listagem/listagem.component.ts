@@ -12,8 +12,6 @@ export class ListagemComponent implements OnInit {
 
 
   usuarios: Usuario[] = [];
-
-
   
   constructor( private servico: UsuarioService) { }
 

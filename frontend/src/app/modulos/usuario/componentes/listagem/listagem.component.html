@@ -48,21 +48,22 @@
                 </th>        
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-customer>
+        <ng-template pTemplate="body" let-usuario>
             <tr>
                 <td>
-                    {{customer.name}}
+                    {{usuario.nome}}
                 </td>
                 <td>
-                    <img src="assets/showcase/images/demo/flag/flag_placeholder.png" [class]="'flag flag-' + customer.country.code" width="30">
-                    <span class="image-text">{{customer.country.name}}</span>
+                    {{usuario.cpf}}
                 </td>
                 <td>
-                    <img [alt]="customer.representative.name" src="assets/showcase/images/demo/avatar/{{customer.representative.image}}" width="32" style="vertical-align: middle" />
-                    <span class="image-text">{{customer.representative.name}}</span>
+                    {{usuario.email}}
                 </td>
                 <td>
-                    {{customer.date | date: 'dd/MM/yyyy'}}
+                    {{usuario.telefone}}
+                </td>
+                <td>
+                    {{usuario.dataNascimento | date: 'dd/MM/yyyy'}}
                 </td>
             </tr>
         </ng-template>

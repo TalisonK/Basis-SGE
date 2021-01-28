@@ -13,6 +13,6 @@ export class UsuarioService {
 
   getUsuarios(): Observable<Usuario[]>{
 
-    return this.http.get<Usuario[]>(`$(this.url)`);
+    return this.http.get<Usuario[]>(`${this.url}`);
   }
 }
