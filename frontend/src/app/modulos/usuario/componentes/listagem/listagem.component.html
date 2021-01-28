@@ -1,6 +1,10 @@
 <div class="card">
     <h5>Lista de Usuários</h5>
     <p>Através dos filtros navegue pela lista de Usuários.</p>
+    <div class="p-d-flex p-jc-end">
+        <button routerLink="formulario" pButton type="button" label="Cadastrar Usuário" ></button>
+    </div>
+    
     <p-table #dt1 [value]="usuarios" dataKey="id"
         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
         [paginator]="true" currentPageReportTemplate="Exibindo {first} a {last} de {totalRecords} usuários"

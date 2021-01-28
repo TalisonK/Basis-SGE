@@ -7,5 +7,5 @@ export class Usuario{
     telefone: string;
     dataNascimento: Date;
 
-    constructor(){}
+    
 }

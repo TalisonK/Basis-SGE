@@ -19,6 +19,4 @@ export class UsuarioService {
   criarUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(this.url, usuario);
   }
-
-
 }
