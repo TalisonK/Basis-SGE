@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Pergunta } from 'src/app/dominios/pergunta';
+import { PerguntaService } from '../../services/pergunta-service';
 
 @Component({
   selector: 'app-listagem',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListagemComponent implements OnInit {
 
-  constructor() { }
+  perguntas: Pergunta[] = [];
+
+  constructor( private servico: PerguntaService) { }
 
   ngOnInit(): void {
+    this.buscarPerguntas();
   }
 
+  private buscarPerguntas(){
+    this.servico.getPerguntas()
+    .subscribe((perguntas: Pergunta[]) => {
+    this.perguntas = perguntas;
+    });
+  }
 }
