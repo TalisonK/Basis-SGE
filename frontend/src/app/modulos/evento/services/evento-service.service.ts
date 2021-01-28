@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Evento} from 'src/app/dominios/evento';
 import { environment } from 'src/environments/environment';
+import { EventoListagem } from './dto/evento-listagem';
 
 
 @Injectable()
@@ -12,9 +13,9 @@ export class EventoService{
 
   constructor( private http: HttpClient) { }
 
-  getEventos(): Observable<Evento[]>{
+  getEventos(): Observable<EventoListagem[]>{
 
-    return this.http.get<Evento[]>(`${this.url}`);
+    return this.http.get<EventoListagem[]>(`${this.url}`);
   }
 }
 

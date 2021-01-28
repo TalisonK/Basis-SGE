@@ -8,7 +8,9 @@ import com.basis.sge.service.dominio.EventoPergunta;
 import com.basis.sge.service.repositorio.*;
 import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.EventoDTO;
+import com.basis.sge.service.servico.dto.EventoListagemDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
+import com.basis.sge.service.servico.mapper.EventoListagemMapper;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -36,11 +38,12 @@ public class EventoServico {
 
     private final UsuarioRepositorio usuarioRepositorio;
 
+    private final EventoListagemMapper eventoListagemMapper;
 
-    public List<EventoDTO> listar() {
+    public List<EventoListagemDTO> listar() {
         List<Evento> listaEvento = eventoRepositorio.findAll();
 
-        return eventoMapper.toDto(listaEvento);
+        return eventoListagemMapper.toDto(listaEvento);
     }
 
     public EventoDTO obterPorId(Integer id){

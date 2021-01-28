@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Evento} from 'src/app/dominios/evento';
+import { EventoListagem } from '../../services/dto/evento-listagem';
 import { EventoService } from '../../services/evento-service.service';
 @Component({
   selector: 'app-lista-evento',
@@ -8,7 +9,7 @@ import { EventoService } from '../../services/evento-service.service';
 })
 export class ListaEventoComponent implements OnInit {
 
-  eventos: Evento[] = [];
+  eventos: EventoListagem[] = [];
 
   constructor(private servico: EventoService) {}
 
@@ -18,7 +19,7 @@ export class ListaEventoComponent implements OnInit {
   }
   private buscarEventos(){
     this.servico.getEventos()
-    .subscribe((eventos: Evento[]) =>{
+    .subscribe((eventos: EventoListagem[]) =>{
       this.eventos = eventos;
     });
   }

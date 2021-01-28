@@ -2,6 +2,7 @@ package com.basis.sge.service.recurso;
 
 import com.basis.sge.service.servico.EventoServico;
 import com.basis.sge.service.servico.dto.EventoDTO;
+import com.basis.sge.service.servico.dto.EventoListagemDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,7 +28,7 @@ public class EventoRecurso {
 
 
     @GetMapping
-    public ResponseEntity<List<EventoDTO>> listar() {
+    public ResponseEntity<List<EventoListagemDTO>> listar() {
         return ResponseEntity.ok(eventoServico.listar());
     }
 
