@@ -1,1 +1,17 @@
 <p>formulario works!</p>
+<form [formGroup]="formUsuario">
+
+    <div class="p-grid p-dir-col">
+  
+      <input type="text" [(ngModel)]="usuario.nome" placeholder="Nome Usuário" formControlName="nome" pInputText />
+      <div *ngIf="formUsuario.get('nome').invalid">Nome inválido</div>
+  
+      <input type="text" [(ngModel)]="usuario.cpf" placeholder="CPF" formControlName="cpf" pInputText />
+      <input type="text" [(ngModel)]="usuario.email" placeholder="Email" formControlName="email" pInputText />
+      <input type="text" [(ngModel)]="usuario.telefone" placeholder="Telefone" formControlName="telefone" pInputText />
+      <input type="text" [(ngModel)]="usuario.dataNascimento" placeholder="Data de Nascimento" formControlName="dataNascimento" pInputText />
+    </div>
+  
+  </form>
+  
+  <button (click)="criar()" pButton type="button" label="Cadastrar" ></button>

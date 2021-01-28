@@ -7,6 +7,7 @@ import { ListagemComponent } from './componentes/listagem/listagem.component';
 import { UsuarioService } from './services/usuario.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +19,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     UsuarioRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     HttpClientModule
   ]
