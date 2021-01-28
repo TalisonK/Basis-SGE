@@ -33,8 +33,8 @@ public class EventoDTO implements Serializable {
     @Valid
     private LocalDateTime dataFim;
 
-    @NotNull
-    private String chaveUsuario;
+
+   // private String chaveUsuario;
 
     private String descricao;
 

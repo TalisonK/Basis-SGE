@@ -41,7 +41,7 @@ public class EventoBuilder extends ConstrutorDeEntidade<Evento> {
     public Evento construirEntidade() throws Exception {
 
         Evento evento = new Evento();
-
+        /*
         if (!usuarioRepositorio.existsByCpf("25258218074")){
             Usuario usuario = new Usuario();
             usuario.setTelefone("839999900000");
@@ -54,7 +54,7 @@ public class EventoBuilder extends ConstrutorDeEntidade<Evento> {
             usuarioRepositorio.save(usuario);
         }else {
             evento.setChaveUsuario("a57sr28s3q28d7a");
-        }
+        }*/
 
         evento.setTitulo("Show do Zé");
         evento.setDataInicio(LocalDateTime.now());

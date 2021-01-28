@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FormEventoComponent } from './form-evento/form-evento.component';
-import { ListaEventoComponent} from './lista-evento/lista-evento.component'
+import { FormEventoComponent } from './components/form-evento/form-evento.component';
+import { ListaEventoComponent} from './components/lista-evento/lista-evento.component'
 
 const routes: Routes = [
   {

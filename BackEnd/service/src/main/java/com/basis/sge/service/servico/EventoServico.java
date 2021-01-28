@@ -52,7 +52,7 @@ public class EventoServico {
 
     public EventoDTO criar(EventoDTO eventoDTO) {
         validaEvento(eventoDTO);
-        validaChaveUsuario(eventoDTO.getChaveUsuario());
+        //validaChaveUsuario(eventoDTO.getChaveUsuario());
         validaTitulo(eventoDTO.getTitulo());
         eventoDTO.setId(null);
         Evento evento = eventoMapper.toEntity(eventoDTO);

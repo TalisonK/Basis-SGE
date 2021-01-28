@@ -55,14 +55,14 @@ public class EventoRecursoIt extends IntTestComum{
     @Test
     public void listaTest() throws Exception {
         eventoBuilder.construir();
-        getMockMvc().perform(get("/api/evento")).andExpect(status().isOk());
+        getMockMvc().perform(get("/api/eventos")).andExpect(status().isOk());
     }
 
     @Test
     public void criarTest() throws Exception {
         Evento evento = eventoBuilder.construirEntidade();
 
-        getMockMvc().perform(post("/api/evento")
+        getMockMvc().perform(post("/api/eventos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(evento))))
                 .andExpect(status().isCreated());
@@ -76,7 +76,7 @@ public class EventoRecursoIt extends IntTestComum{
         Integer idEvento = evento.getId();
         evento.setTitulo("Atualizado");
 
-        getMockMvc().perform(put("/api/evento")
+        getMockMvc().perform(put("/api/eventos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(evento))))
                 .andExpect(status().isOk());
@@ -87,7 +87,7 @@ public class EventoRecursoIt extends IntTestComum{
     public void deletarTest() throws Exception {
         Evento evento = eventoBuilder.construir();
         Integer idEvento = evento.getId();
-        getMockMvc().perform(delete("/api/evento/"+idEvento)).andExpect(status().isOk());
+        getMockMvc().perform(delete("/api/eventos/"+idEvento)).andExpect(status().isOk());
         Assert.assertEquals(0,eventoRepositorio.findAll().size());
     }
 
@@ -95,7 +95,7 @@ public class EventoRecursoIt extends IntTestComum{
     public void obterPorIdTest() throws Exception {
         Evento evento = eventoBuilder.construir();
         Integer idEvento = evento.getId();
-        getMockMvc().perform(get("/api/evento/"+idEvento)).andExpect(status().isOk());
+        getMockMvc().perform(get("/api/eventos/"+idEvento)).andExpect(status().isOk());
 
     }
     //=========================================================================================================
@@ -111,7 +111,7 @@ public class EventoRecursoIt extends IntTestComum{
         perguntaList.add(eventoPergunta);
         evento.setPerguntas(perguntaList);
 
-        getMockMvc().perform(post("/api/evento")
+        getMockMvc().perform(post("/api/eventos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(evento))))
                 .andExpect(status().isCreated());
@@ -125,7 +125,7 @@ public class EventoRecursoIt extends IntTestComum{
         Evento evento = eventoBuilder.construir();
         Evento eventoNovo = eventoBuilder.construirEntidade();
         eventoNovo.setTitulo(evento.getTitulo());
-        getMockMvc().perform(post("/api/evento")
+        getMockMvc().perform(post("/api/eventos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(eventoNovo))))
                 .andExpect(status().isBadRequest());
@@ -141,7 +141,7 @@ public class EventoRecursoIt extends IntTestComum{
         Evento eventoAt = eventoBuilder.persistir(eventoNovo);
         eventoAt.setTitulo(evento.getTitulo());
 
-        getMockMvc().perform(put("/api/evento")
+        getMockMvc().perform(put("/api/eventos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(eventoAt))))
                 .andExpect(status().isBadRequest());
@@ -155,7 +155,7 @@ public class EventoRecursoIt extends IntTestComum{
         Evento evento = eventoBuilder.construirEntidade();
         evento.setValor(-10.0);
         evento.setQuantVagas(-1);
-        getMockMvc().perform(post("/api/evento")
+        getMockMvc().perform(post("/api/eventos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(evento))))
                 .andExpect(status().isBadRequest());
@@ -166,7 +166,7 @@ public class EventoRecursoIt extends IntTestComum{
         Evento evento = eventoBuilder.construir();
         Integer idEventoInvalido = evento.getId() + 2;
 
-        getMockMvc().perform(get("/api/evento/"+idEventoInvalido)).andExpect(status().isBadRequest());
+        getMockMvc().perform(get("/api/eventos/"+idEventoInvalido)).andExpect(status().isBadRequest());
 
     }
 
@@ -176,7 +176,7 @@ public class EventoRecursoIt extends IntTestComum{
         Evento evento = eventoBuilder.construir();
         Integer idEventoInvalido = evento.getId() + 2;
 
-        getMockMvc().perform(delete("/api/evento/"+idEventoInvalido)).andExpect(status().isBadRequest());
+        getMockMvc().perform(delete("/api/eventos/"+idEventoInvalido)).andExpect(status().isBadRequest());
 
     }
 
@@ -184,7 +184,7 @@ public class EventoRecursoIt extends IntTestComum{
     public void criarComTipoEventoInvalido() throws Exception {
         Evento evento = eventoBuilder.construirEntidade();
         evento.getTipoEvento().setId(9);
-        getMockMvc().perform(post("/api/evento")
+        getMockMvc().perform(post("/api/eventos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(evento))))
                 .andExpect(status().isBadRequest());

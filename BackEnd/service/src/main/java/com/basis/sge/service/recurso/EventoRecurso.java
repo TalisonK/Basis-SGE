@@ -19,7 +19,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api/evento")
+@RequestMapping("/api/eventos")
 @AllArgsConstructor
 public class EventoRecurso {
 
