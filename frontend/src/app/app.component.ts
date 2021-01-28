@@ -4,7 +4,8 @@ import { MenusService, MenuOrientation } from '@nuvem/primeng-components';
 
 @Component({
     selector: 'app-root',
-    templateUrl: './app.component.html'
+    templateUrl: './app.component.html',
+    styleUrls:["./app.component.css"]
 })
 export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
@@ -51,7 +52,8 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
         this.menuService.itens = [
             { label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] },
-            { label: 'Usuarios', icon: 'dashboard', routerLink: ['/usuarios'] }
+            { label: 'Usuarios', icon: 'dashboard', routerLink: ['/usuarios'] },
+            { label: 'inscricao', icon: 'loupe', routerLink: ['/inscricao'] }
         ];
     }
 

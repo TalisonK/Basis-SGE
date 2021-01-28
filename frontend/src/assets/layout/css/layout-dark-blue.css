@@ -813,7 +813,7 @@
   vertical-align: middle;
   width: 200px;
   height: 30px;
-  background: url("../images/logo.png") top left no-repeat;
+  background: url("../images/basis.png") top left no-repeat;
 }
 .landing-wrapper #header .header-top #menu {
   float: right;
@@ -1155,7 +1155,7 @@
 }
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .landing-wrapper .header .header-top .logo {
-    background: url("../images/logo2x.png") top left no-repeat;
+    background: url("../images/basis.png") top left no-repeat;
     background-size: 200px 30px;
   }
 }
@@ -1201,12 +1201,15 @@ body a {
   -moz-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
 }
 .layout-container .topbar .logo {
-  display: inline-block;
-  vertical-align: middle;
-  width: 200px;
-  height: 30px;
-  background: url("../images/logo2x.png") top left no-repeat;
-  background-size: 200px 30px;
+  display: block;
+  vertical-align: auto;
+  position: absolute;
+  top: 4px;
+  left: 30px;
+  width: 210px;
+  height: 80px;
+  background: url("../images/basis-branco.png") top left no-repeat;
+  background-size: 180px 65px;
 }
 .layout-container .topbar .topbar-left {
   box-sizing: border-box;
