@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { PerguntaRoutingModule } from './pergunta-routing.module';
 import { FormularioComponent } from './componentes/formulario/formulario.component';
-import { ListagemComponent } from '../usuario/listagem/listagem.component';
-import { PerguntaService } from './services/pergunta-service';
+import { ListagemComponent } from './componentes/listagem/listagem.component';
+import { PerguntaService } from './services/pergunta.service';
 import { HttpClientModule } from '@angular/common/http';
-import { SharedModule } from 'primeng';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [FormularioComponent, ListagemComponent],

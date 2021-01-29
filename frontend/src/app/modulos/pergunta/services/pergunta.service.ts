@@ -13,7 +13,7 @@ export class PerguntaService{
 
   getPerguntas(): Observable<Pergunta[]>{
 
-    return this.http.get<Pergunta[]>(`$(this.url)`);
+    return this.http.get<Pergunta[]>(`${this.url}`);
   }
 }
 

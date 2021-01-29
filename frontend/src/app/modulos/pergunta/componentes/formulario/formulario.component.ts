@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Pergunta } from 'src/app/dominios/pergunta';
+import { PerguntaService } from '../../services/pergunta.service';
 
 @Component({
   selector: 'app-formulario',
@@ -7,9 +9,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormularioComponent implements OnInit {
 
-  constructor() { }
+  formPergunta: FormGroup;
+  pergunta = new Pergunta();
+
+  constructor( private fb: FormBuilder, private perguntaService: PerguntaService) { }
 
   ngOnInit(): void {
+
+    this.formPergunta = this.fb.group({
+      titulo: ['', Validators.minLength(1)],
+      obrigatoriedade: '',
+    })
   }
 
+  criar(){
+    if(this.formPergunta.invalid){
+      alert('Inválido');
+      return;
+    }
+
+    this.perguntaService.criarPergunta(this.pergunta).subscribe(perguntas => {
+      console.log('salvou', perguntas);
+      alert('Pergunta salva')
+    }, (erro: HttpErrorResponse) => {
+      alert(erro.message);
+    })
+  }
 }

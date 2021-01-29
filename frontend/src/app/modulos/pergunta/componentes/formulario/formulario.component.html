@@ -1,38 +1,15 @@
-<!--<p>formulario works!</p>-->
-<div class="footer">
-    <div class="card clearfix">
-        <app-version-tag cssClass="footer-text-left"></app-version-tag>
-        <span class="footer-text-left">formulario works!</span>
-        <span class="footer-text-left">
+<p>Formulario Works!</p>
+<form [formGroup]="formPergunta">
 
-            <h3>formulario works!</h3>
-            <span class="p-float-label">
-                <input id="float-input" type="text" pInputText placeholder="Pergunta" /> 
-            </span>
-            <div class="p-field p-col-12 p-md-4">
-                <label for="time">Time</label>
-                <p-calendar [(ngModel)]="date7" [showTime]="true" inputId="time"></p-calendar>
-            </div>
+    <div class="p-grid p-dir-col">
 
-            <div class="p-field p-col-12 p-md-4">
-                <label for="time">Time</label>
-                <p-calendar [(ngModel)]="date7" [showTime]="true" inputId="time"></p-calendar>
-            </div>
+      <input type="text" [(ngModel)]="pergunta.nome" placeholder="Pergunta" formControlName="nome" pInputText />
+      <div *ngIf="formPergunta.get('nome').invalid">Pergunta invalida</div>
 
-            <span class="p-float-label">
-                <input id="float-input" type="text" pInputText placeholder="Descrição" /> 
-            </span>
-            <span class="p-float-label">
-                <input id="float-input" type="text" pInputText placeholder="Local" /> 
-            </span>
-
-        </span>
-        <span class="footer-text-right">
-            <span class="ui-icon ui-icon-copyright"></span>
-            <span>Sistema de Gerenciamento de Eventos!</span>
-        </span>
-
-
-
+      <input type="text" [(ngModel)]="pergunta.titulo" placeholder="Titulo" formControlName="titulo" pInputText />
+      <input type="text" [(ngModel)]="pergunta.obrigatoriedade" placeholder="Obrigatoriedade" formControlName="obrigatoriedade" pInputText />
     </div>
-</div> 
+
+  </form>
+
+  <button (click)="criar()" pButton type="button" label="Cadastrar" ></button>

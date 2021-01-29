@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Pergunta } from 'src/app/dominios/pergunta';
-import { PerguntaService } from '../../services/pergunta-service';
+import { PerguntaService } from '../../services/pergunta.service';
 
 @Component({
   selector: 'app-listagem',
@@ -19,8 +19,8 @@ export class ListagemComponent implements OnInit {
 
   private buscarPerguntas(){
     this.servico.getPerguntas()
-    .subscribe((perguntas: Pergunta[]) => {
-    this.perguntas = perguntas;
+    .subscribe((pergunta: Pergunta[]) => {
+    this.perguntas = pergunta;
     });
   }
 }
