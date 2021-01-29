@@ -22,20 +22,20 @@ export class FormularioComponent implements OnInit {
     this.formPergunta = this.fb.group({
       titulo: ['', Validators.minLength(1)],
       obrigatoriedade: '',
-    })
+    });
   }
 
   criar(){
     if(this.formPergunta.invalid){
-      alert('Inválido');
+      alert('Pergunta Inválida');
       return;
     }
 
     this.perguntaService.criarPergunta(this.pergunta).subscribe(pergunta => {
-      console.log('salvou', pergunta);
+      console.log('pergunta salva', pergunta);
       alert('Pergunta salva')
     }, (erro: HttpErrorResponse) => {
       alert(erro.message);
-    })
+    });
   }
 }

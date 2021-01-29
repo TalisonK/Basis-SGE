@@ -3,10 +3,9 @@
 
     <div class="p-grid p-dir-col">
 
-      <input type="text" [(ngModel)]="pergunta.nome" placeholder="Pergunta" formControlName="nome" pInputText />
-      <div *ngIf="formPergunta.get('nome').invalid">Pergunta invalida</div>
-
       <input type="text" [(ngModel)]="pergunta.titulo" placeholder="Titulo" formControlName="titulo" pInputText />
+      <div *ngIf="formPergunta.get('titulo').invalid">Pergunta invalida</div>
+
       <input type="text" [(ngModel)]="pergunta.obrigatoriedade" placeholder="Obrigatoriedade" formControlName="obrigatoriedade" pInputText />
     </div>
 

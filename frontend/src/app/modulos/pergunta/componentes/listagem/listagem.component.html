@@ -1,6 +1,10 @@
 <div class="card">
     <h3>Lista de Perguntas</h3>
     <p>Use os filtros e encontre os melhores Perguntas.</p>
+    <div class="p-d-flex p-jc-end">
+        <button routerLink="formulario" pButton type="button" label="Cadastrar Pergunta" ></button>
+    </div>
+
     <p-table #dt1 [value]="pergunta" dataKey="id"
         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
         [paginator]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} perguntas"
