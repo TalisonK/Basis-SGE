@@ -1,6 +1,7 @@
 <div class="card">
     <h5>Lista de Usuários</h5>
     <p>Através dos filtros navegue pela lista de Usuários.</p>
+    
     <div class="p-d-flex p-jc-end">
         <button routerLink="formulario" pButton type="button" label="Cadastrar Usuário" ></button>
     </div>
@@ -69,11 +70,15 @@
                 <td>
                     {{usuario.dataNascimento | date: 'dd/MM/yyyy'}}
                 </td>
+                <td class="p-d-flex p-jc-center">
+                    <button [routerLink]="['formulario', usuario.id]" pButton type="button" icon="pi pi-pencil"></button>
+                    <button (click)="deletarUsuario(usuario.id)" class="p-ml-2" pButton type="button" icon="pi pi-trash"></button>
+                </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="7">Não existem usuários.</td>
+                <td colspan="5">Não existem usuários.</td>
             </tr>
         </ng-template>
     </p-table>

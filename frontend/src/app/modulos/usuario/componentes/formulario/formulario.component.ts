@@ -12,21 +12,21 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class FormularioComponent implements OnInit {
 
-  formUsuario: FormGroup;
   edicao = false;
+  formUsuario: FormGroup;
   usuario = new Usuario();
   
 
   constructor( 
     private fb: FormBuilder, 
     private usuarioService: UsuarioService,
-    private route: ActivatedRoute){}
-
+    private route: ActivatedRoute
+    ){}
 
   ngOnInit(): void {
     
-    this.route.paramMap.subscribe(params => {
-      if(params.id){
+    this.route.params.subscribe(params => {
+      if (params.id){
         this.edicao = true;
         this.buscarUsuario(params.id);
       }
@@ -42,7 +42,7 @@ export class FormularioComponent implements OnInit {
 
   buscarUsuario(id: number){
     this.usuarioService.buscarUsuarioPorId(id)
-    .subscribe.(usuario => this.usuario = usuario);
+    .subscribe(usuario => this.usuario = usuario);
   }
   criar(){
    
@@ -65,9 +65,6 @@ export class FormularioComponent implements OnInit {
         }, (erro: HttpErrorResponse) => {
           alert(erro.error.message);
         });
+      }
     }
   }
-  }
-
-  
-}

@@ -26,4 +26,15 @@ export class ListagemComponent implements OnInit {
     this.usuarios = usuarios;
     });
   }
+
+  deletarUsuario(id: number) {
+    this.servico.deletarUsuario(id)
+      .subscribe(() => {
+        alert('Usuário deletado');
+        this.buscarUsuarios();
+      },
+      err => alert(err));
+  }
+
+
 } 
