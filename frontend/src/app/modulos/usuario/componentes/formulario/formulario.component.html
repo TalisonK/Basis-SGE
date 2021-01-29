@@ -8,10 +8,12 @@
       <input type="text" [(ngModel)]="usuario.cpf" placeholder="CPF" formControlName="cpf" pInputText />
       <div *ngIf="formUsuario.get('cpf').invalid">Cpf inválido</div>
       <input type="text" [(ngModel)]="usuario.email" placeholder="Email" formControlName="email" pInputText />
+      <div *ngIf="formUsuario.get('email').invalid">Email inválido</div>
       <input type="text" [(ngModel)]="usuario.telefone" placeholder="Telefone" formControlName="telefone" pInputText />
+      <div *ngIf="formUsuario.get('telefone').invalid">Telefone inválido</div>
       <input type="text" [(ngModel)]="usuario.dataNascimento" placeholder="Data de Nascimento" formControlName="dataNascimento" pInputText />
     </div>
   
   </form>
   
-  <button (click)="criar()" pButton type="button" label="Cadastrar" ></button>
+  <button (click)="criar()" pButton type="button" [label]="edicao ? 'Editar' : 'Cadastrar'" ></button>

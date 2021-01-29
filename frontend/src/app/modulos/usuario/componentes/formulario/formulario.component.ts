@@ -13,18 +13,24 @@ import { UsuarioService } from '../../services/usuario.service';
 export class FormularioComponent implements OnInit {
 
   formUsuario: FormGroup;
+  edicao = false;
   usuario = new Usuario();
-
-  constructor( private fb: FormBuilder, private usuarioService: UsuarioService){}
   
-  //  private route: ActivatedRoute
+
+  constructor( 
+    private fb: FormBuilder, 
+    private usuarioService: UsuarioService,
+    private route: ActivatedRoute){}
+
 
   ngOnInit(): void {
-    /*
+    
     this.route.paramMap.subscribe(params => {
-      console.log(params);
-    })
-    */
+      if(params.id){
+        this.edicao = true;
+        this.buscarUsuario(params.id);
+      }
+    });
     this.formUsuario = this.fb.group({
       nome: ['', Validators.minLength(3)],
       cpf: ['', Validators.maxLength(11)],
@@ -34,6 +40,10 @@ export class FormularioComponent implements OnInit {
     });
   }
 
+  buscarUsuario(id: number){
+    this.usuarioService.buscarUsuarioPorId(id)
+    .subscribe.(usuario => this.usuario = usuario);
+  }
   criar(){
    
     if(this.formUsuario.invalid){
@@ -41,12 +51,22 @@ export class FormularioComponent implements OnInit {
       return;
     }
    
-    this.usuarioService.criarUsuario(this.usuario).subscribe(usuario => {
-      console.log('usuario salvo', usuario);
-      alert('Usuário salvo')
-    }, (erro: HttpErrorResponse) => {
-      alert(erro.message);
-    });
+    if (this.edicao) {
+      this.usuarioService.editarUsuario(this.usuario)
+        .subscribe(usuario => {
+          alert('Usuário Editado')
+        }, (erro: HttpErrorResponse) => {
+          alert(erro.error.message);
+        });
+    } else {
+      this.usuarioService.criarUsuario(this.usuario)
+        .subscribe(usuario => {
+          alert('Usuário Salvo')
+        }, (erro: HttpErrorResponse) => {
+          alert(erro.error.message);
+        });
+    }
+  }
   }
 
   
