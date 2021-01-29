@@ -9,7 +9,7 @@ import { PerguntaModule } from './modulos/pergunta/pergunta.module';
 const routes: Routes = [
 
   {	    path:'usuarios', loadChildren: () => UsuarioModule },
-  { path: 'perguntas', loadChildren: ()=>PerguntaModule},
+  { path: 'pergunta', loadChildren: ()=>PerguntaModule},
     { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
     { path: 'login-success', component: LoginSuccessComponent },
 ];

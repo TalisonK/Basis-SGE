@@ -9,18 +9,18 @@ import { PerguntaService } from '../../services/pergunta.service';
 })
 export class ListagemComponent implements OnInit {
 
-  perguntas: Pergunta[] = [];
+  pergunta: Pergunta[] = [];
 
   constructor( private servico: PerguntaService) { }
 
   ngOnInit(): void {
-    this.buscarPerguntas();
+    this.buscarPergunta();
   }
 
-  private buscarPerguntas(){
-    this.servico.getPerguntas()
+  private buscarPergunta(){
+    this.servico.getPergunta()
     .subscribe((pergunta: Pergunta[]) => {
-    this.perguntas = pergunta;
+    this.pergunta = pergunta;
     });
   }
 }

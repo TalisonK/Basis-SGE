@@ -1,4 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Pergunta } from 'src/app/dominios/pergunta';
 import { PerguntaService } from '../../services/pergunta.service';
 
@@ -7,6 +9,7 @@ import { PerguntaService } from '../../services/pergunta.service';
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.css']
 })
+
 export class FormularioComponent implements OnInit {
 
   formPergunta: FormGroup;
@@ -28,8 +31,8 @@ export class FormularioComponent implements OnInit {
       return;
     }
 
-    this.perguntaService.criarPergunta(this.pergunta).subscribe(perguntas => {
-      console.log('salvou', perguntas);
+    this.perguntaService.criarPergunta(this.pergunta).subscribe(pergunta => {
+      console.log('salvou', pergunta);
       alert('Pergunta salva')
     }, (erro: HttpErrorResponse) => {
       alert(erro.message);

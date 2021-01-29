@@ -7,6 +7,7 @@ import { ListagemComponent } from './componentes/listagem/listagem.component';
 import { PerguntaService } from './services/pergunta.service';
 import { HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [FormularioComponent, ListagemComponent],
@@ -18,6 +19,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     PerguntaRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     HttpClientModule
   ]
