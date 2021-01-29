@@ -2,36 +2,54 @@
 <div class="footer">
     <div class="card clearfix">
         <app-version-tag cssClass="footer-text-left"></app-version-tag>
-        <span class="footer-text-left">
+        
             
-            <h3>form-evento works!</h3>
+            <h3>Cadastre seu Evento!</h3>
+            
             <span class="p-float-label">
+                <label for="titulo">Titulo</label>
                 <input id="float-input" type="text" pInputText placeholder="Titulo" /> 
             </span>
-            <div class="p-field p-col-12 p-md-4">
-                <label for="time">Time</label>
-                <p-calendar [(ngModel)]="date7" [showTime]="true" inputId="time"></p-calendar>
+
+            <div class="p-field ">
+                <label for="inicio">Inicio</label>
+                <p-calendar [(ngModel)]="date7" [showTime]="true" inputId="dataInicio"></p-calendar>
             </div>
         
-            <div class="p-field p-col-12 p-md-4">
-                <label for="time">Time</label>
-                <p-calendar [(ngModel)]="date7" [showTime]="true" inputId="time"></p-calendar>
+            <div class="p-field ">
+                <label for="final">Final</label>
+                <p-calendar [(ngModel)]="date7" [showTime]="true" inputId="dataFim"></p-calendar>
             </div>
         
             <span class="p-float-label">
+                <label for="final">Descrição</label>
                 <input id="float-input" type="text" pInputText placeholder="Descrição" /> 
             </span>
+            
             <span class="p-float-label">
+                <label for="final">Local</label>
                 <input id="float-input" type="text" pInputText placeholder="Local" /> 
             </span>
+            
+           
+            <p-inputNumber [(ngModel)]="value1" [showButtons]="true" aria-placeholder="Valor do Ticket" mode="currency" currency="USD"></p-inputNumber>
+            
+      
+                <p-inputNumber [(ngModel)]="value20" aria-placeholder="Quantidade de Vagas" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="9999999">
+                </p-inputNumber>
+           
+      
+            <span class="p-float-label">
+                <label for="final">Categoria</label>
+                <p-dropdown [options]="tipoEventos" [(ngModel)]="selectedCity1" placeholder="Selecione a categoria" optionLabel="name" [showClear]="true"></p-dropdown>
+            </span>
 
-        </span>
-        <span class="footer-text-right">
-            <span class="ui-icon ui-icon-copyright"></span>
-            <span>Sistema de Gerenciamento de Eventos!</span>
-        </span>
+            
 
-        
+            <span>
+                <button pButton type="button" label="Voltar" icon="pi pi-times" class="p-button-text"></button>
+                <button pButton type="button" label="Salvar" class="p-button-success"></button>
+            </span>  
         
     </div>
 </div>
