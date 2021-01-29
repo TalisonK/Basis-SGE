@@ -18,6 +18,7 @@ export class FormEventoComponent implements OnInit {
   form: FormGroup;
   evento = new Evento();
   categorias: TipoEvento[] = [];
+  tipoEvento = new TipoEvento(); 
 
   constructor(
     private fb: FormBuilder,
@@ -41,7 +42,7 @@ export class FormEventoComponent implements OnInit {
       local: '',
       quantVagas: 0,
       valor: 0.0,
-      tipoInscricao: false,
+      tipoInscricao: Validators.nullValidator,
       idTipoEvento: 1,
       perguntas: []
     });
@@ -66,20 +67,30 @@ export class FormEventoComponent implements OnInit {
     }
    
     if (this.edicao) {
+      this.evento.perguntas = []
+      this.getIdTipoEvento()
       this.servicoEvento.editarEvento(this.evento)
         .subscribe(usuario => {
           alert('Evento Editado com Sucesso')
+          
         }, (erro: HttpErrorResponse) => {
           alert(erro.error.message);
         });
     } else {
+      this.evento.perguntas = []
+      this.getIdTipoEvento()
       this.servicoEvento.salvarEvento(this.evento)
         .subscribe(evento => {
           alert('Evento Salvo com Sucesso!')
+
         }, (erro: HttpErrorResponse) => {
           alert(erro.error.message);
         });
       }
     }
 
+  getIdTipoEvento(){
+    
+    this.evento.idTipoEvento = this.tipoEvento.id
+  }
 }
