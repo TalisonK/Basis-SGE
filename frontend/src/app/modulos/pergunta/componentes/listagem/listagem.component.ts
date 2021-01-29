@@ -23,4 +23,13 @@ export class ListagemComponent implements OnInit {
     this.pergunta = pergunta;
     });
   }
+
+  deletarPergunta(id: number) {
+    this.servico.deletarPergunta(id)
+      .subscribe(() => {
+        alert('Pergunta deletada');
+        this.buscarPergunta();
+      },
+      err => alert(err));
+  }
 }

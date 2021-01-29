@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { PerguntaRoutingModule } from './pergunta-routing.module';
 import { FormularioComponent } from './componentes/formulario/formulario.component';
 import { ListagemComponent } from './componentes/listagem/listagem.component';
@@ -22,7 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    HttpClientModule,
+    HttpClientModule
   ]
 })
 export class PerguntaModule { }
