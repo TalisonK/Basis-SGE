@@ -7,15 +7,16 @@ import { ListaEventoComponent } from './components/lista-evento/lista-evento.com
 import { SharedModule } from 'src/app/shared/shared.module';
 import { EventoService } from './services/evento-service.service';
 import { HttpClientModule } from '@angular/common/http';
+import { TipoEventoService } from './services/tipo-evento-service.service';
 
 @NgModule({
   declarations: [FormEventoComponent, ListaEventoComponent],
-  providers: [EventoService],
+  providers: [EventoService,TipoEventoService],
   imports: [
     CommonModule,
     EventoRoutingModule,
     SharedModule,
-    HttpClientModule,
+    HttpClientModule
 
   ]
 })

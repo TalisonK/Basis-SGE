@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { TipoEvento } from 'src/app/dominios/tipo-evento';
+import { TipoEventoService } from 'src/app/modulos/evento/services/tipo-evento-service.service';
 
 @Component({
   selector: 'app-form-evento',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormEventoComponent implements OnInit {
 
-  constructor() { }
+  categorias: TipoEvento[] = [];
+
+  constructor(private servico: TipoEventoService) { }
 
   ngOnInit(): void {
+    this.buscarTipoEventos();
+  }
+
+  private buscarTipoEventos(){
+    this.servico.getTiposEventos()
+    .subscribe((tipoEventos: TipoEvento[]) =>{
+      this.categorias = tipoEventos;
+    });
   }
 
 }

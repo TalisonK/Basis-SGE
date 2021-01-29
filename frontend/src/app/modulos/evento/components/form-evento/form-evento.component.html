@@ -2,54 +2,53 @@
 <div class="footer">
     <div class="card clearfix">
         <app-version-tag cssClass="footer-text-left"></app-version-tag>
-        
-            
             <h3>Cadastre seu Evento!</h3>
             
-            <span class="p-float-label">
-                <label for="titulo">Titulo</label>
+            <span class="p-field">
                 <input id="float-input" type="text" pInputText placeholder="Titulo" /> 
             </span>
 
             <div class="p-field ">
-                <label for="inicio">Inicio</label>
-                <p-calendar [(ngModel)]="date7" [showTime]="true" inputId="dataInicio"></p-calendar>
+             
+                <p-calendar [(ngModel)]="date7" placeholder="Inicio" [showTime]="true" inputId="dataInicio"></p-calendar>
             </div>
         
             <div class="p-field ">
-                <label for="final">Final</label>
-                <p-calendar [(ngModel)]="date7" [showTime]="true" inputId="dataFim"></p-calendar>
+             
+                <p-calendar [(ngModel)]="date7" placeholder="Termino" [showTime]="true" inputId="dataFim" ></p-calendar>
             </div>
         
-            <span class="p-float-label">
-                <label for="final">Descrição</label>
+            <div class="p-fiel">
+               
                 <input id="float-input" type="text" pInputText placeholder="Descrição" /> 
-            </span>
             
-            <span class="p-float-label">
-                <label for="final">Local</label>
+            </div>
+            <div class="p-fiel">
+              
                 <input id="float-input" type="text" pInputText placeholder="Local" /> 
-            </span>
+            </div>
             
-           
-            <p-inputNumber [(ngModel)]="value1" [showButtons]="true" aria-placeholder="Valor do Ticket" mode="currency" currency="USD"></p-inputNumber>
-            
-      
-                <p-inputNumber [(ngModel)]="value20" aria-placeholder="Quantidade de Vagas" mode="decimal" [showButtons]="true" inputId="minmax-buttons" [min]="0" [max]="9999999">
+            <div class="p-fiel">
+                <p-inputNumber [(ngModel)]="value2" placeholder="Valor"  mode="currency" currency="BRL" locale="pt-BR"></p-inputNumber>
+            </div>
+
+            <div class="p-fiel">
+                <p-inputNumber [(ngModel)]="value4" placeholder="Vagas" mode="decimal" [min]="0" [max]="10000000">
                 </p-inputNumber>
-           
+            </div>
       
-            <span class="p-float-label">
-                <label for="final">Categoria</label>
-                <p-dropdown [options]="tipoEventos" [(ngModel)]="selectedCity1" placeholder="Selecione a categoria" optionLabel="name" [showClear]="true"></p-dropdown>
-            </span>
+            <div class="p-fiel">
+                <p-dropdown [options]="categorias" [(ngModel)]="selectedCity1" placeholder="Selecione a categoria" optionLabel="descricao" [showClear]="true"></p-dropdown>
+            </div>
 
-            
+            <div class="p-fiel">
+                <p-inputSwitch [(ngModel)]="checked1"></p-inputSwitch>
+            </div>
 
-            <span>
-                <button pButton type="button" label="Voltar" icon="pi pi-times" class="p-button-text"></button>
-                <button pButton type="button" label="Salvar" class="p-button-success"></button>
-            </span>  
+            <div class="p-fiel">
+                <button pButton type="button" label="Secondary" class="ui-button-secondary"></button>
+                <button pButton type="button" label="Success" class="ui-button-rounded ui-button-success"></button>
+            </div>  
         
     </div>
 </div>
