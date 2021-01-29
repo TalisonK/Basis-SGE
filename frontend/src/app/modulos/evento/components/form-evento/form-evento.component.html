@@ -2,43 +2,44 @@
 <div class="footer">
     <div class="card clearfix">
         <app-version-tag cssClass="footer-text-left"></app-version-tag>
+        <form [formGroup]="form">
             <h3>Cadastre seu Evento!</h3>
             
             <span class="p-field">
-                <input id="float-input" type="text" pInputText placeholder="Titulo" /> 
+                <input id="float-input" type="text" pInputText placeholder="Titulo" formControlName="titulo"/> 
             </span>
 
             <div class="p-field ">
              
-                <p-calendar [(ngModel)]="date7" placeholder="Inicio" [showTime]="true" inputId="dataInicio"></p-calendar>
+                <p-calendar [(ngModel)]="date7" placeholder="Inicio" [showTime]="true" formControlName="dataInicio"></p-calendar>
             </div>
         
             <div class="p-field ">
              
-                <p-calendar [(ngModel)]="date7" placeholder="Termino" [showTime]="true" inputId="dataFim" ></p-calendar>
+                <p-calendar [(ngModel)]="date7" placeholder="Termino" [showTime]="true" formControlName="dataFim"></p-calendar>
             </div>
         
             <div class="p-fiel">
                
-                <input id="float-input" type="text" pInputText placeholder="Descrição" /> 
+                <input id="float-input" type="text" pInputText placeholder="Descrição" formControlName="descricao"/> 
             
             </div>
             <div class="p-fiel">
               
-                <input id="float-input" type="text" pInputText placeholder="Local" /> 
+                <input id="float-input" type="text" pInputText placeholder="Local" formControlName="local"/> 
             </div>
             
             <div class="p-fiel">
-                <p-inputNumber [(ngModel)]="value2" placeholder="Valor"  mode="currency" currency="BRL" locale="pt-BR"></p-inputNumber>
+                <p-inputNumber [(ngModel)]="value2" placeholder="Valor"  mode="currency" currency="BRL" locale="pt-BR" formControlName="valor"></p-inputNumber>
             </div>
 
             <div class="p-fiel">
-                <p-inputNumber [(ngModel)]="value4" placeholder="Vagas" mode="decimal" [min]="0" [max]="10000000">
+                <p-inputNumber [(ngModel)]="value4" placeholder="Vagas" mode="decimal" [min]="0" [max]="10000000" formControlName="quantVagas">
                 </p-inputNumber>
             </div>
       
             <div class="p-fiel">
-                <p-dropdown [options]="categorias" [(ngModel)]="selectedCity1" placeholder="Selecione a categoria" optionLabel="descricao" [showClear]="true"></p-dropdown>
+                <p-dropdown [options]="categorias" [(ngModel)]="selectedCity1" placeholder="Selecione a categoria" optionLabel="descricao" optionValue="id" [showClear]="true" formControlName="idTipoEvento"></p-dropdown>
             </div>
 
             <div class="p-fiel">
@@ -49,6 +50,6 @@
                 <button pButton type="button" label="Secondary" class="ui-button-secondary"></button>
                 <button pButton type="button" label="Success" class="ui-button-rounded ui-button-success"></button>
             </div>  
-        
+        </form>
     </div>
 </div>

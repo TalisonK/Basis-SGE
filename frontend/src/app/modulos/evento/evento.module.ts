@@ -8,6 +8,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { EventoService } from './services/evento-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TipoEventoService } from './services/tipo-evento-service.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [FormEventoComponent, ListaEventoComponent],
@@ -16,8 +17,9 @@ import { TipoEventoService } from './services/tipo-evento-service.service';
     CommonModule,
     EventoRoutingModule,
     SharedModule,
-    HttpClientModule
-
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class EventoModule { }
