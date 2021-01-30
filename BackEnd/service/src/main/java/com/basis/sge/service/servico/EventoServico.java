@@ -5,13 +5,12 @@ import com.basis.sge.service.dominio.Pergunta;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.dominio.EventoPergunta;
-import com.basis.sge.service.repositorio.EventoPerguntaRepositorio;
-import com.basis.sge.service.repositorio.EventoRepositorio;
-import com.basis.sge.service.repositorio.InscricaoRepositorio;
-import com.basis.sge.service.repositorio.TipoEventoRepositorio;
+import com.basis.sge.service.repositorio.*;
 import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.EventoDTO;
+import com.basis.sge.service.servico.dto.EventoListagemDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
+import com.basis.sge.service.servico.mapper.EventoListagemMapper;
 import com.basis.sge.service.servico.mapper.EventoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,11 +36,14 @@ public class EventoServico {
 
     private final EmailServico emailServico;
 
+    private final UsuarioRepositorio usuarioRepositorio;
 
-    public List<EventoDTO> listar() {
+    private final EventoListagemMapper eventoListagemMapper;
+
+    public List<EventoListagemDTO> listar() {
         List<Evento> listaEvento = eventoRepositorio.findAll();
 
-        return eventoMapper.toDto(listaEvento);
+        return eventoListagemMapper.toDto(listaEvento);
     }
 
     public EventoDTO obterPorId(Integer id){
@@ -53,6 +55,7 @@ public class EventoServico {
 
     public EventoDTO criar(EventoDTO eventoDTO) {
         validaEvento(eventoDTO);
+        //validaChaveUsuario(eventoDTO.getChaveUsuario());
         validaTitulo(eventoDTO.getTitulo());
         eventoDTO.setId(null);
         Evento evento = eventoMapper.toEntity(eventoDTO);
@@ -112,6 +115,13 @@ public class EventoServico {
         validaNumero(eventoDTO.getQuantVagas());
         validaTipoEvento(eventoDTO.getIdTipoEvento());
 
+    }
+
+    // valida dados de evento, com exceção das datas
+    public void validaChaveUsuario(String chave){
+        if(!usuarioRepositorio.existsByChave(chave)){
+            throw new RegraNegocioException("Chave de Usuario não existe!");
+        }
     }
 
     //verifica se o numero é negativo caso não seja nulo
