@@ -20,7 +20,7 @@ export class FormularioComponent implements OnInit {
   display: boolean = false;
 
   showDialog() {
-      this.display = true;
+      this.display = !this.display;
   }
 
   ngOnInit(): void {

@@ -1,6 +1,6 @@
 
 
-<p-dialog header="Title" [(visible)]="display" modal="true" [style]="{width: '70vw'}">
+<p-dialog styleClass="nova-light" header="Title" [(visible)]="display" modal="true" [style]="{width: '70vw'}">
 
     <div class="formularioInscricao">
         <div>
@@ -25,7 +25,7 @@
     </div>
 
     <div class="submit_button_div">
-        <button pButton type="button2" label="Submit" class="p-button-text" icon="pi pi-check" iconPos="right" id="submit-button"></button>
+        <button pButton type="button2" label="Submit" class="p-button-text" icon="pi pi-check" iconPos="right" id="submit-button" (click)="showDialog()"></button>
     </div>
 
 </p-dialog>
