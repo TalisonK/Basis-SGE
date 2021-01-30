@@ -9,6 +9,20 @@ export class FormularioComponent implements OnInit {
 
   constructor() { }
 
+  titulo:String = "Titulo do Evento"
+
+  descricao:String = "Descrição do evento blablabla";
+
+  inicio:Number = Date.now();
+
+  Fim:Number = Date.now();
+
+  display: boolean = false;
+
+  showDialog() {
+      this.display = true;
+  }
+
   ngOnInit(): void {
   }
 
