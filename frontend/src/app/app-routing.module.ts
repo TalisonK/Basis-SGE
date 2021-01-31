@@ -4,6 +4,7 @@ import { DiarioErrosComponent } from './components/diario-erros/diario-erros.com
 import { LoginSuccessComponent } from '@nuvem/angular-base';
 import { EventoModule } from './modulos/evento/evento.module';
 import { UsuarioModule } from './modulos/usuario/usuario.module';
+import { PerguntaModule } from './modulos/pergunta/pergunta.module';
 import { InscricaoService } from './modulos/pre-inscricao/services/inscricao-service.service';
 import { PreInscricaoModule } from './modulos/pre-inscricao/pre-inscricao.module';
 
