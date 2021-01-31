@@ -49,6 +49,15 @@ public class PreInscricaoServico {
         return mapper.toDto(dto.orElseThrow(() -> new RegraNegocioException("Inscrição número " + id + " não encontrada!")));
     }
 
+    public List<PreInscricaoDTO> obterPorUsuarioId(Integer id){
+        try {
+            return mapper.toDto(incrRepo.findAllByUsuarioId(id));
+        }
+        catch (Exception e){
+            throw new RegraNegocioException("Usuario não inscrito em eventos");
+        }
+    }
+
     public void idEmUso(Integer id){
         if(!incrRepo.findById(id).isPresent()){
             throw new RegraNegocioException("Inscrição não cadastrada!");
@@ -92,7 +101,16 @@ public class PreInscricaoServico {
         });
 
         try{
+            PreInscricao inscricao = incrRepo.findById(id).orElseThrow(() -> new RegraNegocioException("Inscrição nao cadastrada"));
+
             incrRepo.deleteById(id);
+
+
+
+            emailServico.rabbitSendMail(inscricao.getUsuario().getEmail(),
+                    "Inscrição efetuado com sucesso",
+                    "Inscrição bem sucedida, sua chave para acesso e atualização é: " + inscricao.getUsuario().getChave(),
+                    new ArrayList<>());
         }
         catch (Exception e){
             throw new RegraNegocioException("Impossivel detar, inscriçao nao cadastrada!");
