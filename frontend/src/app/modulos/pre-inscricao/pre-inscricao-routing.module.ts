@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FormularioComponent } from 'src/app/modulos/pre-inscricao/componentes/formulario/formulario.component';
-import { ListagemComponent } from '../usuario/listagem/listagem.component';
+import { ListagemInscricaoComponent } from './componentes/listagem-inscricao/listagem-inscricao.component';
 
 const routes: Routes = [
 	{
 		path:'',
-		component: ListagemComponent
+		component: ListagemInscricaoComponent
 	},
 	{
 		path:'form',
