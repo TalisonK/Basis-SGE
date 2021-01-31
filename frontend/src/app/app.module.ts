@@ -32,6 +32,7 @@ import { TableModule } from 'primeng/table';
         SharedModule,
         HttpClientModule,
         PageNotificationModule,
+        TableModule,
         BreadcrumbModule,
         ErrorStackModule,
         VersionTagModule,
