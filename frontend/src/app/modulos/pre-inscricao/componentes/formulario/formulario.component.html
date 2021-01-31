@@ -1,15 +1,13 @@
 
-
+<ul >
+    <li *ngFor="let inscricao of incricoes"></li>
+</ul>
 <p-dialog styleClass="nova-light" header="Title" [(visible)]="display" modal="true" [style]="{width: '70vw'}">
 
     <div class="formularioInscricao">
         <div>
             <h2><b>Dados do Evento:</b></h2>
-            <div class="p-text-left">{{titulo}}</div>
-            <div class="p-text-left">Data de inicio: {{inicio}}</div>
-            <div class="p-text-left">Data de inicio: {{Fim}}</div>
-            <div class="p-text-left">{{descricao}}</div>
-            <div class="p-text-left">{{titulo}}</div>
+            
         </div>
         
         <div style="width: 50%;">
@@ -25,7 +23,7 @@
     </div>
 
     <div class="submit_button_div">
-        <button pButton type="button2" label="Submit" class="p-button-text" icon="pi pi-check" iconPos="right" id="submit-button" (click)="showDialog()"></button>
+        <button pButton type="button2" label="Submit" class="p-button-text" icon="pi pi-check" iconPos="right" id="submit-button"></button>
     </div>
 
 </p-dialog>

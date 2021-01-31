@@ -1,29 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { PreInscricao } from 'src/app/dominios/PreInscricao';
+import { InscricaoService } from '../../services/inscricao-service.service';
 
 @Component({
-  selector: 'app-formulario',
+  selector: 'app-formulario-inscricao',
   templateUrl: './formulario.component.html',
   styleUrls: ['./formulario.component.css']
 })
 export class FormularioComponent implements OnInit {
 
-  constructor() { }
+	incricoes:PreInscricao[] = [];
 
-  titulo:String = "Titulo do Evento"
+	display: boolean = false;
 
-  descricao:String = "Descrição do evento blablabla";
+	constructor(private service: InscricaoService) { }
 
-  inicio:Number = Date.now();
+	showDialog():void {
+	this.display = !this.display;
+	}
 
-  Fim:Number = Date.now();
-
-  display: boolean = false;
-
-  showDialog() {
-      this.display = !this.display;
-  }
-
-  ngOnInit(): void {
-  }
-
+	ngOnInit(): void {
+	}
 }
