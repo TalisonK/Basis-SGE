@@ -12,7 +12,10 @@ export class TipoEventoService {
   constructor( private http: HttpClient) { }
 
   getTiposEventos(): Observable<TipoEvento[]>{
-
     return this.http.get<TipoEvento[]>(`${this.url}`);
+  }
+
+  obterTipoEventoPorId(id: number): Observable<TipoEvento> {
+    return this.http.get<TipoEvento>(`${this.url}/${id}`);
   }
 }

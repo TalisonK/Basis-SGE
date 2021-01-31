@@ -32,6 +32,7 @@ export class FormEventoComponent implements OnInit {
       if(params.id){
         this.edicao = true
         this.obterEventoPorId(params.id);
+       
       }
     });
     this.form = this.fb.group({
@@ -42,8 +43,8 @@ export class FormEventoComponent implements OnInit {
       local: '',
       quantVagas: 0,
       valor: 0.0,
-      tipoInscricao: Validators.nullValidator,
-      idTipoEvento: 1,
+      tipoInscricao:[Validators.nullValidator],
+      idTipoEvento: 8,
       perguntas: []
     });
 
@@ -56,8 +57,17 @@ export class FormEventoComponent implements OnInit {
       this.categorias = tipoEventos;
     });
   }
+  private obterTipoEventoPorId(id: number){
+    this.servicoTipoEvento.obterTipoEventoPorId(id)
+        .subscribe((tipoEvento: TipoEvento) => {this.tipoEvento = tipoEvento});
+        
+  }
   private obterEventoPorId(id: number){
-    this.servicoEvento.obterEventoPorId(id).subscribe(evento => this.evento = evento);
+    this.servicoEvento.obterEventoPorId(id).subscribe((evento: Evento) => {
+      this.evento = evento
+      this.obterTipoEventoPorId(evento.idTipoEvento)
+    });
+    console.log(this.evento)
   }
   criar(){
    
@@ -69,8 +79,9 @@ export class FormEventoComponent implements OnInit {
     if (this.edicao) {
       this.evento.perguntas = []
       this.getIdTipoEvento()
+      
       this.servicoEvento.editarEvento(this.evento)
-        .subscribe(usuario => {
+        .subscribe(evento => {
           alert('Evento Editado com Sucesso')
           
         }, (erro: HttpErrorResponse) => {
@@ -79,6 +90,7 @@ export class FormEventoComponent implements OnInit {
     } else {
       this.evento.perguntas = []
       this.getIdTipoEvento()
+      this.evento.tipoInscricao = false
       this.servicoEvento.salvarEvento(this.evento)
         .subscribe(evento => {
           alert('Evento Salvo com Sucesso!')

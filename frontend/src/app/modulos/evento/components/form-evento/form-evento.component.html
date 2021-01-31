@@ -10,13 +10,13 @@
             </span>
 
             <div class="p-field ">
-             
-                <p-calendar [(ngModel)]="evento.dataInicio" placeholder="Inicio" [showTime]="true" formControlName="dataInicio"></p-calendar>
+                <input [(ngModel)]="evento.dataInicio" id="float-input" type="datetime-local" pInputText placeholder="Local" formControlName="dataInicio"/> 
+                <!--<p-calendar [(ngModel)]="evento.dataInicio" placeholder="Inicio" [showTime]="true"  formControlName="dataInicio"></p-calendar>-->
             </div>
         
             <div class="p-field ">
-             
-                <p-calendar [(ngModel)]="evento.dataFim" placeholder="Termino" [showTime]="true" formControlName="dataFim"></p-calendar>
+                <input [(ngModel)]="evento.dataFim" id="float-input" type="datetime-local" pInputText placeholder="Local" formControlName="dataFim"/> 
+                <!--<p-calendar [(ngModel)]="evento.dataFim" placeholder="Termino" [showTime]="true"  formControlName="dataFim"></p-calendar>-->
             </div>
         
             <div class="p-fiel">

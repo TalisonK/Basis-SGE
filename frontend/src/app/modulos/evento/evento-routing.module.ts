@@ -11,7 +11,11 @@ const routes: Routes = [
   {
     path : '',
     component: ListaEventoComponent 
-  }
+  },
+  {
+    path: 'form/:id',
+    component: FormEventoComponent
+  },
 ];
 
 @NgModule({
