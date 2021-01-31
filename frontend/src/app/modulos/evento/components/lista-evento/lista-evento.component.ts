@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Evento} from 'src/app/dominios/evento';
+
 import { EventoListagem } from '../../services/dto/evento-listagem';
 import { EventoService } from '../../services/evento-service.service';
 @Component({
@@ -23,5 +23,12 @@ export class ListaEventoComponent implements OnInit {
       this.eventos = eventos;
     });
   }
-
+  deletarEvento(id: number) {
+    this.servico.deletarEvento(id)
+      .subscribe(() => {
+        alert('Evento Excluido');
+        this.buscarEventos();
+      },
+      err => alert(err));
+  }
 }

@@ -2,4 +2,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-left: 5pt;
+}
+#btn-list-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }

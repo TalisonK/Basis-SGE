@@ -9,5 +9,5 @@ export class Evento{
     local: string;
     tipoInscricao: boolean;
     idTipoEvento: number;
-    perguntas: any[]
+    perguntas: any[];
 }
