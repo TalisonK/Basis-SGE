@@ -1,26 +1,27 @@
-.formularioInscricao{
-    width: 80%;
-    margin: auto;
-}
-
-#float-input{
-    width: 100%;
-    right: 1;
+#dialog-inscricao{
+    background-color: white;
 }
 
 .submit_button_div{
     float: right;
+    margin-top: 4px;
 }
 
 #submit-button{
     margin: auto;
-    display: flex;
-    padding: 4px;       
+    display: flex;   
     flex-direction: column;
     justify-content: center;
-    padding: 4px;
 }
 
 #resposta_text_area{
     width: 100%;
+}
+
+.formularioInscricao{
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
