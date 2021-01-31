@@ -24,6 +24,11 @@ public class InscricaoRecurso {
         return ResponseEntity.ok().body(servico.obterPorId(id));
     }
 
+    @GetMapping(value = "/usuario/{id}")
+    public ResponseEntity<List<PreInscricaoDTO>> obterPorUsuarioId(@PathVariable Integer id){
+        return ResponseEntity.ok().body(servico.obterPorUsuarioId(id));
+    }
+
     @PostMapping
     public ResponseEntity<PreInscricaoDTO> criar(@RequestBody PreInscricaoDTO dto){
         return ResponseEntity.status(201).body(servico.criar(dto));

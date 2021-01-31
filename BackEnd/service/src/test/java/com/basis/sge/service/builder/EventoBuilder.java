@@ -3,14 +3,19 @@ package com.basis.sge.service.builder;
 import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.dominio.EventoPergunta;
 import com.basis.sge.service.dominio.TipoEvento;
+import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.repositorio.EventoRepositorio;
+import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.EventoServico;
+import com.basis.sge.service.servico.UsuarioServico;
 import com.basis.sge.service.servico.dto.EventoDTO;
 import com.basis.sge.service.servico.mapper.EventoMapper;
+import com.basis.sge.service.servico.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -28,12 +33,29 @@ public class EventoBuilder extends ConstrutorDeEntidade<Evento> {
     @Autowired
     private EventoRepositorio eventoRepositorio;
 
+    @Autowired
+    private UsuarioRepositorio usuarioRepositorio;
 
 
     @Override
-    public Evento construirEntidade() throws Exception
-    {
+    public Evento construirEntidade() throws Exception {
+
         Evento evento = new Evento();
+        /*
+        if (!usuarioRepositorio.existsByCpf("25258218074")){
+            Usuario usuario = new Usuario();
+            usuario.setTelefone("839999900000");
+            usuario.setEmail("zedafeira@gmail.com");
+            usuario.setCpf("25258218074");
+            usuario.setNome("Jose Silva");
+            usuario.setDataNascimento(LocalDate.now());
+            usuario.setChave("a57sr28s3q28d7a");
+            evento.setChaveUsuario("a57sr28s3q28d7a");
+            usuarioRepositorio.save(usuario);
+        }else {
+            evento.setChaveUsuario("a57sr28s3q28d7a");
+        }*/
+
         evento.setTitulo("Show do Zé");
         evento.setDataInicio(LocalDateTime.now());
         evento.setDataFim(LocalDateTime.now());
