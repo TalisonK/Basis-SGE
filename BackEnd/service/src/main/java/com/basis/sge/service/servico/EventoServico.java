@@ -117,10 +117,6 @@ public class EventoServico {
 
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> ffb3f78dab877adb864aaab64609567dfa7c287a
     //verifica se o numero é negativo caso não seja nulo
     public void validaNumero(Number num){
         if (num!=null && num.doubleValue()<0){

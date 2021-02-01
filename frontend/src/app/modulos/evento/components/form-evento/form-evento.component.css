@@ -1,3 +1,16 @@
 #form-evento-content {
-   justify-content: space-around;
+   margin: auto;
+}
+#btn-salvar {
+   float: right;
+}
+.p-field {
+   width: 80%;
+}
+.card {
+   width: 100%;
+}
+#label-form-toggle {
+   margin-right: 5px;
+   color: gray;
 }
