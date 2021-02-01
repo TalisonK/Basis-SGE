@@ -56,9 +56,6 @@ public class PerguntaServico {
         if (titulo!=null && titulo.length() < 3){
             throw new RegraNegocioException("Campo deve ter pelo menos 2 caracteres");
         }
-        if (perguntaRepositorio.existsByTitulo(titulo)){
-            throw new RegraNegocioException(("Pergunta já cadastrada!"));
-        }
         if (titulo == null){
             throw new RegraNegocioException(("Título inválido!"));
         }

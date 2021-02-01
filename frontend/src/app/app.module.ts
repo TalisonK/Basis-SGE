@@ -37,7 +37,8 @@ import { TableModule } from 'primeng/table';
         ErrorStackModule,
         VersionTagModule,
         SecurityModule.forRoot(environment.auth),
-        MenuModule
+        MenuModule,
+        TableModule,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy }
