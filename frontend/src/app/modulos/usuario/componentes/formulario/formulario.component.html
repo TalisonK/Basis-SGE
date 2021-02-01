@@ -17,5 +17,7 @@
   
   </form>
   
-  <button (click)="criar()" pButton type="button" [label]="edicao ? 'Editar' : 'Cadastrar'" ></button>
+  <div class="p-field-checkbox">
+    <button (click)="criar()" pButton type="button" [label]="edicao ? 'Editar' : 'Criar'"  class="ui-button-rounded ui-button-success"></button>
+  </div>
 </div>

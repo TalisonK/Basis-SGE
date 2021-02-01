@@ -2,15 +2,20 @@
     <h5>Lista de Usuários</h5>
     <p>Através dos filtros navegue pela lista de Usuários.</p>
     
-    <div class="p-d-flex p-jc-end">
+    <!--<div class="p-d-flex p-jc-end">
         <button routerLink="formulario" pButton type="button" label="Cadastrar Usuário" ></button>
-    </div>
+        <button routerLink="formulario" pButton type="button" label="Cadastrar Usuário Rota" ></button>
+        <button class="p-ml-2" type="button" (click)="showDialog()" pButton label="Cadastrar Usuário Dialog"></button>
+    </div>-->
     
     <p-table #dt1 [value]="usuarios" dataKey="id"
         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
         [paginator]="true" currentPageReportTemplate="Exibindo {first} a {last} de {totalRecords} usuários"
         [globalFilterFields]="['name','country.name','representative.name','status']">
         <ng-template pTemplate="caption">
+            <div class="left" style="float: left;" >
+                <button id="button_text" pButton pRipple label="Adicionar" icon="pi pi-plus" class="p-button-success" (click)="showDialog()"></button>
+            </div>
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
                  <i class="pi pi-search"></i>
@@ -46,7 +51,7 @@
                     </div>
                 </th>
                 <th> 
-                    <p-calendar [(ngModel)]="dateValue" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
+                   <!-- <p-calendar [(ngModel)]="dateValue" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>-->
                 </th>
                 <th style="width: 80px;">Ações</th>     
             </tr>
@@ -69,8 +74,8 @@
                     {{usuario.dataNascimento | date: 'dd/MM/yyyy'}}
                 </td>
                 <td class="p-d-flex p-jc-center">
-                    <button [routerLink]="['formulario', usuario.id]" pButton type="button" icon="pi pi-pencil"></button>
-                    <button (click)="deletarUsuario(usuario.id)" class="p-ml-2" pButton type="button" icon="pi pi-trash"></button>
+                    <button (click)="showDialogEditar(usuario.id)" pButton type="button" icon="pi pi-pencil"></button>
+                    <button (click)="dialogDeletarUsuario(usuario.id)" class="p-ml-2" pButton type="button" icon="pi pi-trash"></button>
                 </td>
             </tr>
         </ng-template>
@@ -80,4 +85,14 @@
             </tr>
         </ng-template>
     </p-table>
+
+<p-dialog header= "{{ formularioEdicao ? 'Edite seu perfil' : 'Cadastre-se' }}" [(visible)]="exibirDialog">
+    <app-formulario
+        [usuario]="usuario"
+        [edicao]="formularioEdicao"
+        (usuarioSalvo)="fecharDialog($event)">
+    </app-formulario>
+</p-dialog>
+
+<p-confirmDialog header="Confirmar remoção de usuário" icon="pi pi-exclamation-triangle"></p-confirmDialog> 
 </div>
