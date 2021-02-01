@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng';
+import { Evento } from 'src/app/dominios/evento';
 import { EventoListagem } from '../../services/dto/evento-listagem';
 import { EventoService } from '../../services/evento-service.service';
 
@@ -11,6 +12,9 @@ import { EventoService } from '../../services/evento-service.service';
 export class ListaEventoComponent implements OnInit {
 
   eventos: EventoListagem[] = [];
+  evento = new Evento();
+  exibirDialog = false;
+  edicao: boolean;
 
   constructor(
 
@@ -32,14 +36,14 @@ export class ListaEventoComponent implements OnInit {
     });
   }
 
-  // confirmarDeletarEvento(id: number) {
-  //   this.confirmationService.confirm({
-  //       message: 'Tem certeza que deseja excluir este Evento?',
-  //       accept: () => {
-  //         this.deletarEvento(id);
-  //       }
-  //   });
-  // }
+  confirmarDeletarEvento(id: number) {
+      this.confirmationService.confirm({
+          message: 'Tem certeza que deseja excluir este Evento?',
+          accept: () => {
+            this.deletarEvento(id);
+          }
+      });
+    }
 
   deletarEvento(id?: number) {
     this.servico.deletarEvento(id)
@@ -49,4 +53,24 @@ export class ListaEventoComponent implements OnInit {
       },
       err => alert(err));
   }
+
+  mostrarDialogEditar(id: number) {
+    this.servico.obterEventoPorId(id)
+      .subscribe(evento => {
+        this.evento = evento
+        this.mostrarDialog(true);
+      }); 
+  }
+
+  mostrarDialog(edicao = false) {
+    this.exibirDialog = true;
+    this.edicao = edicao;
+  }
+
+  fecharDialog(eventoSalvo: Evento) {
+    console.log(eventoSalvo);
+    this.exibirDialog = false;
+    this.buscarEventos();
+  }
+
 }

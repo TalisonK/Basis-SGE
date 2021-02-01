@@ -7,7 +7,9 @@
         [globalFilterFields]="['titulo']">
         <ng-template pTemplate="caption">
             <div class="left" style="float: left;" >
-                <button id="button_text" routerLink = "form" pButton pRipple label="New" icon="pi pi-plus" class="p-button-success" (click)="openNew()"></button>
+                
+                <button id="button_text" (click)="mostrarDialog(evento.id)" pButton pRipple label="New" icon="pi pi-plus" class="p-button-success" ></button>
+                
             </div>
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
@@ -114,8 +116,9 @@
                     {{evento.descricaoTipoEvento}}
                 </td>
                 <td id="btn-list-item">
-                    <button [routerLink]="['form', evento.id]" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" ></button>
-                    <button (click)="deletarEvento(evento.id)" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" ></button>
+
+                    <button (click)="mostrarDialogEditar(evento.id)" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" ></button>
+                    <button (click)="confirmarDeletarEvento(evento.id)" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" ></button>
                 </td>
             </tr>
         </ng-template>
@@ -126,3 +129,13 @@
         </ng-template>
     </p-table>
 </div>
+
+<p-dialog header="Formulario de Eventos" [(visible)]="exibirDialog">
+    <app-form-evento
+        [evento]="evento"
+        [edicao]="edicao"
+        (usuarioSalvo)="fecharDialog($event)"
+    ></app-form-evento>
+</p-dialog>
+
+<p-confirmDialog header="Confirmar Remover Evento" icon="pi pi-exclamation-triangle"></p-confirmDialog>

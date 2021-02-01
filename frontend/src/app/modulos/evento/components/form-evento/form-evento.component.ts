@@ -57,11 +57,13 @@ export class FormEventoComponent implements OnInit {
       this.categorias = tipoEventos;
     });
   }
+
   private obterTipoEventoPorId(id: number){
     this.servicoTipoEvento.obterTipoEventoPorId(id)
         .subscribe((tipoEvento: TipoEvento) => {this.tipoEvento = tipoEvento});
         
   }
+
   private obterEventoPorId(id: number){
     this.servicoEvento.obterEventoPorId(id).subscribe((evento: Evento) => {
       this.evento = evento
@@ -69,6 +71,7 @@ export class FormEventoComponent implements OnInit {
     });
     console.log(this.evento)
   }
+  
   criar(){
    
     if(this.form.invalid){
@@ -77,17 +80,17 @@ export class FormEventoComponent implements OnInit {
     }
    
     if (this.edicao) {
+
       this.evento.perguntas = []
       this.getIdTipoEvento()
-      
       this.servicoEvento.editarEvento(this.evento)
         .subscribe(evento => {
-          alert('Evento Editado com Sucesso')
-          
+          alert('Evento Editado com Sucesso') 
         }, (erro: HttpErrorResponse) => {
           alert(erro.error.message);
         });
     } else {
+
       this.evento.perguntas = []
       this.getIdTipoEvento()
       this.evento.tipoInscricao = false

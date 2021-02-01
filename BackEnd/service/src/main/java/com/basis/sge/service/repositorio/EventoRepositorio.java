@@ -11,4 +11,5 @@ public interface EventoRepositorio  extends JpaRepository<Evento, Integer> {
 
     Boolean existsByTituloAndIdNot (String titulo, Integer id);
 
+
 }

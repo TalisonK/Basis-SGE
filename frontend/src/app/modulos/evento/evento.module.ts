@@ -9,10 +9,17 @@ import { EventoService } from './services/evento-service.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TipoEventoService } from './services/tipo-evento-service.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConfirmationService } from 'primeng';
 
 @NgModule({
-  declarations: [FormEventoComponent, ListaEventoComponent],
-  providers: [EventoService,TipoEventoService],
+  declarations: [
+    FormEventoComponent,
+    ListaEventoComponent
+    ],
+  providers: [
+    EventoService,
+    TipoEventoService
+  ],
   imports: [
     CommonModule,
     EventoRoutingModule,
