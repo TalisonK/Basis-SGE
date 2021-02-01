@@ -38,8 +38,6 @@
             <column name="chave">admin</column>
         </insert>
 
-
-
         <addPrimaryKey tableName="usuario" columnNames="id" constraintName="pk_usuario"/>
         <createSequence sequenceName="sq_usuario" cycle="false" cacheSize="20" incrementBy="1" startValue="1"/>
 
