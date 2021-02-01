@@ -13,6 +13,7 @@ import { TipoEventoService } from '../../services/tipo-evento-service.service';
 })
 export class ListaEventoComponent implements OnInit {
 
+  condicao = true;
   eventos: EventoListagem[] = [];
   evento = new Evento();
   exibirDialog = false;

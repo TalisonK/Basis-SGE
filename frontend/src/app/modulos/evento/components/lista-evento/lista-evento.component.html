@@ -7,9 +7,9 @@
         [globalFilterFields]="['titulo']">
         <ng-template pTemplate="caption">
             <div class="left" style="float: left;" >
-                
-                <button id="button_text" (click)="mostrarDialogSalvar()" pButton pRipple label="Adicionar" icon="pi pi-plus" class="p-button-success" ></button>
-                
+                <div *ngIf="condicao;">
+                    <button id="button_text" (click)="mostrarDialogSalvar()" pButton pRipple label="Adicionar" icon="pi pi-plus" class="p-button-success" ></button>
+                </div>
             </div>
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
@@ -116,9 +116,15 @@
                     {{evento.descricaoTipoEvento}}
                 </td>
                 <td id="btn-list-item">
-
-                    <button (click)="mostrarDialogEditar(evento.id)" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" ></button>
-                    <button (click)="confirmarDeletarEvento(evento.id)" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" ></button>
+                    <div *ngIf="condicao; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <button (click)="mostrarDialogEditar(evento.id)" pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" ></button>
+                        <button (click)="confirmarDeletarEvento(evento.id)" pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" ></button>
+                    </ng-template>
+                    <ng-template #elseBlock>
+                        <button  pButton pRipple icon="pi pi-calendar-plus" class="p-button-rounded p-button-success p-mr-2" ></button>
+                    </ng-template>
+                    
                 </td>
             </tr>
         </ng-template>
@@ -130,7 +136,7 @@
     </p-table>
 </div>
 
-<p-dialog [style]="{width:'70vw'}" header="Formulario de Eventos" [(visible)]="exibirDialog">
+<p-dialog [style]="{width:'70vw'}"  header="Formulario de Eventos" [(visible)]="exibirDialog">
     <app-form-evento
         [tipoEvento]="tipoEvento"
         [evento]="evento"
