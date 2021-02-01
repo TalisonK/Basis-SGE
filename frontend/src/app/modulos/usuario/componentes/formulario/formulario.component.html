@@ -12,7 +12,11 @@
       <div *ngIf="formUsuario.get('email').invalid">Email inválido</div>
       <input type="text" [(ngModel)]="usuario.telefone" placeholder="Telefone" formControlName="telefone" pInputText />
       <div *ngIf="formUsuario.get('telefone').invalid">Telefone inválido</div>
-      <input type="text" [(ngModel)]="usuario.dataNascimento" placeholder="Data de Nascimento" formControlName="dataNascimento" pInputText />
+      <p-calendar [(ngModel)]="usuario.dataNascimento" [monthNavigator]="true" [yearNavigator]="true"></p-calendar>
+    
+      
+      <!--<p-calendar [(ngModel)]="usuario.dataNascimento" view="month" dateFormat="dd/MM/yyyy" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
+      <input type="text" [(ngModel)]="usuario.dataNascimento" placeholder="Data de Nascimento" formControlName="dataNascimento" pInputText />-->
     </div>
   
   </form>
