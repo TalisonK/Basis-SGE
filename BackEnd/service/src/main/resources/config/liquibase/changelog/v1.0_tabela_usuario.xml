@@ -41,7 +41,7 @@
 
 
         <addPrimaryKey tableName="usuario" columnNames="id" constraintName="pk_usuario"/>
-        <createSequence sequenceName="sq_usuario" cycle="false" cacheSize="20" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="sq_usuario" cycle="false" cacheSize="20" incrementBy="1" startValue="2"/>
 
     </changeSet>
 
