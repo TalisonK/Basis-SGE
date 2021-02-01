@@ -1,5 +1,6 @@
 package com.basis.sge.service.recurso;
 import com.basis.sge.service.servico.PreInscricaoServico;
+import com.basis.sge.service.servico.dto.InscricaoListagemDTO;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class InscricaoRecurso {
     private final PreInscricaoServico servico;
 
     @GetMapping
-    public ResponseEntity<List<PreInscricaoDTO>> listar(){
+    public ResponseEntity<List<InscricaoListagemDTO>> listar(){
         return ResponseEntity.ok(servico.listar());
     }
 
