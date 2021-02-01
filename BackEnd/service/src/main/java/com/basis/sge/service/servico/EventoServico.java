@@ -117,12 +117,6 @@ public class EventoServico {
 
     }
 
-    // valida dados de evento, com exceção das datas
-    public void validaChaveUsuario(String chave){
-        if(!usuarioRepositorio.existsByChave(chave)){
-            throw new RegraNegocioException("Chave de Usuario não existe!");
-        }
-    }
 
     //verifica se o numero é negativo caso não seja nulo
     public void validaNumero(Number num){
