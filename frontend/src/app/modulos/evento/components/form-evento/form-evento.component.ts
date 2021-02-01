@@ -16,17 +16,25 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class FormEventoComponent implements OnInit {
 
   @Input() edicao = false;
+
   @Input() evento = new Evento();
+  
   @Input() categorias: TipoEvento[] = [];
+  
   @Input() tipoEvento = new TipoEvento(); 
+  
   @Output() eventoSalvo = new EventEmitter<Evento>();
   
   form: FormGroup;
   
   constructor(
+  
     private fb: FormBuilder,
+  
     private servicoEvento: EventoService,
+  
     private servicoTipoEvento: TipoEventoService,
+  
     private route: ActivatedRoute
     ) {}
 
@@ -62,7 +70,9 @@ export class FormEventoComponent implements OnInit {
 
   private obterTipoEventoPorId(id: number){
     this.servicoTipoEvento.obterTipoEventoPorId(id)
-        .subscribe((tipoEvento: TipoEvento) => {this.tipoEvento = tipoEvento});
+        .subscribe((tipoEvento: TipoEvento) => {
+          this.tipoEvento = tipoEvento
+        });
         
   }
 
@@ -71,7 +81,6 @@ export class FormEventoComponent implements OnInit {
       this.evento = evento
       this.obterTipoEventoPorId(evento.idTipoEvento)
     });
-    console.log(this.evento)
   }
   
   criar(){
