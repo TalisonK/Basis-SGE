@@ -45,12 +45,9 @@
                         <p-columnFilter type="text" field="telefone" display="menu"></p-columnFilter>
                     </div>
                 </th>
-                <th>
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        Data de Nascimento
-                        <p-columnFilter type="date" field="dataNascimento" display="menu"></p-columnFilter>
-                    </div>
-                </th>   
+                <th> 
+                    <p-calendar [(ngModel)]="dateValue" view="month" dateFormat="mm/yy" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
+                </th>
                 <th style="width: 80px;">Ações</th>     
             </tr>
         </ng-template>

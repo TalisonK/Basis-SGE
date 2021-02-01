@@ -22,10 +22,15 @@ export class ListagemComponent implements OnInit {
 
   private buscarUsuarios(){
     this.servico.getUsuarios()
-    .subscribe((usuarios: Usuario[]) => {
-    this.usuarios = usuarios;
-    });
-  }
+    .subscribe((usuarios: Usuario[]) =>{
+      usuarios.forEach((usuario) => {
+        if(usuario.id > 1){
+          this.usuarios.push(usuario); 
+        }
+      }
+    );}
+    )}
+    
 
   deletarUsuario(id: number) {
     this.servico.deletarUsuario(id)
