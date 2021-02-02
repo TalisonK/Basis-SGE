@@ -5,7 +5,6 @@ import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.dto.UsuarioAutenticacaoDTO;
 import com.basis.sge.service.servico.dto.UsuarioDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
-import com.basis.sge.service.servico.mapper.UsuarioAutenticacaoMapper;
 import com.basis.sge.service.servico.mapper.UsuarioMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,5 +24,4 @@ public class UsuarioAutenticacaoServico {
         Usuario usuario = usuarioRepositorio.findByCpfAndChave(usuarioAutenticacaoDTO.getCpf(), usuarioAutenticacaoDTO.getChave()).orElseThrow(() -> new RegraNegocioException("Autenticação negada"));
         return usuarioMapper.toDto(usuario);
     }
-
 }
