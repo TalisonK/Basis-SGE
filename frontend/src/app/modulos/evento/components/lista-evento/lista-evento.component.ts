@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ConfirmationService } from 'primeng';
 import { Evento } from 'src/app/dominios/evento';
 import { TipoEvento } from 'src/app/dominios/tipo-evento';
@@ -13,10 +13,12 @@ import { TipoEventoService } from '../../services/tipo-evento-service.service';
 })
 export class ListaEventoComponent implements OnInit {
 
-  condicao = true;
+  @Input() categorias;
+  condicao = false;
   eventos: EventoListagem[] = [];
   evento = new Evento();
   exibirDialog = false;
+  inscricaoDialog = false;
   formEdicao: boolean;
   tipoEvento = new TipoEvento();
 
@@ -102,4 +104,16 @@ export class ListaEventoComponent implements OnInit {
     this.buscarEventos();
   }
 
+  inscricao(id){
+    this.servico.obterEventoPorId(id)
+      .subscribe(evento => {
+        this.evento = evento
+      }); 
+    this.inscricaoDialog = !this.inscricaoDialog;
+  }
+  
+  fecharInscricaoDialog(){
+    console.log("renan gay")
+    this.inscricaoDialog = false;
+  }
 }
