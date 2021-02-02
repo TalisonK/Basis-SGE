@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Evento } from 'src/app/dominios/evento';
 import { InscricaoResposta } from 'src/app/dominios/InscricaoResposta';
 import { Pergunta } from 'src/app/dominios/pergunta';
+import { PreInscricao } from 'src/app/dominios/PreInscricao';
 import { ServicoPergutaService } from '../../services/servico-perguta.service';
 
 @Component({
@@ -17,9 +18,11 @@ export class FormularioInscricaoComponent implements OnInit {
 
   @Output() dialogEvento = new EventEmitter();
 
-  respostas = {};
+  respostas:InscricaoResposta[] = [];
 
   perguntas:Pergunta[] = [];
+
+  inscricao:PreInscricao = new PreInscricao();
 
   constructor(
     private servico:ServicoPergutaService
@@ -37,17 +40,42 @@ export class FormularioInscricaoComponent implements OnInit {
         .subscribe((pergunta:Pergunta) => {this.perguntas.push(pergunta)});
       } 
     )
+
+    this.inscricao.idEvento = this.evento.id;
+    this.inscricao.idUsuario = 1;
+    this.inscricao.idSituacao = 1;
   }
 
-  EnviarResposta(respostas){
+  salvarResposta(respostas){
 
-    for(let i in respostas){this.respostas[this.perguntas[respostas[i].numero-1].id] = respostas[i]};
-    console.log(this.respostas);
+    for(let i in respostas){
+      let index:number = Number.parseInt(i.slice(1))-1;
+      let resposta:InscricaoResposta = new InscricaoResposta();
+      resposta.idPergunta = this.perguntas[index].id;
+      resposta.idEvento = this.evento.id;
+      resposta.resposta = respostas[i].resposta;
+      this.respostas[index] = resposta;
+      console.log(this.respostas);
+    }
+  }
+
+  enviarRespostas(id){
+    for(let i in this.respostas){
+      this.respostas[i].idInscricao = id;
+      this.servico.salvarResposta(this.respostas[i])
+      .subscribe(() => {
+        console.log(this.respostas[i]);
+      })
+    }
   }
 
   enviarInscricao(){
-
-    
+    this.servico.criarInscricao(this.inscricao)
+    .subscribe((inscricao) => {
+      this.inscricao = inscricao
+      console.log(this.inscricao)
+      this.enviarRespostas(this.inscricao.id);
+    });
 
 
     this.closeDialog();

@@ -8,7 +8,7 @@
         
         <div style="width: 50%;">
             <p-accordion mutiple="false" *ngFor="let pergunta of perguntas; let i = index">
-                <app-perguntas-respostas [pergunta] = pergunta.titulo [numero] ="i + 1" (enviarRespostaEvent)="EnviarResposta($event)"></app-perguntas-respostas>
+                <app-perguntas-respostas [pergunta] = pergunta.titulo [numero] ="i + 1" (enviarRespostaEvent)="salvarResposta($event)"></app-perguntas-respostas>
             </p-accordion>
         </div>
 

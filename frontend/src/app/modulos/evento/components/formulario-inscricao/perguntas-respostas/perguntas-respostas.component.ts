@@ -24,7 +24,6 @@ export class PerguntasRespostasComponent implements OnInit {
 
   salvaResposta(pergunta, numero){
     this.respostas["c" + numero] = {
-      numero:numero,
       pergunta:pergunta,
       resposta:this.resposta
     }
