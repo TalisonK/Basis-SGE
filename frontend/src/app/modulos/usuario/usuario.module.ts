@@ -8,10 +8,11 @@ import { UsuarioService } from './services/usuario.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './componentes/login/login.component';
 
 
 @NgModule({
-  declarations: [FormularioComponent, ListagemComponent],
+  declarations: [FormularioComponent, ListagemComponent, LoginComponent],
 
   providers:[
     UsuarioService
