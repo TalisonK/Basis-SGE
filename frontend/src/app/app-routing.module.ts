@@ -7,6 +7,7 @@ import { UsuarioModule } from './modulos/usuario/usuario.module';
 import { PerguntaModule } from './modulos/pergunta/pergunta.module';
 import { InscricaoService } from './modulos/pre-inscricao/services/inscricao-service.service';
 import { PreInscricaoModule } from './modulos/pre-inscricao/pre-inscricao.module';
+import { LoginComponent } from './shared/login/login/login.component';
 
 const routes: Routes = [
 	{ 
@@ -23,6 +24,7 @@ const routes: Routes = [
   },
     { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
     { path: 'login-success', component: LoginSuccessComponent },
+    {path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
