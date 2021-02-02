@@ -1,0 +1,23 @@
+
+
+<div class="card">
+    <form [formGroup]="formLogin">
+        <h3 style="color: gray">Faça Seu Login</h3>
+        <div class="p-field">
+            <label for="float-input" style="color: gray">CPF</label>
+            <br/>
+            <input [(ngModel)]="login.cpf" type="text" pInputText formControlName="cpf"/> 
+        </div>
+        
+        <div class="p-field">
+            <label for="float-input" style="color: gray">CHAVE de Acesso</label>
+            <br/>
+            <input [(ngModel)]="login.chave" type="text" pInputText formControlName="chave"/> 
+        </div>
+    </form>
+    <div id="btn-salvar" class="p-formgroup-inline">
+        <div class="p-field-checkbox">
+            <button (click)="makeLogin()" pButton type="button" label="Entrar" class="ui-button-success"></button>
+        </div>
+    </div>
+</div>
