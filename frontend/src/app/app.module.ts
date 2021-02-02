@@ -20,7 +20,8 @@ import { TableModule } from 'primeng/table';
         AppComponent,
         AppTopbarComponent,
         AppFooterComponent,
-        DiarioErrosComponent
+        DiarioErrosComponent,
+        
     ],
     imports: [
         BlockUIModule.forRoot({

@@ -1,13 +1,7 @@
 <div class="card">
-    <h5>Lista de Usuários</h5>
+    <h3>Lista de Usuários</h3>
     <p>Através dos filtros navegue pela lista de Usuários.</p>
-    
-    <!--<div class="p-d-flex p-jc-end">
-        <button routerLink="formulario" pButton type="button" label="Cadastrar Usuário" ></button>
-        <button routerLink="formulario" pButton type="button" label="Cadastrar Usuário Rota" ></button>
-        <button class="p-ml-2" type="button" (click)="showDialog()" pButton label="Cadastrar Usuário Dialog"></button>
-    </div>-->
-    
+       
     <p-table #dt1 [value]="usuarios" dataKey="id"
         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
         [paginator]="true" currentPageReportTemplate="Exibindo {first} a {last} de {totalRecords} usuários"
@@ -27,7 +21,7 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>
-                    <div class="p-d-flex p-jc-between p-ai-center">
+                    <div class="p-d-flex p-jc-between p-ai-center" >
                         Nome 
                         <p-columnFilter type="text" field="nome" display="menu"></p-columnFilter>
                     </div>
@@ -83,12 +77,12 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="5">Não existem usuários.</td>
+                <td colspan="6">Não existem usuários.</td>
             </tr>
         </ng-template>
     </p-table>
 
-<p-dialog header= "{{ formularioEdicao ? 'Edite seu perfil' : 'Cadastre-se' }}" [(visible)]="exibirDialog">
+<p-dialog header= "{{ formularioEdicao ? 'Edite seu perfil' : 'Cadastre-se' }}" [(visible)]="exibirDialog" [style]= "{width: '70vw' }">
     <app-formulario
         [usuario]="usuario"
         [edicao]="formularioEdicao"

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { UsuarioRoutingModule } from './usuario-routing.module';
@@ -8,11 +8,10 @@ import { UsuarioService } from './services/usuario.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './componentes/login/login.component';
 
 
 @NgModule({
-  declarations: [FormularioComponent, ListagemComponent, LoginComponent],
+  declarations: [FormularioComponent, ListagemComponent],
 
   providers:[
     UsuarioService
@@ -24,6 +23,6 @@ import { LoginComponent } from './componentes/login/login.component';
     ReactiveFormsModule,
     SharedModule,
     HttpClientModule
-  ]
+  ],schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class UsuarioModule { }
