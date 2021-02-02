@@ -4,14 +4,14 @@ import { PerguntaService } from '../../services/pergunta.service';
 
 @Component({
   selector: 'app-listagem',
-  templateUrl: './listagem.component.html',
-  styleUrls: ['./listagem.component.css']
+  templateUrl: './listagem-pergunta.component.html',
+  styleUrls: ['./listagem-pergunta.component.css'],
 })
 export class ListagemComponent implements OnInit {
 
   pergunta: Pergunta[] = [];
 
-  constructor( private servico: PerguntaService) { }
+  constructor(private servico: PerguntaService) { }
 
   ngOnInit(): void {
     this.buscarPergunta();
@@ -23,7 +23,7 @@ export class ListagemComponent implements OnInit {
     this.pergunta = pergunta;
     });
   }
-
+  
   deletarPergunta(id: number) {
     this.servico.deletarPergunta(id)
       .subscribe(() => {
