@@ -26,12 +26,9 @@ export class ListagemComponent implements OnInit {
   private buscarUsuarios(){
     this.servico.getUsuarios()
     .subscribe((usuarios: Usuario[]) =>{
-      usuarios.forEach((usuario) => {
-        if(usuario.id > 1){
-          this.usuarios.push(usuario); 
-        }
-      }
-    );}
+      this.usuarios = usuarios.filter(usuario => usuario.id !== 1);
+      
+    }
     )}
     showDialog(edicao = false){
       this.exibirDialog = true;
