@@ -1,9 +1,12 @@
 package com.basis.sge.service.recurso;
+
 import com.basis.sge.service.servico.PreInscricaoServico;
+import com.basis.sge.service.servico.dto.InscricaoListagemDTO;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +18,7 @@ public class InscricaoRecurso {
     private final PreInscricaoServico servico;
 
     @GetMapping
-    public ResponseEntity<List<PreInscricaoDTO>> listar(){
+    public ResponseEntity<List<InscricaoListagemDTO>> listar(){
         return ResponseEntity.ok(servico.listar());
     }
 
@@ -31,7 +34,7 @@ public class InscricaoRecurso {
 
     @PostMapping
     public ResponseEntity<PreInscricaoDTO> criar(@RequestBody PreInscricaoDTO dto){
-        return ResponseEntity.status(201).body(servico.criar(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(servico.criar(dto));
     }
 
     @PutMapping

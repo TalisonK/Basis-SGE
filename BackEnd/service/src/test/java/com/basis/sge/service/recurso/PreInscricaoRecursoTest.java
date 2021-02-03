@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @Transactional
-public class PreInscricaoRecursoIT extends IntTestComum {
+class PreInscricaoRecursoTest extends IntTestComum {
 
     @Autowired
     private PreInscricaoBuilder inscricaobuilder;
@@ -45,7 +45,7 @@ public class PreInscricaoRecursoIT extends IntTestComum {
 
 
     @Test
-    public void criar() throws Exception {
+    void criar() throws Exception {
 
         Usuario usuario = usuarioBuilder.construir();
         Evento evento = eventoBuilder.construir();
@@ -61,7 +61,7 @@ public class PreInscricaoRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void listar() throws Exception{
+    void listar() throws Exception{
         PreInscricao preInscricao = inscricaobuilder.construirEntidade();
         inscricaobuilder.buildDependencias(preInscricao);
 
@@ -72,7 +72,7 @@ public class PreInscricaoRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void atualizar() throws Exception{
+    void atualizar() throws Exception{
 
         PreInscricao preInscricao = inscricaobuilder.construir();
         preInscricao.getSituacao().setId(2);
@@ -84,7 +84,7 @@ public class PreInscricaoRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void deletar() throws Exception{
+    void deletar() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
         Evento evento = eventoBuilder.construir();
@@ -107,13 +107,13 @@ public class PreInscricaoRecursoIT extends IntTestComum {
 
 
     @Test
-    public void obterPorIdComIdErrado() throws Exception {
+    void obterPorIdComIdErrado() throws Exception {
         getMockMvc().perform(get("/api/inscricao/78"))
                     .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void criarComEventoInvalidos() throws Exception {
+    void criarComEventoInvalidos() throws Exception {
 
         Usuario usuario = usuarioBuilder.construir();
         Evento evento = eventoBuilder.construir();
@@ -132,7 +132,7 @@ public class PreInscricaoRecursoIT extends IntTestComum {
 
     }
     @Test
-    public void criarComUsuarioInvalido() throws Exception {
+    void criarComUsuarioInvalido() throws Exception {
         Usuario usuario = usuarioBuilder.construir();
         Evento evento = eventoBuilder.construir();
 
@@ -148,7 +148,7 @@ public class PreInscricaoRecursoIT extends IntTestComum {
                 .andExpect(status().isBadRequest());
     }
     @Test
-    public void criarComSituacaoInvalida() throws Exception{
+    void criarComSituacaoInvalida() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
         Evento evento = eventoBuilder.construir();
@@ -166,7 +166,7 @@ public class PreInscricaoRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void inscricaoDuplicada() throws Exception {
+    void inscricaoDuplicada() throws Exception {
 
         Usuario usuario = usuarioBuilder.construir();
         Evento evento = eventoBuilder.construir();

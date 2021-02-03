@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PreInscricao } from 'src/app/dominios/PreInscricao';
+import { InscricaoListagem } from 'src/app/dominios/InscricaoListagem';
 import { InscricaoService } from '../../services/inscricao-service.service';
 
 @Component({
@@ -9,8 +9,7 @@ import { InscricaoService } from '../../services/inscricao-service.service';
 })
 export class ListagemInscricaoComponent implements OnInit {
 
-  inscricoes: PreInscricao[] = [];
-
+  private inscricoes: InscricaoListagem[] = [];
 
 
   constructor(private service:InscricaoService) { }
@@ -21,7 +20,7 @@ export class ListagemInscricaoComponent implements OnInit {
 
 
   buscarUsuarioInscricoes() {
-    this.service.getInscricaoUsuario().subscribe((inscricoes: PreInscricao[]) =>{
+    this.service.getInscricao().subscribe((inscricoes: InscricaoListagem[]) =>{
 		  this.inscricoes = inscricoes;
 		  console.log(this.inscricoes);
     });

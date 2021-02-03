@@ -14,9 +14,6 @@ public class EventoPerguntaBuilder extends ConstrutorDeEntidade<EventoPergunta>{
     private EventoPerguntaRepositorio eventoPerguntaRepositorio;
 
     @Autowired
-    private EventoBuilder eventoBuilder;
-
-    @Autowired
     private PerguntaBuilder perguntaBuilder;
 
 

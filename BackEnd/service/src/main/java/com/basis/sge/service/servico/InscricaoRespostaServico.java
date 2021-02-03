@@ -1,9 +1,6 @@
 package com.basis.sge.service.servico;
 
-import com.basis.sge.service.dominio.IdInscricaoResposta;
-import com.basis.sge.service.dominio.InscricaoResposta;
-import com.basis.sge.service.dominio.Pergunta;
-import com.basis.sge.service.dominio.PreInscricao;
+import com.basis.sge.service.dominio.*;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRespostaRepositorio;
@@ -31,7 +28,6 @@ public class InscricaoRespostaServico {
     private final PerguntaRepositorio perguntaRepositorio;
     private final InscricaoRespostaMapper inscricaoRespostaMapper;
 
-
     public List<InscricaoRespostaDTO> listar(){
         return inscricaoRespostaMapper.toDto(inscricaoRespostaRepositorio.findAll());
     }
@@ -53,8 +49,9 @@ public class InscricaoRespostaServico {
             throw new RegraNegocioException("Dados inválidos");
         }
 
-        eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(
-                () -> new RegraNegocioException("Evento não cadastrado"));
+        if(!eventoRepositorio.existsById(dto.getIdEvento())){
+            throw new RegraNegocioException("Evento não cadastrado");
+        }
 
         InscricaoResposta ir = new InscricaoResposta();
         IdInscricaoResposta id = new IdInscricaoResposta(dto.getIdPergunta(),dto.getIdEvento(),dto.getIdInscricao());

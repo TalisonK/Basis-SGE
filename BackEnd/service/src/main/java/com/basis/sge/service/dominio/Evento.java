@@ -37,12 +37,6 @@ public class Evento implements Serializable {
     @Column(name="descricao")
     private String descricao;
 
-    /*
-    @NotNull
-    @Column(name = "chave_usuario")
-    private String chaveUsuario;
-    */
-
     @Column(name="quantidade_vagas")
     private Integer quantVagas;
 

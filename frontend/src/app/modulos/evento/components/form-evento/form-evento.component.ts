@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input ,Output ,EventEmitter} from '@angular/core';
 import { TipoEvento } from 'src/app/dominios/tipo-evento';
 import { TipoEventoService } from 'src/app/modulos/evento/services/tipo-evento-service.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,6 +7,7 @@ import { Evento} from "src/app/dominios/evento"
 import { EventoService } from '../../services/evento-service.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-form-evento',
   templateUrl: './form-evento.component.html',
@@ -14,16 +15,26 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class FormEventoComponent implements OnInit {
 
-  edicao = false;
-  form: FormGroup;
-  evento = new Evento();
-  categorias: TipoEvento[] = [];
-  tipoEvento = new TipoEvento(); 
+  @Input() edicao = false;
 
+  @Input() evento = new Evento();
+  
+  @Input() categorias: TipoEvento[] = [];
+  
+  @Input() tipoEvento = new TipoEvento(); 
+  
+  @Output() eventoSalvo = new EventEmitter<Evento>();
+  
+  form: FormGroup;
+  
   constructor(
+  
     private fb: FormBuilder,
+  
     private servicoEvento: EventoService,
+  
     private servicoTipoEvento: TipoEventoService,
+  
     private route: ActivatedRoute
     ) {}
 
@@ -31,8 +42,7 @@ export class FormEventoComponent implements OnInit {
     this.route.params.subscribe(params =>{
       if(params.id){
         this.edicao = true
-        this.obterEventoPorId(params.id);
-       
+        this.obterEventoPorId(params.id);       
       }
     });
     this.form = this.fb.group({
@@ -47,7 +57,7 @@ export class FormEventoComponent implements OnInit {
       idTipoEvento: 8,
       perguntas: []
     });
-
+    this.evento.tipoInscricao = false
     this.buscarTipoEventos();
   }
 
@@ -57,18 +67,22 @@ export class FormEventoComponent implements OnInit {
       this.categorias = tipoEventos;
     });
   }
+
   private obterTipoEventoPorId(id: number){
     this.servicoTipoEvento.obterTipoEventoPorId(id)
-        .subscribe((tipoEvento: TipoEvento) => {this.tipoEvento = tipoEvento});
+        .subscribe((tipoEvento: TipoEvento) => {
+          this.tipoEvento = tipoEvento
+        });
         
   }
+
   private obterEventoPorId(id: number){
     this.servicoEvento.obterEventoPorId(id).subscribe((evento: Evento) => {
       this.evento = evento
       this.obterTipoEventoPorId(evento.idTipoEvento)
     });
-    console.log(this.evento)
   }
+  
   criar(){
    
     if(this.form.invalid){
@@ -77,23 +91,23 @@ export class FormEventoComponent implements OnInit {
     }
    
     if (this.edicao) {
+
       this.evento.perguntas = []
       this.getIdTipoEvento()
-      
       this.servicoEvento.editarEvento(this.evento)
         .subscribe(evento => {
-          alert('Evento Editado com Sucesso')
-          
+          alert('Evento Editado com Sucesso');
+          this.fecharDialog(evento);
         }, (erro: HttpErrorResponse) => {
           alert(erro.error.message);
         });
     } else {
       this.evento.perguntas = []
       this.getIdTipoEvento()
-      this.evento.tipoInscricao = false
       this.servicoEvento.salvarEvento(this.evento)
         .subscribe(evento => {
           alert('Evento Salvo com Sucesso!')
+          this.fecharDialog(evento);
 
         }, (erro: HttpErrorResponse) => {
           alert(erro.error.message);
@@ -102,7 +116,10 @@ export class FormEventoComponent implements OnInit {
     }
 
   getIdTipoEvento(){
-    
     this.evento.idTipoEvento = this.tipoEvento.id
+  }
+
+  fecharDialog(eventoSalvo: Evento) {
+    this.eventoSalvo.emit(eventoSalvo);
   }
 }
