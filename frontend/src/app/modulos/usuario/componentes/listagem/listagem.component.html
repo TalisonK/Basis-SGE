@@ -69,10 +69,12 @@
                 <td>
                     {{usuario.dataNascimento | date: 'dd/MM/yyyy'}}
                 </td>
-                <td class="p-d-flex p-jc-center" *ngIf= "usuario.id == 1">
+                <div *ngIf= "usuario.id !== 1">
+                <td class="p-d-flex p-jc-center" >
                     <button (click)="showDialogEditar(usuario.id)" pButton type="button" icon="pi pi-pencil"></button>
                     <button (click)="dialogDeletarUsuario(usuario.id)" class="p-ml-2" pButton type="button" icon="pi pi-trash"></button>
                 </td>
+                </div>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
