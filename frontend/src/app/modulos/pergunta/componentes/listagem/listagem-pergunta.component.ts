@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { element } from 'protractor';
 import { Pergunta } from 'src/app/dominios/pergunta';
 import { PerguntaService } from '../../services/pergunta.service';
 
@@ -7,9 +8,12 @@ import { PerguntaService } from '../../services/pergunta.service';
   templateUrl: './listagem-pergunta.component.html',
   styleUrls: ['./listagem-pergunta.component.css'],
 })
+
 export class ListagemComponent implements OnInit {
 
   pergunta: Pergunta[] = [];
+  listaIdPergunta: Pergunta[];
+  checked: Boolean = false;
 
   constructor(private servico: PerguntaService) { }
 
@@ -31,5 +35,9 @@ export class ListagemComponent implements OnInit {
         this.buscarPergunta();
       },
       err => alert(err));
+  }
+
+  testeConsole(){
+    console.log(this.listaIdPergunta)
   }
 }
