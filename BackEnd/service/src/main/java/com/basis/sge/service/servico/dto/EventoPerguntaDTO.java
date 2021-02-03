@@ -10,5 +10,5 @@ import java.io.Serializable;
 public class EventoPerguntaDTO implements Serializable {
 
     private Integer idEvento;
-    private Integer IdPergunta;
+    private Integer idPergunta;
 }

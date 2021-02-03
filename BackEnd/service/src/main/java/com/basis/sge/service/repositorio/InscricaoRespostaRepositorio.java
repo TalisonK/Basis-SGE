@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface InscricaoRespostaRepositorio extends JpaRepository<InscricaoResposta, IdInscricaoResposta> {
 
     void deleteByPerguntaAndInscricao(Pergunta pergunta, PreInscricao inscricao);
-    InscricaoResposta findByPerguntaAndInscricao(Pergunta pergunta, PreInscricao inscricao);
 
+    InscricaoResposta findByPerguntaAndInscricao(Pergunta pergunta, PreInscricao inscricao);
 }

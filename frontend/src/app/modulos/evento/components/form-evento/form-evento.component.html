@@ -1,55 +1,55 @@
-<!--<p>form-evento works!</p>-->
-<div class="footer">
-    <div class="card clearfix">
-        <app-version-tag cssClass="footer-text-left"></app-version-tag>
-        <form [formGroup]="form">
-            <h3>Cadastre seu Evento!</h3>
-            
-            <span class="p-field">
-                <input [(ngModel)]="evento.titulo" id="float-input" type="text" pInputText placeholder="Titulo" formControlName="titulo"/> 
-            </span>
 
-            <div class="p-field ">
-                <input [(ngModel)]="evento.dataInicio" id="float-input" type="datetime-local" pInputText placeholder="Local" formControlName="dataInicio"/> 
-                <!--<p-calendar [(ngModel)]="evento.dataInicio" placeholder="Inicio" [showTime]="true"  formControlName="dataInicio"></p-calendar>-->
-            </div>
+<div class="card">
+    <app-version-tag cssClass="footer-text-left"></app-version-tag>
+
+    <form [formGroup]="form">
+
+        <h3>{{edicao ? 'Atualizar Evento' : 'Cadastrar Evento'}}</h3>
         
-            <div class="p-field ">
-                <input [(ngModel)]="evento.dataFim" id="float-input" type="datetime-local" pInputText placeholder="Local" formControlName="dataFim"/> 
-                <!--<p-calendar [(ngModel)]="evento.dataFim" placeholder="Termino" [showTime]="true"  formControlName="dataFim"></p-calendar>-->
-            </div>
+        <span class="p-field">
+            <input [(ngModel)]="evento.titulo" id="float-input" type="text" pInputText placeholder="Titulo" formControlName="titulo"/> 
+        </span>
+
+        <div class="p-field">
+            <input [(ngModel)]="evento.dataInicio" id="float-input" type="datetime-local" pInputText placeholder="Local" formControlName="dataInicio"/> 
+        </div>
+    
+        <div class="p-field ">
+            <input [(ngModel)]="evento.dataFim" id="float-input" type="datetime-local" pInputText placeholder="Local" formControlName="dataFim"/>
+        </div>
+    
+        <div class="p-field">
+            <input [(ngModel)]="evento.descricao" id="float-input" type="text" pInputText placeholder="Descrição" formControlName="descricao"/> 
+        </div>
+
+        <div class="p-field">
+            <input [(ngModel)]="evento.local" id="float-input" type="text" pInputText placeholder="Local" formControlName="local"/> 
+        </div>
         
-            <div class="p-fiel">
-               
-                <input [(ngModel)]="evento.descricao" id="float-input" type="text" pInputText placeholder="Descrição" formControlName="descricao"/> 
-            
-            </div>
-            <div class="p-fiel">
-              
-                <input [(ngModel)]="evento.local" id="float-input" type="text" pInputText placeholder="Local" formControlName="local"/> 
-            </div>
-            
-            <div class="p-fiel">
-                <p-inputNumber [(ngModel)]="evento.valor" placeholder="Valor"  mode="currency" currency="BRL" locale="pt-BR" formControlName="valor"></p-inputNumber>
-            </div>
+        <div class="p-field">
+            <p-inputNumber [(ngModel)]="evento.valor" placeholder="Valor"  mode="currency" currency="BRL" locale="pt-BR" formControlName="valor">
+            </p-inputNumber>
+        </div>
 
-            <div class="p-fiel">
-                <p-inputNumber [(ngModel)]="evento.quantVagas" placeholder="Vagas" mode="decimal" [min]="0" [max]="10000000" formControlName="quantVagas">
-                </p-inputNumber>
-            </div>
-      
-            <div class="p-fiel">
-                <p-dropdown [options]="categorias" [(ngModel)]="tipoEvento" placeholder="Selecione a categoria" optionLabel="descricao" optionValue="evento.id" [showClear]="true" formControlName="idTipoEvento"></p-dropdown>
-            </div>
+        <div class="p-field">
+            <p-inputNumber [(ngModel)]="evento.quantVagas" placeholder="Vagas" mode="decimal" [min]="0" [max]="10000000" formControlName="quantVagas">
+            </p-inputNumber>
+        </div>
+    
+        <div class="p-field">
+            <p-dropdown [options]="categorias" [(ngModel)]="tipoEvento" placeholder="Selecione a categoria" optionLabel="descricao" optionValue="evento.id" [showClear]="true" formControlName="idTipoEvento" style="color: gray;"></p-dropdown>
+        </div>
 
-            <div class="p-fiel">
-                <p-inputSwitch [(ngModel)]="evento.tipoInscricao" formControlName="tipoInscricao"></p-inputSwitch>
-            </div>
-        </form>
-            <div class="p-fiel">
-                <button  pButton type="button" routerLink ="/eventos" label="Cancelar" class="ui-button-secondary"></button>
+        <div class="p-field">
+            <label id="label-form-toggle">Requer Pre-Inscrição</label>
+            <p-inputSwitch [(ngModel)]="evento.tipoInscricao" formControlName="tipoInscricao"></p-inputSwitch>
+        </div>
+        
+        <div id="btn-salvar" class="p-formgroup-inline">
+            <div class="p-field-checkbox">
                 <button (click)="criar()" pButton type="button" [label]="edicao ? 'Atualizar' : 'Salvar'" class="ui-button-rounded ui-button-success"></button>
-            </div>  
-        
-    </div>
+            </div>
+        </div>
+    
+    </form>
 </div>

@@ -1,38 +1,24 @@
 package com.basis.sge.service.recurso;
 
 import com.basis.sge.service.builder.EventoBuilder;
-import com.basis.sge.service.builder.PerguntaBuilder;
 import com.basis.sge.service.builder.PreInscricaoBuilder;
 import com.basis.sge.service.builder.UsuarioBuilder;
 import com.basis.sge.service.dominio.Evento;
-import com.basis.sge.service.dominio.EventoPergunta;
-import com.basis.sge.service.dominio.Pergunta;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
-import com.basis.sge.service.repositorio.EventoRepositorio;
-import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.PreInscricaoServico;
-import com.basis.sge.service.servico.UsuarioServico;
-import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.InscricaoMapper;
 import com.basis.sge.service.servico.mapper.UsuarioMapper;
 import com.basis.sge.service.util.IntTestComum;
 import com.basis.sge.service.util.TestUtil;
-import org.apache.tomcat.jni.Time;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -41,13 +27,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @Transactional
-public class UsuarioRecursoIT extends IntTestComum {
+class UsuarioRecursoTest extends IntTestComum {
 
     @Autowired
     private UsuarioBuilder usuarioBuilder;
 
-    @Autowired
-    private PerguntaBuilder perguntaBuilder;
 
     @Autowired
     private PreInscricaoBuilder inscricaoBuilder;
@@ -56,19 +40,10 @@ public class UsuarioRecursoIT extends IntTestComum {
     private EventoBuilder eventoBuilder;
 
     @Autowired
-    private UsuarioServico usuarioServico;
-
-    @Autowired
     private UsuarioMapper usuarioMapper;
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
-
-    @Autowired
-    private EventoRepositorio eventoRepositorio;
-
-    @Autowired
-    private InscricaoRepositorio inscricaoRepositorio;
 
     @Autowired
     private PreInscricaoServico preInscricaoServico;
@@ -78,19 +53,19 @@ public class UsuarioRecursoIT extends IntTestComum {
   
 
     @BeforeEach
-    public void inicializar() {
+    void inicializar() {
         //apagar repositorios.
         usuarioRepositorio.deleteAll();
     }
 
     @Test
-    public void listarTest() throws Exception {
+    void listarTest() throws Exception {
         getMockMvc().perform(get("/api/usuarios"))
                 .andExpect(status().isOk());
     }
   
     @Test
-    public void obterPorId() throws Exception {
+    void obterPorId() throws Exception {
 
         Usuario usuario = usuarioBuilder.construir();
 
@@ -99,7 +74,7 @@ public class UsuarioRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void criarTest() throws Exception {
+    void criarTest() throws Exception {
 
         Usuario usuario = usuarioBuilder.construirEntidade();
 
@@ -111,7 +86,7 @@ public class UsuarioRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void atualizarTest() throws Exception {
+    void atualizarTest() throws Exception {
 
         Usuario usuario = usuarioBuilder.construir();
 
@@ -123,7 +98,7 @@ public class UsuarioRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void deletarTest() throws Exception{
+    void deletarTest() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
         Evento evento = eventoBuilder.construir();
@@ -142,48 +117,46 @@ public class UsuarioRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void obterPorIdInexistente() throws Exception{
+    void obterPorIdInexistente() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
 
-        Integer idUsuario = usuario.getId()+1;
+        int idUsuario = usuario.getId()+1;
         getMockMvc().perform(get("/api/usuarios/" + idUsuario))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void deletarIdInexistente()throws Exception{
+    void deletarIdInexistente()throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
 
-        Integer idUsuario = usuario.getId()+1;
+        int idUsuario = usuario.getId()+1;
         getMockMvc().perform(delete("/api/usuarios/"+ idUsuario))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void criarUsuarioExistente()throws Exception{
+    void criarUsuarioExistente()throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
         verificaUsuario(usuario);
     }
 
     @Test
-    public void criarUsuarioNulo() throws Exception{
-
-        Usuario usuario = null;
-        verificaUsuario(usuario);
+    void criarUsuarioNulo() throws Exception{
+        verificaUsuario(null);
     }
 
     @Test
-    public void criarUsuarioNomeInvalido() throws Exception{
+    void criarUsuarioNomeInvalido() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
         usuario.setNome("");
         verificaUsuario(usuario);
     }
     @Test
-    public void criarUsuarioCpfExistente() throws Exception{
+    void criarUsuarioCpfExistente() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
         Usuario usuario2 = usuarioBuilder.construirEntidade();
@@ -192,7 +165,7 @@ public class UsuarioRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void criarUsuarioEmailExistente() throws Exception{
+    void criarUsuarioEmailExistente() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
         Usuario usuario2 = usuarioBuilder.construirEntidade();
@@ -201,7 +174,7 @@ public class UsuarioRecursoIT extends IntTestComum {
     }
 
     @Test
-    public void atualizarUsuarioCpf() throws Exception{
+    void atualizarUsuarioCpf() throws Exception{
 
         Usuario usuario = usuarioBuilder.construir();
         Usuario usuario2 = usuarioBuilder.construirEntidade();
@@ -211,14 +184,14 @@ public class UsuarioRecursoIT extends IntTestComum {
         verificaUsuarioPut(usuario2);
     }
 
-    public void verificaUsuario(Usuario usuario) throws Exception{
+    void verificaUsuario(Usuario usuario) throws Exception{
 
         getMockMvc().perform(post("/api/usuarios/")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(usuarioMapper.toDto(usuario))))
                 .andExpect(status().isBadRequest());
     }
-    public void verificaUsuarioPut(Usuario usuario) throws Exception{
+    void verificaUsuarioPut(Usuario usuario) throws Exception{
 
         getMockMvc().perform(put("/api/usuarios/")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)

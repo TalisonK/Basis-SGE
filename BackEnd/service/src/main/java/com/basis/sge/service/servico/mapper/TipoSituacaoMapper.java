@@ -5,6 +5,6 @@ import com.basis.sge.service.servico.dto.TipoSituacaoDTO;
 import org.mapstruct.Mapper;
 
 
-@Mapper(componentModel = "spring",uses = {})
+@Mapper(componentModel = "spring")
 public interface TipoSituacaoMapper extends EntityMapper<TipoSituacaoDTO, TipoSituacao>{
 }
