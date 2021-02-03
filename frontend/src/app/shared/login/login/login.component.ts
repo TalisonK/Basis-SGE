@@ -36,7 +36,10 @@ export class LoginComponent implements OnInit {
   makeLogin(){
     this.servico.findUserByCpfAndChave(this.login).subscribe((usuario: Usuario) =>{
       this.emitUsuario.emit(usuario);
+      
       localStorage.setItem("usuario",JSON.stringify(usuario));
+      const usuarioS = JSON.parse(window.localStorage.getItem("usuario"));
+      console.log(usuarioS)
     })
   }
 
