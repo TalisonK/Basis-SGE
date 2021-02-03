@@ -7,8 +7,8 @@ import { PerguntaService } from '../../services/pergunta.service';
 
 @Component({
   selector: 'app-formulario',
-  templateUrl: './formulario.component.html',
-  styleUrls: ['./formulario.component.css']
+  templateUrl: './formulario-pergunta.component.html',
+  styleUrls: ['./formulario-pergunta.component.css']
 })
 export class FormularioComponent implements OnInit {
 
@@ -16,7 +16,6 @@ export class FormularioComponent implements OnInit {
   edicao = false;
   pergunta = new Pergunta();
   
-
   constructor( 
     private fb: FormBuilder, 
     private perguntaService: PerguntaService,
@@ -46,7 +45,7 @@ export class FormularioComponent implements OnInit {
       alert('Formulário inválido');
       return;
     }
-   
+    
     if (this.edicao) {
       this.perguntaService.editarPergunta(this.pergunta).subscribe(pergunta => {
           alert('Pergunta Editada')
@@ -55,7 +54,8 @@ export class FormularioComponent implements OnInit {
         });
     } else {
       this.perguntaService.criarPergunta(this.pergunta).subscribe(pergunta => {
-          alert('Pergunta Salva')
+        console.log(this.pergunta)  
+        alert('Pergunta Salva')
         }, (erro: HttpErrorResponse) => {
           alert(erro.error.message);
         });

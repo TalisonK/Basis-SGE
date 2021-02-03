@@ -27,6 +27,10 @@ const routes: Routes = [
     path:'inscricao',
     loadChildren: () => PreInscricaoModule
   },
+  {
+    path: 'pergunta',
+    loadChildren: ()=> PerguntaModule
+  },
     { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
     { path: 'login-success', component: LoginSuccessComponent },
     {path: 'login', component: LoginComponent},

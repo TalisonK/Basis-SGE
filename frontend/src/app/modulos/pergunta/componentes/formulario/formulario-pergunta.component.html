@@ -1,0 +1,25 @@
+<!--<p>Formulário Pergunta Works!</p>-->
+<div class="footer">
+    <div class="card clearfix">
+        <app-version-tag cssClass="footer-text-left"></app-version-tag>
+            <form [formGroup]="formPergunta">
+          <h3>Cadastre a sua Pergunta!</h3>
+          
+          <div class="p-field">
+              <input [(ngModel)]="pergunta.titulo" id="float-input" type="text" pInputText placeholder="Titulo da Pergunta" formControlName="titulo"/> 
+          </div>
+      
+          <div class="p-field">             
+          <!-- <input [(ngModel)]="pergunta.obrigatoriedade" id="float-input" type="boolean" pInputText placeholder="Obrigatoriedade" formControlName="obrigatoriedade"/> -->
+                <p>Pergunta obrigatória?</p>
+                Selecione:
+                <p-inputSwitch [(ngModel)]="pergunta.obrigatoriedade" formControlName="obrigatoriedade"></p-inputSwitch>     
+        </div>   
+          
+      </form>
+          <div class="p-field">
+              <button  pButton type="button" routerLink="/pergunta" label="Cancelar" class="ui-button-secondary"></button>
+              <button (click)="criar()" pButton type="button" [label]="edicao ? 'Atualizar' : 'Salvar'" class="ui-button-rounded ui-button-success"></button>
+          </div>        
+  </div>
+</div>

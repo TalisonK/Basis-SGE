@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { FormularioComponent } from '../pergunta/componentes/formulario/formulario.component';
-import { ListagemComponent } from '../pergunta/componentes/listagem/listagem.component';
+import { FormularioComponent } from './componentes/formulario/formulario-pergunta.component';
+import { ListagemComponent } from './componentes/listagem/listagem-pergunta.component';
 
 const routes: Routes = [
   {
     path : 'formulario',
+    component: FormularioComponent
+  },
+  {
+    path : 'formulario/:id',
     component: FormularioComponent
   },
   {
