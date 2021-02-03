@@ -45,7 +45,7 @@ public class InscricaoRespostaBuilder extends ConstrutorDeEntidade<InscricaoResp
 
 
     @Override
-    public InscricaoResposta construirEntidade() throws ParseException, Exception {
+    public InscricaoResposta construirEntidade() throws Exception {
 
         Pergunta pergunta = perguntaBuilder.construirEntidade();
         pergunta.setTitulo("Outro Titulo");

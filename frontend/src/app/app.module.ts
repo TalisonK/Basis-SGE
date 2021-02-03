@@ -22,7 +22,8 @@ import { LoginTemplateComponent } from './shared/login/login-template/login-temp
         AppComponent,
         AppTopbarComponent,
         AppFooterComponent,
-        DiarioErrosComponent
+        DiarioErrosComponent,
+        
     ],
     imports: [
         BlockUIModule.forRoot({

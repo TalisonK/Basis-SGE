@@ -3,20 +3,12 @@ package com.basis.sge.service.builder;
 import com.basis.sge.service.dominio.*;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
-import com.basis.sge.service.repositorio.UsuarioRepositorio;
 import com.basis.sge.service.servico.EventoServico;
-import com.basis.sge.service.servico.PreInscricaoServico;
 import com.basis.sge.service.servico.UsuarioServico;
 import com.basis.sge.service.servico.mapper.EventoMapper;
-import com.basis.sge.service.servico.mapper.InscricaoMapper;
 import com.basis.sge.service.servico.mapper.UsuarioMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collection;
 
 
@@ -25,9 +17,6 @@ public class PreInscricaoBuilder extends ConstrutorDeEntidade<PreInscricao>{
 
     @Autowired
     private InscricaoRepositorio inscricaoRepositorio;
-
-    @Autowired
-    private PreInscricaoServico preInscricaoServico;
 
     @Autowired
     private UsuarioBuilder usuarioBuilder;
@@ -46,9 +35,6 @@ public class PreInscricaoBuilder extends ConstrutorDeEntidade<PreInscricao>{
 
     @Autowired
     private EventoBuilder eventoBuilder;
-
-    @Autowired
-    private InscricaoMapper mapper;
 
     @Autowired
     private EventoMapper eventoMapper;
@@ -93,7 +79,6 @@ public class PreInscricaoBuilder extends ConstrutorDeEntidade<PreInscricao>{
     protected PreInscricao obterPorId(Integer id) {
         return inscricaoRepositorio.findById(id).orElse(null);
     }
-
 
     public void buildDependencias(PreInscricao preInscricao){
 

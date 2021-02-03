@@ -2,6 +2,7 @@ package com.basis.sge.service.recurso;
 
 //métodos
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.basis.sge.service.servico.PerguntaServico;
@@ -38,7 +39,7 @@ public class PerguntaRecurso {
     @PostMapping
     public ResponseEntity<PerguntaDTO> criar(@RequestBody PerguntaDTO perguntaDTO) {
         PerguntaDTO perguntaDtoCriado = perguntaServico.criar(perguntaDTO);
-        return ResponseEntity.status(201).body(perguntaDtoCriado);
+        return ResponseEntity.status(HttpStatus.CREATED).body(perguntaDtoCriado);
     }
 
     @PutMapping

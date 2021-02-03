@@ -1,12 +1,8 @@
 package com.basis.sge.service.servico;
 
 import com.basis.sge.service.dominio.Evento;
-import com.basis.sge.service.dominio.Pergunta;
-import com.basis.sge.service.dominio.PreInscricao;
-import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.dominio.EventoPergunta;
 import com.basis.sge.service.repositorio.*;
-import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.EventoDTO;
 import com.basis.sge.service.servico.dto.EventoListagemDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
@@ -32,12 +28,6 @@ public class EventoServico {
 
     private final EventoMapper eventoMapper;
 
-    private final InscricaoRepositorio inscricaoRepositorio;
-
-    private final EmailServico emailServico;
-
-    private final UsuarioRepositorio usuarioRepositorio;
-
     private final EventoListagemMapper eventoListagemMapper;
 
     public List<EventoListagemDTO> listar() {
@@ -55,7 +45,7 @@ public class EventoServico {
 
     public EventoDTO criar(EventoDTO eventoDTO) {
         validaEvento(eventoDTO);
-        //validaChaveUsuario(eventoDTO.getChaveUsuario());
+
         validaTitulo(eventoDTO.getTitulo());
         eventoDTO.setId(null);
         Evento evento = eventoMapper.toEntity(eventoDTO);
@@ -66,9 +56,7 @@ public class EventoServico {
         eventoRepositorio.save(evento);
 
         if (perguntas != null && !perguntas.isEmpty()) {
-            perguntas.forEach(pergunta -> {
-                pergunta.setEvento(evento);
-            });
+            perguntas.forEach(pergunta -> pergunta.setEvento(evento));
             eventoPerguntaRepositorio.saveAll(perguntas);
         }
         return eventoMapper.toDto(evento);
@@ -82,8 +70,6 @@ public class EventoServico {
         Evento evento = eventoMapper.toEntity(eventoDTO);
         Evento eventoAtualizado = eventoRepositorio.save(evento);
 
-        //notificarInscritos(evento.getTitulo(),evento.getId());
-
         return eventoMapper.toDto(eventoAtualizado);
     }
 
@@ -94,20 +80,6 @@ public class EventoServico {
 
     //---------------------------------------------------------------------
     //funções de validação e notificação
-
-    public void notificarInscritos(String titulo,Integer id) {
-
-        List<PreInscricao> inscricoes = inscricaoRepositorio.findAllByEventoId(id);
-        List<String> destinatarios = new ArrayList();
-        inscricoes.forEach((inscricao) -> {
-            Usuario usuarioInscrito = inscricao.getUsuario();
-            destinatarios.add(usuarioInscrito.getEmail());
-        });
-
-        emailServico.rabbitSendMail("kenouen1@gmail.com",
-                " O evento " + titulo + " foi atualizado, verifique sua inscrição.",
-                "Evento Atualizado",destinatarios);
-    }
 
     // valida dados de evento, com exceção das datas
     public void validaEvento(EventoDTO eventoDTO){
@@ -126,12 +98,12 @@ public class EventoServico {
 
     //Verifica se o titulo do evento já existe
     public void validaTitulo(String titulo,Integer id){
-        if (eventoRepositorio.existsByTituloAndIdNot(titulo,id)){
+        if (eventoRepositorio.existsByTituloAndIdNot(titulo,id).equals(true)){
             throw new RegraNegocioException("Um evento com esse titulo já existe");
         }
     }
     public void validaTitulo(String titulo){
-        if (eventoRepositorio.existsByTitulo(titulo)){
+        if (eventoRepositorio.existsByTitulo(titulo).equals(true)){
             throw new RegraNegocioException("Um evento com esse titulo já existe");
         }
     }

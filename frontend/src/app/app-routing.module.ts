@@ -15,6 +15,10 @@ const routes: Routes = [
    path: 'eventos', 
    loadChildren: ()=>EventoModule
   },
+  {
+    path: 'pergunta',
+    loadChildren: () => PerguntaModule
+  },
 	{
 	path:'usuarios',
 	loadChildren: () => UsuarioModule

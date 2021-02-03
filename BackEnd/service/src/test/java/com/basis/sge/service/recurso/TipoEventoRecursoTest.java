@@ -1,8 +1,5 @@
 package com.basis.sge.service.recurso;
 
-
-
-
 import com.basis.sge.service.repositorio.TipoEventoRepositorio;
 
 import com.basis.sge.service.util.IntTestComum;
@@ -20,15 +17,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @Transactional
-public class TipoEventoRecursoIt extends IntTestComum {
-
-
-    @Autowired
-    private TipoEventoRepositorio tipoEventoRepositorio;
-
+class TipoEventoRecursoTest extends IntTestComum {
 
     @Test
-    public void listaTest() throws Exception {
+    void listaTest() throws Exception {
         getMockMvc().perform(get("/api/tipo-evento")).andExpect(status().isOk());
     }
 
