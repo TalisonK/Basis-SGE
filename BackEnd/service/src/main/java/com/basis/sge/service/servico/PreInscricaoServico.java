@@ -2,7 +2,6 @@ package com.basis.sge.service.servico;
 
 import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.dominio.PreInscricao;
-import com.basis.sge.service.dominio.TipoSituacao;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
@@ -32,7 +31,7 @@ public class PreInscricaoServico {
     private final EventoRepositorio eventoRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
     private final InscricaoRespostaServico irServico;
-    private final TipoSituacaoRepositorio tsrepo;
+    private final TipoSituacaoRepositorio tipoSituacaoRepositorio;
 
     private final InscricaoMapper mapper;
     private final InscricaoRespostaMapper inscricaoRespostaMapper;
@@ -71,7 +70,7 @@ public class PreInscricaoServico {
 
         Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
         Evento evento = eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(() -> new RegraNegocioException("Evento nao Cadastrado!"));
-        TipoSituacao situacao = tsrepo.findById(dto.getIdSituacao()).orElseThrow(() -> new RegraNegocioException("Inscrição inexistente!"));
+        if(!tipoSituacaoRepositorio.existsById(dto.getIdSituacao())){ throw new RegraNegocioException("Inscrição inexistente!");}
 
         incrRepo.findAllByUsuarioId(usuario.getId()).forEach(inscricao -> {
             if (inscricao.getEvento().getId().equals(evento.getId())){
