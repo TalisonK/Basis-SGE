@@ -65,7 +65,7 @@
                     {{inscricao.situacao}}
                 </td>
                 <td>
-                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editProduct(product)"></button>
+                    <button (click)="aprovarInscricao(inscricao.id)" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success p-mr-2" ></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
                 </td>
             </tr>

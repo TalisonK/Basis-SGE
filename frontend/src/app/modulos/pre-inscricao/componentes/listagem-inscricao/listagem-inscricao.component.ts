@@ -1,28 +1,45 @@
-import { Component, OnInit } from '@angular/core';
-import { InscricaoListagem } from 'src/app/dominios/InscricaoListagem';
-import { InscricaoService } from '../../services/inscricao-service.service';
+  import { HttpErrorResponse } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+  import { InscricaoListagem } from 'src/app/dominios/InscricaoListagem';
+  import { PreInscricao } from 'src/app/dominios/PreInscricao';
+  import { InscricaoService } from '../../services/inscricao-service.service';
 
-@Component({
-  selector: 'app-listagem-inscricao',
-  templateUrl: './listagem-inscricao.component.html',
-  styleUrls: ['./listagem-inscricao.component.css']
-})
-export class ListagemInscricaoComponent implements OnInit {
+  @Component({
+    selector: 'app-listagem-inscricao',
+    templateUrl: './listagem-inscricao.component.html',
+    styleUrls: ['./listagem-inscricao.component.css']
+  })
+  export class ListagemInscricaoComponent implements OnInit {
 
-  private inscricoes: InscricaoListagem[] = [];
+    @Input() edicao = true;
+    @Input() inscricao = new PreInscricao();
 
+    private inscricoes: InscricaoListagem[] = [];
 
-  constructor(private service:InscricaoService) { }
+    constructor(private service:InscricaoService) { }
 
-  ngOnInit(): void {
-    this.buscarUsuarioInscricoes();
-  }
+    ngOnInit(): void {
+      this.buscarUsuarioInscricoes();
+    }
 
+    buscarUsuarioInscricoes() {
+      this.service.getInscricao().subscribe((inscricoes: InscricaoListagem[]) =>{
+        this.inscricoes = inscricoes;
+      });
+    }
 
-  buscarUsuarioInscricoes() {
-    this.service.getInscricao().subscribe((inscricoes: InscricaoListagem[]) =>{
-		  this.inscricoes = inscricoes;
-		  console.log(this.inscricoes);
-    });
-  }
+    aprovarInscricao(id: number){
+      this.service.getInscricaoPorId(id)
+      .subscribe((inscricao: PreInscricao) =>{
+        this.aprovarInscricaoEditar(inscricao);
+      })
+    }
+
+    aprovarInscricaoEditar(insc:PreInscricao){
+      console.log(insc);
+			this.service.editarInscricao(insc).subscribe(inscricao =>{
+        console.log("cu")
+				alert('Inscrição aprovada');
+			});
+	}
 }
