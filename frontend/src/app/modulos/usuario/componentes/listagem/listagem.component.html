@@ -8,7 +8,7 @@
         [globalFilterFields]="['name','country.name','representative.name','status']">
         <ng-template pTemplate="caption">
             <div class="left" style="float: left;" >
-                <button id="button_text" pButton pRipple label="Adicionar" icon="pi pi-plus" class="p-button-success" (click)="showDialog()"></button>
+                <button id="button_text" pButton pRipple label="Adicionar" icon="pi pi-plus" class="p-button-success" (click)="showDialogSalvar()"></button>
             </div>
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
@@ -69,7 +69,7 @@
                 <td>
                     {{usuario.dataNascimento | date: 'dd/MM/yyyy'}}
                 </td>
-                <td class="p-d-flex p-jc-center">
+                <td class="p-d-flex p-jc-center" *ngIf= "usuario.id == 1">
                     <button (click)="showDialogEditar(usuario.id)" pButton type="button" icon="pi pi-pencil"></button>
                     <button (click)="dialogDeletarUsuario(usuario.id)" class="p-ml-2" pButton type="button" icon="pi pi-trash"></button>
                 </td>

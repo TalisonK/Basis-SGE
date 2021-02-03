@@ -3,8 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { FormularioComponent } from 'src/app/modulos/pre-inscricao/componentes/formulario/formulario.component';
 
 import { ListagemInscricaoComponent } from './componentes/listagem-inscricao/listagem-inscricao.component';
-import { LoginTesteComponent } from './componentes/login-teste/login-teste.component';
-
 
 const routes: Routes = [
 	{
@@ -15,12 +13,8 @@ const routes: Routes = [
 		path:'form',
 		component: FormularioComponent
 	},
-	{
-		path:"login",
-		component: LoginTesteComponent
-	}
 ];
-
+ 
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule]
