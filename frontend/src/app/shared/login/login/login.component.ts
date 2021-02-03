@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Input } from '@angular/core';
 import { Component, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -13,38 +13,24 @@ import { LoginService } from '../login.service';
 })
 export class LoginComponent implements OnInit {
 
-  @Output() emitUsuario: EventEmitter<Usuario> = new EventEmitter();
-  formLogin: FormGroup;
-  login = new UsuarioAutenticacaoDTO();
+  @Output() loginDadosEvent = new EventEmitter();
 
+  cpf:String = "";
 
-  constructor(
-    private servico: LoginService, 
-    private formBuilder: FormBuilder 
-  ) { }
+  chave:String = "";
+  
+  constructor() { }
 
   ngOnInit(): void {
-    this.formLogin = this.formBuilder.group({
-      cpf: '',
-      chave: ''
-    })
-  }
-  getUserFromLocalStorage(){
-    const usuario = JSON.parse(window.localStorage.getItem("usuario"));
-    this.emitUsuario.emit(usuario);
-  } 
-  makeLogin(){
-    this.servico.findUserByCpfAndChave(this.login).subscribe((usuario: Usuario) =>{
-      this.emitUsuario.emit(usuario);
-      
-      localStorage.setItem("usuario",JSON.stringify(usuario));
-      const usuarioS = JSON.parse(window.localStorage.getItem("usuario"));
-      console.log(usuarioS)
-    })
   }
 
-  makeLogout(){
-    localStorage.clear()
-    location.reload()
+  loginFocusOut(){
+
+    let pacote = {
+      cpf:this.cpf,
+      chave:this.chave
+    }
+
+    this.loginDadosEvent.emit(pacote);
   }
 }

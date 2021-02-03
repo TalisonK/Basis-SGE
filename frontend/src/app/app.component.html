@@ -13,7 +13,6 @@
             'layout-menu-static-inactive': menuService.staticMenuDesktopInactive,
             'layout-menu-static-active': menuService.staticMenuMobileActive
         }">
-        
         <app-topbar></app-topbar>
         
         <div class="layout-menu" [ngClass]="{ 'layout-menu-dark': darkMenu }" (click)="onMenuClick($event)">

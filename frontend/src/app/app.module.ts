@@ -15,6 +15,7 @@ import { DiarioErrosComponent } from './components/diario-erros/diario-erros.com
 import { BlockUIModule } from 'ng-block-ui';
 import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
+import { LoginTemplateComponent } from './shared/login/login-template/login-template.component';
 
 @NgModule({
     declarations: [

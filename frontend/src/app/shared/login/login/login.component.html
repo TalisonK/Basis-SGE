@@ -1,23 +1,12 @@
+<span class="ui-float-label" style="margin-top: 30px;">
+    <p-inputMask [(ngModel)]="cpf" size="20" mask="999.999.999-99" characterPattern="[А-Яа-я]" (focusout)="loginFocusOut()" style="font: 16px Roboto"></p-inputMask>
+    <label for="float-input">CPF</label>
+</span>
+
+<span class="ui-float-label" style="margin-top: 30px;">
+    <input [(ngModel)]="chave" id="float-input" type="text" size="20" (focusout)="loginFocusOut()" pInputText style="font: 16px Roboto"> 
+    <label for="float-input">Chave</label>
+</span>
+    
 
 
-<div class="card">
-    <form [formGroup]="formLogin">
-        <h3 style="color: gray">Faça Seu Login</h3>
-        <div class="p-field">
-            <label for="float-input" style="color: gray">CPF</label>
-            <br/>
-            <input [(ngModel)]="login.cpf" type="text" pInputText formControlName="cpf"/> 
-        </div>
-        
-        <div class="p-field">
-            <label for="float-input" style="color: gray">CHAVE de Acesso</label>
-            <br/>
-            <input [(ngModel)]="login.chave" type="text" pInputText formControlName="chave"/> 
-        </div>
-    </form>
-    <div id="btn-salvar" class="p-formgroup-inline">
-        <div class="p-field-checkbox">
-            <button (click)="makeLogin()" pButton type="button" label="Entrar" class="ui-button-success"></button>
-        </div>
-    </div>
-</div>

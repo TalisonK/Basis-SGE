@@ -4,6 +4,8 @@ import { PRIMENG_IMPORTS } from './primeng-imports';
 import { LoginComponent } from './login/login/login.component';
 import { LoginService } from './login/login.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginTemplateComponent } from './login/login-template/login-template.component';
+
 
 @NgModule({
     imports: [
@@ -16,6 +18,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     exports: [
         PRIMENG_IMPORTS,
     ],
-    declarations: [LoginComponent]
+    declarations: [LoginComponent, LoginTemplateComponent]
 })
 export class SharedModule { }
