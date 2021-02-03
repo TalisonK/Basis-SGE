@@ -13,6 +13,10 @@ const routes: Routes = [
    path: 'eventos', 
    loadChildren: ()=>EventoModule
   },
+  {
+    path: 'pergunta',
+    loadChildren: () => PerguntaModule
+  },
 	{
 	path:'usuarios',
 	loadChildren: () => UsuarioModule
@@ -23,6 +27,8 @@ const routes: Routes = [
   },
     { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
     { path: 'login-success', component: LoginSuccessComponent },
+    
+  
 ];
 
 @NgModule({

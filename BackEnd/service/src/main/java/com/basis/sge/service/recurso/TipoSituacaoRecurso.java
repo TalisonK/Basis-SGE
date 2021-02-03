@@ -5,7 +5,6 @@ import com.basis.sge.service.servico.dto.TipoSituacaoDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 
@@ -15,7 +14,6 @@ import java.util.List;
 public class TipoSituacaoRecurso {
 
     private final TipoSituacaoServico servico;
-
 
     @GetMapping
     public ResponseEntity<List<TipoSituacaoDTO>> listar(){

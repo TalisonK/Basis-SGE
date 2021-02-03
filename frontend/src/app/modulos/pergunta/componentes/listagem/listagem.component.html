@@ -37,23 +37,7 @@
                         Obrigatoriedade
                         <p-columnFilter type="text" field="obrigatoriedade" display="menu"></p-columnFilter>
                     </div>
-                </th>
-                                
-                <th>
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        Teste
-                        <p-columnFilter field="status" matchMode="equals" display="menu">
-                            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-                                <p-dropdown [ngModel]="value" [options]="statuses" (onChange)="filter($event.value)" placeholder="Any">
-                                    <ng-template let-option pTemplate="item">
-                                        <span [class]="'customer-badge status-' + option.value">{{option.label}}</span>
-                                    </ng-template>
-                                </p-dropdown>
-                            </ng-template>
-                        </p-columnFilter>
-                    </div>
-                </th>
-                
+                </th>                
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-pergunta>
@@ -67,7 +51,7 @@
                 <td>
                     {{obrigatoriedade}}
                 </td>                 
-            </tr>-->
+            </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>

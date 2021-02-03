@@ -7,7 +7,6 @@ import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.PerguntaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;  //corpo da requisição, envia dados pro servidor
 
 import javax.transaction.Transactional;
@@ -66,7 +65,9 @@ public class PerguntaServico {
        }
     }
     public void deletar(Integer id) {
-        Pergunta pergunta = perguntaRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Pergunta inexistente"));
+        if (!perguntaRepositorio.existsById(id)) {
+            throw new RegraNegocioException("Pergunta inexistente");
+        }
         perguntaRepositorio.deleteById(id);
     }
 }

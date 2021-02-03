@@ -1,16 +1,15 @@
 <div class="card">
-    <h5>Lista de Usuários</h5>
+    <h3>Lista de Usuários</h3>
     <p>Através dos filtros navegue pela lista de Usuários.</p>
-    
-    <div class="p-d-flex p-jc-end">
-        <button routerLink="formulario" pButton type="button" label="Cadastrar Usuário" ></button>
-    </div>
-    
+       
     <p-table #dt1 [value]="usuarios" dataKey="id"
         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
         [paginator]="true" currentPageReportTemplate="Exibindo {first} a {last} de {totalRecords} usuários"
         [globalFilterFields]="['name','country.name','representative.name','status']">
         <ng-template pTemplate="caption">
+            <div class="left" style="float: left;" >
+                <button id="button_text" pButton pRipple label="Adicionar" icon="pi pi-plus" class="p-button-success" (click)="showDialog()"></button>
+            </div>
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
                  <i class="pi pi-search"></i>
@@ -22,7 +21,7 @@
         <ng-template pTemplate="header">
             <tr>
                 <th>
-                    <div class="p-d-flex p-jc-between p-ai-center">
+                    <div class="p-d-flex p-jc-between p-ai-center" >
                         Nome 
                         <p-columnFilter type="text" field="nome" display="menu"></p-columnFilter>
                     </div>
@@ -45,12 +44,11 @@
                         <p-columnFilter type="text" field="telefone" display="menu"></p-columnFilter>
                     </div>
                 </th>
-                <th>
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        Data de Nascimento
-                        <p-columnFilter type="date" field="dataNascimento" display="menu"></p-columnFilter>
-                    </div>
-                </th>   
+                <th> 
+                    Data de Nascimento
+                    <p-columnFilter type="date" field="dataNascimento" display="menu"></p-columnFilter>
+                   
+                </th>
                 <th style="width: 80px;">Ações</th>     
             </tr>
         </ng-template>
@@ -72,15 +70,25 @@
                     {{usuario.dataNascimento | date: 'dd/MM/yyyy'}}
                 </td>
                 <td class="p-d-flex p-jc-center">
-                    <button [routerLink]="['formulario', usuario.id]" pButton type="button" icon="pi pi-pencil"></button>
-                    <button (click)="deletarUsuario(usuario.id)" class="p-ml-2" pButton type="button" icon="pi pi-trash"></button>
+                    <button (click)="showDialogEditar(usuario.id)" pButton type="button" icon="pi pi-pencil"></button>
+                    <button (click)="dialogDeletarUsuario(usuario.id)" class="p-ml-2" pButton type="button" icon="pi pi-trash"></button>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="5">Não existem usuários.</td>
+                <td colspan="6">Não existem usuários.</td>
             </tr>
         </ng-template>
     </p-table>
+
+<p-dialog header= "{{ formularioEdicao ? 'Edite seu perfil' : 'Cadastre-se' }}" [(visible)]="exibirDialog" [style]= "{width: '70vw' }">
+    <app-formulario
+        [usuario]="usuario"
+        [edicao]="formularioEdicao"
+        (usuarioSalvo)="fecharDialog($event)">
+    </app-formulario>
+</p-dialog>
+
+<p-confirmDialog header="Confirmar remoção de usuário" icon="pi pi-exclamation-triangle"></p-confirmDialog> 
 </div>

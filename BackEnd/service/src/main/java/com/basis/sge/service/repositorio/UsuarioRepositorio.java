@@ -17,6 +17,4 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, Integer> {
 
     Boolean existsByCpfAndIdNot(String cpf, Integer id);
 
-    Boolean existsByChave(String chave);
-
 }

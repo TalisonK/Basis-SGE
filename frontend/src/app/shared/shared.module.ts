@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
+import { ConfirmationService } from 'primeng';
 import { PRIMENG_IMPORTS } from './primeng-imports';
 
 @NgModule({
     imports: [
         PRIMENG_IMPORTS,
+                
     ],
-    providers: [],
+    providers: [
+        ConfirmationService
+    ],
     exports: [
-        PRIMENG_IMPORTS,
-    ]
+        PRIMENG_IMPORTS
+        
+    ],
+    declarations: []
 })
 export class SharedModule { }
