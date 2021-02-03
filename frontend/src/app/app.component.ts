@@ -9,7 +9,7 @@ import { Usuario } from './dominios/usuario';
 })
 export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    usarioLogado: Usuario;
+    usuario: Usuario;
 
     layoutCompact = true;
 

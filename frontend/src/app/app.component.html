@@ -14,13 +14,14 @@
             'layout-menu-static-active': menuService.staticMenuMobileActive
         }"> 
         <app-topbar></app-topbar>
-
+        
         <div class="layout-menu" [ngClass]="{ 'layout-menu-dark': darkMenu }" (click)="onMenuClick($event)">
+            
             <p-scrollPanel #scrollPanel [style]="{ height: '100%' }">
                 <app-menu></app-menu>
             </p-scrollPanel>
         </div>
-
+        
         <div class="layout-main">
             <breadcrumb></breadcrumb>
             <div class="layout-content">

@@ -1,0 +1,12 @@
+<span class="ui-float-label" style="margin-top: 30px;">
+    <p-inputMask [(ngModel)]="cpf" size="20" mask="999.999.999-99" characterPattern="[А-Яа-я]" (focusout)="loginFocusOut()" style="font: 16px Roboto"></p-inputMask>
+    <label for="float-input">CPF</label>
+</span>
+
+<span class="ui-float-label" style="margin-top: 30px;">
+    <input [(ngModel)]="chave" id="float-input" type="text" size="20" (focusout)="loginFocusOut()" pInputText style="font: 16px Roboto"> 
+    <label for="float-input">Chave</label>
+</span>
+    
+
+

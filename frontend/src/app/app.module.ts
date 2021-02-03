@@ -14,6 +14,8 @@ import { SecurityModule, VersionTagModule } from '@nuvem/angular-base';
 import { DiarioErrosComponent } from './components/diario-erros/diario-erros.component';
 import { BlockUIModule } from 'ng-block-ui';
 import { TableModule } from 'primeng/table';
+import { FormsModule } from '@angular/forms';
+import { LoginTemplateComponent } from './shared/login/login-template/login-template.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +41,7 @@ import { TableModule } from 'primeng/table';
         VersionTagModule,
         SecurityModule.forRoot(environment.auth),
         MenuModule,
-        TableModule,
+        TableModule
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy }
