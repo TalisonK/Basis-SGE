@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 public class InscricaoListagemDTO{
 
+    private Integer id;
     private String evento;
     private String usuario;
     private LocalDateTime dataInicio;

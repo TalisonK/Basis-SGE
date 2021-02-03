@@ -21,6 +21,7 @@ export class ListaEventoComponent implements OnInit {
   inscricaoDialog = false;
   formEdicao: boolean;
   tipoEvento = new TipoEvento();
+  loading = '';
 
   constructor(
 
