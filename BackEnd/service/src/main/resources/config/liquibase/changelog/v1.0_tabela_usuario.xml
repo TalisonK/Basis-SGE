@@ -30,7 +30,7 @@
         <insert tableName="usuario">
             <column name="id">1</column>
             <column name="nome">admin</column>
-            <column name="cpf">00000000000</column>
+            <column name="cpf">08502610406</column>
             <column name="email">kenouen1@gmail.com</column>
             <column name="telefone">83998899898</column>
             <column name="data_nascimento">2000-10-13</column>
