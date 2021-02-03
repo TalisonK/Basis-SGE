@@ -27,6 +27,8 @@ const routes: Routes = [
   },
     { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
     { path: 'login-success', component: LoginSuccessComponent },
+    
+  
 ];
 
 @NgModule({
