@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    usuarioLogado: boolean = true;
+    usuarioLogado: boolean = false;
 
     usuario:Usuario = new Usuario();
 
