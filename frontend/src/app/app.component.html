@@ -1,4 +1,4 @@
-<block-ui>
+<block-ui *ngIf="usuarioLogado">
     <div class="layout-wrapper"
         [ngClass]="{ 'layout-compact': layoutCompact }"
         (click)="onLayoutClick()">
@@ -13,7 +13,6 @@
                 'layout-menu-static-inactive': menuService.staticMenuDesktopInactive,
                 'layout-menu-static-active': menuService.staticMenuMobileActive
             }"
-            *ngIf="usuarioLogado"
             > 
             <app-topbar (sairEvento)="logOut()"></app-topbar>
             
@@ -34,8 +33,8 @@
             <basis-page-notification></basis-page-notification>
             <div class="layout-mask"></div>
         </div>
-        <div *ngIf="!usuarioLogado">
-            <app-login-template (UsuarioEvent)="logar($event)"></app-login-template>
-        </div>
     </div>
 </block-ui>
+<div *ngIf="!usuarioLogado">
+    <app-login-template (UsuarioEvent)="logar($event)"></app-login-template>
+</div>

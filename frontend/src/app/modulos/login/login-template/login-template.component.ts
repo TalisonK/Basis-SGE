@@ -60,11 +60,8 @@ export class LoginTemplateComponent implements OnInit {
   makeLogin(){
 
     this.servico.findUserByCpfAndChave(this.login).subscribe((usuario: Usuario) =>{
-      this.UsuarioEvent.emit(usuario);
-      
       localStorage.setItem("usuario",JSON.stringify(usuario));
-      console.log(localStorage.getItem("usuario"));
-      
+      this.UsuarioEvent.emit(usuario);      
     })
   }
 
@@ -77,5 +74,7 @@ export class LoginTemplateComponent implements OnInit {
     this.servico.criarUsuario(this.usuario).subscribe((usuario) => {
       console.log(usuario);
     })
+
+    this.cadastroEventoff();
   }
 }

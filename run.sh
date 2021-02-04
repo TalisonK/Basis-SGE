@@ -22,3 +22,5 @@ java -jar target/service*.jar
 cd docker/
 
 sudo docker-compose down;sleep 604800'
+
+exit

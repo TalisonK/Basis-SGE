@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AppComponent } from '../../app.component';
 import { Authentication, User } from '@nuvem/angular-base';
+import { Router } from '@angular/router';
+import { Usuario } from 'src/app/dominios/usuario';
 
 @Component({
     selector: 'app-topbar',
@@ -10,18 +12,19 @@ export class AppTopbarComponent {
 
     @Output() sairEvento = new EventEmitter();
 
-    constructor(public app: AppComponent, private readonly _authentication: Authentication<User>) {
+    usuario:String = "";
+
+    constructor(
+        public app: AppComponent,
+        public router:Router) {
     }
 
-    get usuario() {
-        return this._authentication.getUser();
-    }
-
-    isAuthenticated() {
-        return this._authentication.isAuthenticated();
+    ngOnInit(): void {
+        this.usuario = JSON.parse(localStorage.getItem("usuario")).nome;
     }
 
     sair(){
         this.sairEvento.emit(null);
+        this.router.navigate(["/"]);
     }
 }

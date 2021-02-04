@@ -14,7 +14,7 @@ import { TipoEventoService } from '../../services/tipo-evento-service.service';
 export class ListaEventoComponent implements OnInit {
 
   @Input() categorias;
-  condicao = true;
+  condicao = false;
   eventos: EventoListagem[] = [];
   evento = new Evento();
   exibirDialog = false;
@@ -36,6 +36,8 @@ export class ListaEventoComponent implements OnInit {
   ngOnInit(): void {
 
     this.buscarEventos();
+
+    this.condicao = JSON.parse(localStorage.getItem("usuario")).id == 1? true : false;
 
   }
 
