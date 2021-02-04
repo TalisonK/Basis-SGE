@@ -3,11 +3,6 @@
     margin-top: 4px;
 }
 
-.ui-widget-overlay{
-    opacity: 1;
-    background-color: rgba(66, 135, 245, 0,650);
-}
-
 #submit-button{
     margin: auto;
     display: flex;   
