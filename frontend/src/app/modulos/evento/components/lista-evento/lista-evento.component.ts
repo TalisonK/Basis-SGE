@@ -14,7 +14,7 @@ import { TipoEventoService } from '../../services/tipo-evento-service.service';
 export class ListaEventoComponent implements OnInit {
 
   @Input() categorias;
-  condicao = false;
+  condicao = true;
   eventos: EventoListagem[] = [];
   evento = new Evento();
   exibirDialog = false;

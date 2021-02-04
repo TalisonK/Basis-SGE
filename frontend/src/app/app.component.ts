@@ -9,7 +9,9 @@ import { Usuario } from './dominios/usuario';
 })
 export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    usuario: Usuario;
+    usuarioLogado: boolean = false;
+
+    usuario:Usuario = new Usuario();
 
     layoutCompact = true;
 
@@ -284,6 +286,17 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ngOnDestroy() {
         this.unbindRipple();
+    }
+
+    logar(usuario){
+        this.usuario = usuario;
+        this.usuarioLogado = true;
+    }
+
+    logOut(){
+        this.usuario = new Usuario();
+        this.usuarioLogado = false;
+        localStorage.clear();
     }
 
 }
