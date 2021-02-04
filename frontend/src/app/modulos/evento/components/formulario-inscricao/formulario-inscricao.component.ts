@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { Evento } from 'src/app/dominios/evento';
 import { InscricaoResposta } from 'src/app/dominios/InscricaoResposta';
 import { Pergunta } from 'src/app/dominios/pergunta';
@@ -24,8 +25,11 @@ export class FormularioInscricaoComponent implements OnInit {
 
   inscricao:PreInscricao = new PreInscricao();
 
+  msgs
+
   constructor(
-    private servico:ServicoPergutaService
+    private servico:ServicoPergutaService,
+    private messageService: MessageService
     ) { }
 
   closeDialog(){
@@ -48,6 +52,14 @@ export class FormularioInscricaoComponent implements OnInit {
 
   salvarResposta(respostas){
 
+    for(let j in respostas){
+      let index:number = Number.parseInt(j.slice(1))-1;
+      if(respostas[j].resposta == "" && this.perguntas[index].obrigatoriedade){
+        this.addSingle("error","necessita de uma resposta", "pergunta "+ index + 1);
+        return;
+      }
+    }
+
     for(let i in respostas){
       let index:number = Number.parseInt(i.slice(1))-1;
       let resposta:InscricaoResposta = new InscricaoResposta();
@@ -60,6 +72,7 @@ export class FormularioInscricaoComponent implements OnInit {
   }
 
   enviarRespostas(id){
+
     for(let i in this.respostas){
       this.respostas[i].idInscricao = id;
       this.servico.salvarResposta(this.respostas[i])
@@ -70,15 +83,39 @@ export class FormularioInscricaoComponent implements OnInit {
   }
 
   enviarInscricao(){
-    this.servico.criarInscricao(this.inscricao)
-    .subscribe((inscricao) => {
-      this.inscricao = inscricao
-      console.log(this.inscricao)
-      this.enviarRespostas(this.inscricao.id);
-    });
 
+    let cond:boolean = true;
+    let cont:number = 0;
 
-    this.closeDialog();
+    this.respostas.forEach((resposta) => {
+      this.perguntas.forEach((pergunta) => {
+        if(pergunta.id == resposta.idPergunta && pergunta.obrigatoriedade && resposta.resposta == ""){
+          this.addSingle("error","Responda todas as questões obrigatórias","")
+          cond = false;
+        }
+      })
+    })
+    if(cond && cont == this.perguntas.length){
+      this.servico.criarInscricao(this.inscricao)
+      .subscribe((inscricao) => {
+        this.inscricao = inscricao
+        this.enviarRespostas(this.inscricao.id);
+      });
+      this.closeDialog();
+    }
+  }
+
+  addSingle(error,sumary, detalhes) {
+    this.messageService.add({severity:error, summary:sumary, detail:detalhes});
+  }
+
+  addMultiple() {
+      this.messageService.addAll([{severity:'success', summary:'Service Message', detail:'Via MessageService'},
+                                  {severity:'info', summary:'Info Message', detail:'Via MessageService'}]);
+  }
+
+  clear() {
+      this.messageService.clear();
   }
 
 }

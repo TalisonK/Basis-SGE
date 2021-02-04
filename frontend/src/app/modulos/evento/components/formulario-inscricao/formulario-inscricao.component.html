@@ -1,4 +1,4 @@
-<p-dialog styleClass="nova-light" header="Title" [(visible)]="inscricaoDialog" (onHide)="closeDialog()" [style]="{width: '70vw' }">
+<p-dialog styleClass="nova-light" header="Title" modal="true" [(visible)]="inscricaoDialog" (onHide)="closeDialog()" [style]="{width: '70vw' }">
 
     <div class="formularioInscricao">
         <div>
@@ -8,7 +8,7 @@
         
         <div style="width: 50%;">
             <p-accordion mutiple="false" *ngFor="let pergunta of perguntas; let i = index">
-                <app-perguntas-respostas [pergunta] = pergunta.titulo [numero] ="i + 1" (enviarRespostaEvent)="salvarResposta($event)"></app-perguntas-respostas>
+                <app-perguntas-respostas [pergunta] = pergunta [numero] ="i + 1" (enviarRespostaEvent)="salvarResposta($event)"></app-perguntas-respostas>
             </p-accordion>
         </div>
 
@@ -19,3 +19,5 @@
     </div>
 
 </p-dialog>
+<p-toast position="top-right"></p-toast>
+
