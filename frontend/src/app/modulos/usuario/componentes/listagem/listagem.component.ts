@@ -15,12 +15,14 @@ export class ListagemComponent implements OnInit {
   formularioEdicao: boolean;
   usuarios: Usuario[] = [];
   usuario = new Usuario();
+  usuarioAcoes: boolean;
   
   constructor( private servico: UsuarioService, 
     private confirmatioService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.buscarUsuarios();
+    this.usuarioAcoes = JSON.parse(localStorage.getItem("usuario")).id == 1?false:true;
   }
 
   private buscarUsuarios(){
@@ -42,7 +44,6 @@ export class ListagemComponent implements OnInit {
         
         this.showDialog(true);
       });
-     
     }
 
     showDialogSalvar(){

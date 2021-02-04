@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Usuario } from 'src/app/dominios/usuario';
 import { UsuarioService } from '../../services/usuario.service';
 
@@ -15,11 +16,14 @@ export class FormularioComponent implements OnInit {
   @Input() edicao = false;
   @Input() usuario = new Usuario();
   @Output() usuarioSalvo = new EventEmitter<Usuario>();
+  @Output() usuarioEditado = new EventEmitter<Usuario>();
   formUsuario: FormGroup;
+
 
   constructor( 
     private fb: FormBuilder, 
     private usuarioService: UsuarioService,
+    private messageService: MessageService,
     private route: ActivatedRoute
     ){}
 
@@ -75,4 +79,13 @@ export class FormularioComponent implements OnInit {
   fecharDialog(usuarioSalvo: Usuario) {
     this.usuarioSalvo.emit(usuarioSalvo);
     }
+
+  editar(){
+    this.usuarioEditado.emit(this.usuario);
+    this.addSingle("success", "Usuário editado com sucesso", "");
+    
+  }
+  addSingle(error,sumary, detalhes) {
+    this.messageService.add({severity:error, summary:sumary, detail:detalhes});
+  }
   }

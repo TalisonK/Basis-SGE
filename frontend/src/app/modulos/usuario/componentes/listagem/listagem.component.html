@@ -69,7 +69,7 @@
                 <td>
                     {{usuario.dataNascimento | date: 'dd/MM/yyyy'}}
                 </td>
-                <div *ngIf= "usuario.id !== 1">
+                <div *ngIf= "usuarioAcoes">
                 <td class="p-d-flex p-jc-center" >
                     <button (click)="showDialogEditar(usuario.id)" pButton type="button" icon="pi pi-pencil"></button>
                     <button (click)="dialogDeletarUsuario(usuario.id)" class="p-ml-2" pButton type="button" icon="pi pi-trash"></button>
@@ -79,7 +79,7 @@
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="6">Não existem usuários.</td>
+                <td colspan="7">Não existem usuários.</td>
             </tr>
         </ng-template>
     </p-table>

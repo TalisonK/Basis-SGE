@@ -14,12 +14,17 @@ import { Component, Input, OnInit } from '@angular/core';
     @Input() edicao = true;
     @Input() inscricao = new PreInscricao();
 
+    admin : boolean;
+
     private inscricoes: InscricaoListagem[] = [];
 
     constructor(private service:InscricaoService) { }
 
     ngOnInit(): void {
       this.buscarUsuarioInscricoes();
+
+      this.admin = JSON.parse(localStorage.getItem("usuario")).id == 1?true:false;
+
     }
 
     buscarUsuarioInscricoes() {
