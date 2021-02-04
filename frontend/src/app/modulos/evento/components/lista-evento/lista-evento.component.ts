@@ -115,7 +115,6 @@ export class ListaEventoComponent implements OnInit {
       .subscribe(evento => {
         this.evento = evento
         this.inscricaoDialog = !this.inscricaoDialog;
-        console.log("oi");
       }); 
     
   }

@@ -156,20 +156,16 @@
     </p-table>
 </div>
 
-<p-dialog [style]="{width:'80vw'}" header="Formulario de Eventos" [(visible)]="exibirDialog">
-    <div style="display: flex;
-    flex-direction: row">
-        <app-form-evento style="justify-content: space-around;"
-            [tipoEvento]="tipoEvento"
-            [evento]="evento"
-            [categorias]="categorias"
-            [edicao]="formEdicao"
-            (eventoSalvo)="fecharDialog($event)"
-        ></app-form-evento>
-    </div>
+<p-dialog [style]="{width:'70vw'}" header="Formulario de Eventos" [(visible)]="exibirDialog">
+    <app-form-evento
+        [tipoEvento]="tipoEvento"
+        [evento]="evento"
+        [categorias]="categorias"
+        [edicao]="formEdicao"
+        (eventoSalvo)="fecharDialog($event)"
+    ></app-form-evento>
 </p-dialog>
 
 <app-formulario-inscricao *ngIf="inscricaoDialog" (dialogEvento)="fecharInscricaoDialog()" [inscricaoDialog]="inscricaoDialog" [evento] = "evento"></app-formulario-inscricao>
 
 <p-confirmDialog header="Confirmar Remover Evento" icon="pi pi-exclamation-triangle"></p-confirmDialog>
-
