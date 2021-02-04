@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Evento} from 'src/app/dominios/evento';
 import { environment } from 'src/environments/environment';
 import { EventoListagem } from './dto/evento-listagem';
+import { Pergunta } from 'src/app/dominios/pergunta';
 
 
 @Injectable()
@@ -12,6 +13,10 @@ export class EventoService{
   url = `${environment.apiUrl}/eventos`;
 
   constructor( private http: HttpClient) { }
+
+  obterPerguntasPorIdEvento(id: number): Observable<Pergunta[]>{
+    return this.http.get<Pergunta[]>(`${this.url}/${id}/perguntas`)
+  }
 
   obterEventoPorId(id: number): Observable<Evento> {
     return this.http.get<Evento>(`${this.url}/${id}`);

@@ -8,6 +8,7 @@ import { EventoService } from '../../services/evento-service.service';
 import { HttpErrorResponse } from '@angular/common/http'; 
 import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
 import { Pergunta } from 'src/app/dominios/pergunta';
+import { element } from 'protractor';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class FormEventoComponent implements OnInit {
     this.route.params.subscribe(params =>{
       if(params.id){
         this.edicao = true
-        this.obterEventoPorId(params.id);       
+        this.obterEventoPorId(params.id);      
       }
     });
     this.form = this.fb.group({
@@ -96,10 +97,10 @@ export class FormEventoComponent implements OnInit {
     }
    
     if (this.edicao) {
-
-      
       this.getIdTipoEvento()
+      this.adicionarIdEventoEmEventoPergunta()
       this.servicoEvento.editarEvento(this.evento)
+      
         .subscribe(evento => {
           alert('Evento Editado com Sucesso');
           this.fecharDialog(evento);
@@ -134,6 +135,12 @@ export class FormEventoComponent implements OnInit {
 
   getIdTipoEvento(){
     this.evento.idTipoEvento = this.tipoEvento.id
+  }
+
+  adicionarIdEventoEmEventoPergunta(){
+    this.evento.perguntas.forEach(element => {
+      element.idEvento=this.evento.id;
+    })
   }
 
   fecharDialog(eventoSalvo: Evento) {

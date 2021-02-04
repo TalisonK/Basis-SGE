@@ -54,6 +54,8 @@
     </form>
     <div *ngIf="evento.tipoInscricao;">
         <app-lista-pergunta 
+            [editar]="edicao"
+            [eventoEditar]="evento"
             (listaPerguntaEvent)="gerarListaEventoPergunta($event)"
         ></app-lista-pergunta>
     </div>
