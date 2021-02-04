@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService } from 'primeng';
 import { Evento } from 'src/app/dominios/evento';
 import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
-
+import { Pergunta } from 'src/app/dominios/pergunta';
 import { TipoEvento } from 'src/app/dominios/tipo-evento';
 import { EventoListagem } from '../../services/dto/evento-listagem';
 import { EventoService } from '../../services/evento-service.service';
@@ -24,7 +24,7 @@ export class ListaEventoComponent implements OnInit {
   formEdicao: boolean;
   tipoEvento = new TipoEvento();
   loading = '';
-  
+  perguntasEventoSalvo: Pergunta[] = []
 
   constructor(
 
@@ -115,8 +115,7 @@ export class ListaEventoComponent implements OnInit {
       .subscribe(evento => {
         this.evento = evento
         this.inscricaoDialog = !this.inscricaoDialog;
-      }); 
-    
+      });
   }
   
   fecharInscricaoDialog(){
