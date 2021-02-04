@@ -1,23 +1,22 @@
-<p-dialog styleClass="nova-light" header="Title" modal="true" [(visible)]="inscricaoDialog" (onHide)="closeDialog()" [style]="{width: '70vw' }">
+<p-dialog styleClass="nova-light" header={{evento.titulo}} modal="true" [(visible)]="inscricaoDialog" (onHide)="closeDialog()" [style]="{width: '70vw' }">
 
-    <div class="formularioInscricao">
-        <div>
-            <h2><b>{{evento.titulo}}</b></h2>
-            
-        </div>
+    <div style="margin: auto;">
+        <div class="formularioInscricao">
         
-        <div style="width: 50%;">
-            <p-accordion mutiple="false" *ngFor="let pergunta of perguntas; let i = index">
-                <app-perguntas-respostas [pergunta] = pergunta [numero] ="i + 1" (enviarRespostaEvent)="salvarResposta($event)"></app-perguntas-respostas>
-            </p-accordion>
+            <div style="width: 90%;">
+                <p-accordion mutiple="false" *ngFor="let pergunta of perguntas; let i = index">
+                    <app-perguntas-respostas [pergunta] = pergunta [numero] ="i + 1" (enviarRespostaEvent)="salvarResposta($event)"></app-perguntas-respostas>
+                </p-accordion>
+            </div>
+    
         </div>
-
+    
+        <div class="submit_button_div">
+            <button pButton type="button2" label="Submit" class="p-button-text" icon="pi pi-check" iconPos="right" id="submit-button" (click)="enviarInscricao()"></button>
+        </div>
     </div>
-
-    <div class="submit_button_div">
-        <button pButton type="button2" label="Submit" class="p-button-text" icon="pi pi-check" iconPos="right" id="submit-button" (click)="enviarInscricao()"></button>
-    </div>
+    
 
 </p-dialog>
-<p-toast position="top-right"></p-toast>
+
 

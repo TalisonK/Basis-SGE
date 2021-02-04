@@ -1,4 +1,3 @@
-<p>oi</p>
 <div class="card">
     <h3>Lista de Inscrições</h3>
     <p>Use os filtros e encontre os melhores Eventos para você.</p>
@@ -64,7 +63,7 @@
                 <td>
                     {{inscricao.situacao}}
                 </td>
-                <div *ngIf= "inscricao.idUsuario === 1">
+                <div>
                 <td>
                     
                     <button (click)="aprovarInscricao(inscricao.id)" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success p-mr-2" ></button>
