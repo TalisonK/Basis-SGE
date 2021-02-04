@@ -1,6 +1,6 @@
 
-<div class="card">
-    <app-version-tag cssClass="footer-text-left"></app-version-tag>
+<div style="display: flex; flex-direction: row">
+    <!-- <app-version-tag cssClass="footer-text-left"></app-version-tag> -->
 
     <form [formGroup]="form">
 
@@ -52,4 +52,10 @@
         </div>
     
     </form>
+    <div *ngIf="evento.tipoInscricao;">
+        <app-lista-pergunta 
+            (listaPerguntaEvent)="gerarListaEventoPergunta($event)"
+        ></app-lista-pergunta>
+    </div>
+    
 </div>

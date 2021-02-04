@@ -5,7 +5,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Evento} from "src/app/dominios/evento"
 import { EventoService } from '../../services/evento-service.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http'; 
+import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
+import { Pergunta } from 'src/app/dominios/pergunta';
 
 
 @Component({
@@ -22,6 +24,9 @@ export class FormEventoComponent implements OnInit {
   @Input() categorias: TipoEvento[] = [];
   
   @Input() tipoEvento = new TipoEvento(); 
+
+  listaEventoPergunta: EventoPergunta[] = [];
+  @Input() listaPerguntas: Pergunta[];
   
   @Output() eventoSalvo = new EventEmitter<Evento>();
   
@@ -92,7 +97,7 @@ export class FormEventoComponent implements OnInit {
    
     if (this.edicao) {
 
-      this.evento.perguntas = []
+      
       this.getIdTipoEvento()
       this.servicoEvento.editarEvento(this.evento)
         .subscribe(evento => {
@@ -102,7 +107,7 @@ export class FormEventoComponent implements OnInit {
           alert(erro.error.message);
         });
     } else {
-      this.evento.perguntas = []
+  
       this.getIdTipoEvento()
       this.servicoEvento.salvarEvento(this.evento)
         .subscribe(evento => {
@@ -114,6 +119,18 @@ export class FormEventoComponent implements OnInit {
         });
       }
     }
+
+  gerarListaEventoPergunta(listaPerguntas: Pergunta[]){
+    listaPerguntas.forEach(element => {
+      let eventoPergunta = new EventoPergunta();
+      eventoPergunta.idPergunta =element.id;
+      eventoPergunta.idEvento = null;
+      this.listaEventoPergunta.push(eventoPergunta);
+    });
+    this.evento.perguntas=this.listaEventoPergunta;
+    console.log(this.evento.perguntas)
+    this.listaEventoPergunta = []
+  }
 
   getIdTipoEvento(){
     this.evento.idTipoEvento = this.tipoEvento.id

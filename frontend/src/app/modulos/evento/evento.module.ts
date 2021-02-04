@@ -12,16 +12,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfirmationService } from 'primeng';
 import { FormularioInscricaoComponent } from './components/formulario-inscricao/formulario-inscricao.component';
 import { PerguntasRespostasComponent } from './components/formulario-inscricao/perguntas-respostas/perguntas-respostas.component';
+import { ListaPerguntaComponent } from './components/lista-pergunta/lista-pergunta.component';
+import { PerguntaService } from '../pergunta/services/pergunta.service';
+import { PerguntaModule } from '../pergunta/pergunta.module';
+
 
 @NgModule({
   declarations: [
     FormEventoComponent,
     ListaEventoComponent,
     FormularioInscricaoComponent,
-    PerguntasRespostasComponent
+    PerguntasRespostasComponent,
+    ListaPerguntaComponent
     ],
   providers: [
     EventoService,
+    PerguntaService,
     TipoEventoService
   ],
   imports: [
@@ -30,7 +36,8 @@ import { PerguntasRespostasComponent } from './components/formulario-inscricao/p
     SharedModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PerguntaModule
   ],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA
