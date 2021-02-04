@@ -63,10 +63,13 @@
                 <td>
                     {{inscricao.situacao}}
                 </td>
+                <div *ngIf= "inscricao.idUsuario === 1">
                 <td>
+                    
                     <button (click)="aprovarInscricao(inscricao.id)" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success p-mr-2" ></button>
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
                 </td>
+                </div>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

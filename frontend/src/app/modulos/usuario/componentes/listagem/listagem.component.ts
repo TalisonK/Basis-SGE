@@ -45,6 +45,11 @@ export class ListagemComponent implements OnInit {
      
     }
 
+    showDialogSalvar(){
+      this.usuario = new Usuario();
+      this.showDialog();
+    }
+
     fecharDialog(usuarioSalvo: Usuario){
       console.log(usuarioSalvo);
       this.exibirDialog = false;

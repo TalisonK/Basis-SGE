@@ -4,7 +4,6 @@ import { FormularioComponent } from 'src/app/modulos/pre-inscricao/componentes/f
 
 import { ListagemInscricaoComponent } from './componentes/listagem-inscricao/listagem-inscricao.component';
 
-
 const routes: Routes = [
 	{
 		path:'',
@@ -15,7 +14,7 @@ const routes: Routes = [
 		component: FormularioComponent
 	}
 ];
-
+ 
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule]
