@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
-    usuarioLogado: boolean = false;
+    usuarioLogado: boolean = true;
 
     usuario:Usuario = new Usuario();
 
@@ -299,14 +299,14 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
                 { label: 'Perguntas', icon: 'help', routerLink: ['/pergunta'] },
                 { label: 'Eventos', icon: 'event', routerLink: ['/eventos'] },
                 { label: 'Usuarios', icon: 'person', routerLink: ['/usuarios'] },
-                { label: 'Inscricao', icon: 'loupe', routerLink: ['/inscricao'] }
+                { label: 'Inscrição', icon: 'loupe', routerLink: ['/inscricao'] }
             ];
         }
         else{
             console.log("else")
             this.menuService.itens = [
                 { label: 'Eventos', icon: 'event', routerLink: ['/eventos'] },
-                { label: 'Inscricao', icon: 'loupe', routerLink: ['/inscricao'] }
+                { label: 'Inscrição', icon: 'loupe', routerLink: ['/inscricao'] }
             ];
         }
     }
