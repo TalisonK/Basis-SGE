@@ -37,6 +37,8 @@ export class ListaEventoComponent implements OnInit {
 
     this.buscarEventos();
 
+    this.condicao = JSON.parse(localStorage.getItem("usuario")).id == 1? true : false;
+
   }
 
   private buscarEventos(){

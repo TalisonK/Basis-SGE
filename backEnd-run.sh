@@ -1,6 +1,3 @@
-#!/bin/bash
-
-
 cd BackEnd/service/docker
 
 sudo docker-compose down
