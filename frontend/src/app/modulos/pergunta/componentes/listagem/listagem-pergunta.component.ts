@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConfirmationService } from 'primeng';
+import { ConfirmationService, MessageService } from 'primeng';
 import { Pergunta } from 'src/app/dominios/pergunta';
 import { PerguntaService } from '../../services/pergunta.service';
 
@@ -14,9 +14,11 @@ export class ListagemComponent implements OnInit {
   exibirDialog = false;
   pergunta: Pergunta[] = [];
   listaIdPergunta: Pergunta[];
-  checked: Boolean = false;
+  formEdicao: boolean;
+  pergunta_one: Pergunta = new Pergunta();
 
   constructor(
+    private messageService: MessageService,
     private servico: PerguntaService,
     private confirmationService: ConfirmationService) { }
 
@@ -34,10 +36,10 @@ export class ListagemComponent implements OnInit {
   deletarPergunta(id: number) {
     this.servico.deletarPergunta(id)
       .subscribe(() => {
-        alert('Pergunta deletada');
+        this.addSingleSuccess('Pergunta deletada','success')
         this.buscarPergunta();
       },
-      err => alert(err));
+      err => {this.addSingleSuccess(err,'error')});
   }
 
   dialogDeletarPergunta(id: number){
@@ -47,5 +49,26 @@ export class ListagemComponent implements OnInit {
         this.deletarPergunta(id);
       }
     });
+  }
+
+  mostrarDialog(edicao = false) {
+    
+    this.exibirDialog = true;
+    this.formEdicao = edicao;
+  }
+
+  mostrarDialogSalvar(){
+    this.pergunta_one = new Pergunta();
+    this.mostrarDialog()
+  }
+
+  fecharDialog(perguntaSalva: Pergunta) {
+    console.log(perguntaSalva);
+    this.exibirDialog = false; 
+    this.buscarPergunta();
+  }
+
+  addSingleSuccess(detalhes: string,tipo: string) {
+    this.messageService.add({severity:tipo, summary:'Mensagem de Serviço', detail:detalhes});
   }
 }
