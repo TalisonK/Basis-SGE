@@ -27,6 +27,7 @@ export class FormEventoComponent implements OnInit {
   @Input() tipoEvento = new TipoEvento(); 
 
   listaEventoPergunta: EventoPergunta[] = [];
+
   @Input() listaPerguntas: Pergunta[];
   
   @Output() eventoSalvo = new EventEmitter<Evento>();
@@ -128,11 +129,6 @@ export class FormEventoComponent implements OnInit {
   validarDatas(): boolean{
     if(!(this.evento.dataInicio<this.evento.dataFim)){
       this.addSingleSuccess("Duração Invalida",'info')
-      return false;
-    }
-    let dataAgora: Date = new Date()
-    if((dataAgora<this.evento.dataInicio)){
-      this.addSingleSuccess("Duração Invalida!",'info')
       return false;
     }
     return true;
