@@ -4,10 +4,11 @@
     display: flex; 
     flex-direction: row; 
     justify-content: center;
+    align-content: center;
     margin-top: 5vh; 
 }
 
-#barraEsquerda{
+#barra-esquerda{
     font: 1em Roboto;
     display: flex;
     flex-direction: column;
@@ -35,4 +36,19 @@ h1{
 .ui-inputgroup{
     margin-top: 30px;
     width: 70%;
+}
+
+#caixa-botoes{
+    float: inline-end;
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom:10%; 
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-around;
+}
+
+
+label:hover{
+    cursor: pointer;
 }

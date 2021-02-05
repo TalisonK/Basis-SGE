@@ -1,15 +1,10 @@
 import { EventEmitter, Input } from '@angular/core';
 import { Component, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-
-import { Usuario } from 'src/app/dominios/usuario';
-import { UsuarioAutenticacaoDTO } from '../dto/usuarioAutenticacaoDTO';
-import { LoginService } from '../login.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-login-form',
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.css']
 })
 export class LoginComponent implements OnInit {
 

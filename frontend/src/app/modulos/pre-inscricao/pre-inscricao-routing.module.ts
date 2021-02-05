@@ -12,9 +12,9 @@ const routes: Routes = [
 	{
 		path:'form',
 		component: FormularioComponent
-	},
+	}
 ];
-
+ 
 @NgModule({
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule]

@@ -1,55 +1,66 @@
 
 <div class="card">
-    <app-version-tag cssClass="footer-text-left"></app-version-tag>
+    <!-- <app-version-tag cssClass="footer-text-left"></app-version-tag> -->
 
-    <form [formGroup]="form">
-
-        <h3>{{edicao ? 'Atualizar Evento' : 'Cadastrar Evento'}}</h3>
-        
-        <span class="p-field">
-            <input [(ngModel)]="evento.titulo" id="float-input" type="text" pInputText placeholder="Titulo" formControlName="titulo"/> 
-        </span>
-
-        <div class="p-field">
-            <input [(ngModel)]="evento.dataInicio" id="float-input" type="datetime-local" pInputText placeholder="Local" formControlName="dataInicio"/> 
-        </div>
-    
-        <div class="p-field ">
-            <input [(ngModel)]="evento.dataFim" id="float-input" type="datetime-local" pInputText placeholder="Local" formControlName="dataFim"/>
-        </div>
-    
-        <div class="p-field">
-            <input [(ngModel)]="evento.descricao" id="float-input" type="text" pInputText placeholder="Descrição" formControlName="descricao"/> 
-        </div>
-
-        <div class="p-field">
-            <input [(ngModel)]="evento.local" id="float-input" type="text" pInputText placeholder="Local" formControlName="local"/> 
-        </div>
-        
-        <div class="p-field">
-            <p-inputNumber [(ngModel)]="evento.valor" placeholder="Valor"  mode="currency" currency="BRL" locale="pt-BR" formControlName="valor">
-            </p-inputNumber>
-        </div>
-
-        <div class="p-field">
-            <p-inputNumber [(ngModel)]="evento.quantVagas" placeholder="Vagas" mode="decimal" [min]="0" [max]="10000000" formControlName="quantVagas">
-            </p-inputNumber>
-        </div>
-    
-        <div class="p-field">
-            <p-dropdown [options]="categorias" [(ngModel)]="tipoEvento" placeholder="Selecione a categoria" optionLabel="descricao" optionValue="evento.id" [showClear]="true" formControlName="idTipoEvento" style="color: gray;"></p-dropdown>
-        </div>
-
-        <div class="p-field">
-            <label id="label-form-toggle">Requer Pre-Inscrição</label>
-            <p-inputSwitch [(ngModel)]="evento.tipoInscricao" formControlName="tipoInscricao"></p-inputSwitch>
-        </div>
-        
-        <div id="btn-salvar" class="p-formgroup-inline">
-            <div class="p-field-checkbox">
-                <button (click)="criar()" pButton type="button" [label]="edicao ? 'Atualizar' : 'Salvar'" class="ui-button-rounded ui-button-success"></button>
+    <form [formGroup]="form" style="width: 100%;">
+        <h3 style="text-align: center;">{{edicao ? 'Atualizar Evento' : 'Cadastrar Evento'}}</h3>
+        <div class="ui-fluid p-formgrid p-grid">
+            
+            
+            <div class="p-field p-col-12">
+                <input [(ngModel)]="evento.titulo" id="float-input" type="text" pInputText placeholder="Titulo" formControlName="titulo"/> 
             </div>
-        </div>
-    
+
+            <div class="p-field p-col-12">
+                <input [(ngModel)]="evento.dataInicio" id="float-input" type="datetime-local" pInputText placeholder="Local" formControlName="dataInicio"/> 
+            </div>
+        
+            <div class="p-field p-col-12">
+                <input [(ngModel)]="evento.dataFim" id="float-input" type="datetime-local" pInputText placeholder="Local" formControlName="dataFim"/>
+            </div>
+        
+            <div class="p-field p-col-12">
+                <input [(ngModel)]="evento.descricao" id="float-input" type="text" pInputText placeholder="Descrição" formControlName="descricao"/> 
+            </div>
+
+            <div class="p-field p-col-12">
+                <input [(ngModel)]="evento.local" id="float-input" type="text" pInputText placeholder="Local" formControlName="local"/> 
+            </div>
+            
+            <div class="p-field p-col-12">
+                <p-inputNumber [(ngModel)]="evento.valor" placeholder="Valor"  mode="currency" currency="BRL" locale="pt-BR" formControlName="valor">
+                </p-inputNumber>
+            </div>
+
+            <div class="p-field p-col-12">
+                <p-inputNumber [(ngModel)]="evento.quantVagas" placeholder="Vagas" mode="decimal" [min]="0" [max]="10000000" formControlName="quantVagas">
+                </p-inputNumber>
+            </div>
+        
+            <div class="p-field p-col-12">
+                <p-dropdown [options]="categorias" [(ngModel)]="tipoEvento" placeholder="Selecione a categoria" optionLabel="descricao" optionValue="evento.id" [showClear]="true" formControlName="idTipoEvento" style="color: gray;"></p-dropdown>
+            </div>
+
+            <div class="p-field p-col-12">
+                <label id="label-form-toggle">Requer Pre-Inscrição</label>
+                <p-inputSwitch [(ngModel)]="evento.tipoInscricao" formControlName="tipoInscricao"></p-inputSwitch>
+            </div>
+            
+            <div class="p-field p-col-12" *ngIf="evento.tipoInscricao;">
+                <app-lista-pergunta 
+                    [editar]="edicao"
+                    [eventoEditar]="evento"
+                    (listaPerguntaEvent)="gerarListaEventoPergunta($event)"
+                ></app-lista-pergunta>
+            </div>
+            <div id="btn-salvar" class="p-field p-col-12">
+                <div class="p-field-checkbox">
+                    <button (click)="criar()" pButton type="button" [label]="edicao ? 'Atualizar' : 'Salvar'" class="ui-button-rounded ui-button-success"></button>
+                </div>
+            </div>
+        </div>    
     </form>
 </div>
+
+    
+

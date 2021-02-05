@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService } from 'primeng';
 import { Evento } from 'src/app/dominios/evento';
+import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
+import { Pergunta } from 'src/app/dominios/pergunta';
 import { TipoEvento } from 'src/app/dominios/tipo-evento';
 import { EventoListagem } from '../../services/dto/evento-listagem';
 import { EventoService } from '../../services/evento-service.service';
@@ -13,8 +15,8 @@ import { TipoEventoService } from '../../services/tipo-evento-service.service';
 })
 export class ListaEventoComponent implements OnInit {
 
-  @Input() categorias;
-  condicao = false;
+  @Input() categorias: TipoEvento[];
+  condicao = true;
   eventos: EventoListagem[] = [];
   evento = new Evento();
   exibirDialog = false;
@@ -22,6 +24,7 @@ export class ListaEventoComponent implements OnInit {
   formEdicao: boolean;
   tipoEvento = new TipoEvento();
   loading = '';
+  perguntasEventoSalvo: Pergunta[] = []
 
   constructor(
 
@@ -36,6 +39,8 @@ export class ListaEventoComponent implements OnInit {
   ngOnInit(): void {
 
     this.buscarEventos();
+
+    this.condicao = JSON.parse(localStorage.getItem("usuario")).id == 1? true : false;
 
   }
 
@@ -110,12 +115,11 @@ export class ListaEventoComponent implements OnInit {
       .subscribe(evento => {
         this.evento = evento
         this.inscricaoDialog = !this.inscricaoDialog;
-        console.log("oi");
-      }); 
-    
+      });
   }
   
   fecharInscricaoDialog(){
     this.inscricaoDialog = false;
   }
+
 }

@@ -1,5 +1,6 @@
   import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { MessageService } from 'primeng/api';
   import { InscricaoListagem } from 'src/app/dominios/InscricaoListagem';
   import { PreInscricao } from 'src/app/dominios/PreInscricao';
   import { InscricaoService } from '../../services/inscricao-service.service';
@@ -14,9 +15,12 @@ import { Component, Input, OnInit } from '@angular/core';
     @Input() edicao = true;
     @Input() inscricao = new PreInscricao();
 
-    private inscricoes: InscricaoListagem[] = [];
+    inscricoes: InscricaoListagem[] = [];
 
-    constructor(private service:InscricaoService) { }
+    constructor(
+      private service:InscricaoService,
+      private messageService:MessageService
+      ) { }
 
     ngOnInit(): void {
       this.buscarUsuarioInscricoes();
@@ -31,15 +35,33 @@ import { Component, Input, OnInit } from '@angular/core';
     aprovarInscricao(id: number){
       this.service.getInscricaoPorId(id)
       .subscribe((inscricao: PreInscricao) =>{
+        inscricao.idSituacao = 2;
         this.aprovarInscricaoEditar(inscricao);
       })
     }
 
     aprovarInscricaoEditar(insc:PreInscricao){
-      console.log(insc);
 			this.service.editarInscricao(insc).subscribe(inscricao =>{
-        console.log("cu")
-				alert('Inscrição aprovada');
+				this.addSingle("success", "Inscrição aprovada","");
+        this.buscarUsuarioInscricoes()
 			});
+      
 	}
+
+  addSingle(error,sumary, detalhes) {
+    this.messageService.add({severity:error, summary:sumary, detail:detalhes});
+  }
+
+  reprovarInscricao(id){
+    this.service.getInscricaoPorId(id).subscribe(
+      (inscricao) => {
+        inscricao.idSituacao = 3;
+        this.service.editarInscricao(inscricao).subscribe(() => {
+          this.addSingle("warn", "Inscrição reprovada","");
+          this.buscarUsuarioInscricoes()
+        })
+      }
+    )
+
+  }
 }

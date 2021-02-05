@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Pergunta } from 'src/app/dominios/pergunta';
 
 @Component({
   selector: 'app-perguntas-respostas',
@@ -7,7 +8,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class PerguntasRespostasComponent implements OnInit {
 
-  @Input() pergunta:String = "";
+  @Input() pergunta:Pergunta = new Pergunta();
 
   @Input() numero:Number = 0;
 
@@ -17,9 +18,12 @@ export class PerguntasRespostasComponent implements OnInit {
 
   respostas = {};
 
+  obrigatoriedade:string = "";
+
   constructor() { }
 
   ngOnInit(): void {
+    this.obrigatoriedade = this.pergunta.obrigatoriedade?"*":"";
   }
 
   salvaResposta(pergunta, numero){
