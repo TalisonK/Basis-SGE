@@ -1,11 +1,9 @@
-  import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
-  import { InscricaoListagem } from 'src/app/dominios/InscricaoListagem';
-import { Pergunta } from 'src/app/dominios/pergunta';
-  import { PreInscricao } from 'src/app/dominios/PreInscricao';
+import { InscricaoListagem } from 'src/app/dominios/InscricaoListagem';
+import { PreInscricao } from 'src/app/dominios/PreInscricao';
 import { PerguntaResposta } from '../../dto/Conjunto';
-  import { InscricaoService } from '../../services/inscricao-service.service';
+import { InscricaoService } from '../../services/inscricao-service.service';
 
 @Component({
   selector: 'app-listagem-inscricao',
@@ -36,6 +34,7 @@ export class ListagemInscricaoComponent implements OnInit {
   ngOnInit(): void {
 
     this.condicaoAdmin = JSON.parse(localStorage.getItem("usuario")).id == 1 ? true : false;
+    console.log(JSON.parse(localStorage.getItem("usuario")))
 
     this.buscarUsuarioInscricoes();      
   }
@@ -47,6 +46,7 @@ export class ListagemInscricaoComponent implements OnInit {
   }
 
   aprovarInscricao(id: number){
+    console.log(id)
     this.service.getInscricaoPorId(id)
     .subscribe((inscricao: PreInscricao) =>{
       inscricao.idSituacao = 2;

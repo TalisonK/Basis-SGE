@@ -69,10 +69,8 @@
     </p-table>
 </div>
 
-<p-dialog *ngIf="aprovacaoDialog" header="Checagem de Inscrição" modal="true" [(visible)]="aprovacaoDialog" [style]="{width: '50vw' }" (onHide)="closeDialog()"
-    (aprovarEvento)="aprovarInscricao()"
-    >
+<p-dialog *ngIf="aprovacaoDialog" header="Checagem de Inscrição" modal="true" [(visible)]="aprovacaoDialog" [style]="{width: '50vw' }" (onHide)="closeDialog()" >
 
-    <app-aprovar-inscricao [conjuntos]="conjuntos" [incricao] = "inscricao"></app-aprovar-inscricao>
+    <app-aprovar-inscricao [conjuntos]="conjuntos" [id]="id" [incricao] = "inscricao" (aprovarEvento)="aprovarInscricao($event); closeDialog()" (reprovarEvento)="reprovarInscricao($event); closeDialog()"></app-aprovar-inscricao>
 
 </p-dialog>
