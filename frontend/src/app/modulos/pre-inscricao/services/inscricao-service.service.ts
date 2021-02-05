@@ -5,6 +5,7 @@ import { InscricaoListagem } from 'src/app/dominios/InscricaoListagem';
 import { InscricaoResposta } from 'src/app/dominios/InscricaoResposta';
 import { PreInscricao } from 'src/app/dominios/PreInscricao';
 import { environment } from 'src/environments/environment';
+import { PerguntaResposta } from '../dto/Conjunto';
 
 @Injectable()
 export class InscricaoService {
@@ -35,5 +36,9 @@ export class InscricaoService {
 
   editarInscricao(inscricao: PreInscricao): Observable<InscricaoListagem>{
     return this.http.put<InscricaoListagem>(`${this.url}/inscricao`, inscricao);
+  }
+
+  getRespostas(inscricao: PreInscricao): Observable<PerguntaResposta[]>{
+    return this.http.post<PerguntaResposta[]>(`${this.url}/inscricao/respostas`, inscricao);
   }
 }

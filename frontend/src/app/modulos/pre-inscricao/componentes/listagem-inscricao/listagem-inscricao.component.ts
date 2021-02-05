@@ -2,51 +2,65 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
   import { InscricaoListagem } from 'src/app/dominios/InscricaoListagem';
+import { Pergunta } from 'src/app/dominios/pergunta';
   import { PreInscricao } from 'src/app/dominios/PreInscricao';
+import { PerguntaResposta } from '../../dto/Conjunto';
   import { InscricaoService } from '../../services/inscricao-service.service';
 
-  @Component({
-    selector: 'app-listagem-inscricao',
-    templateUrl: './listagem-inscricao.component.html',
-    styleUrls: ['./listagem-inscricao.component.css']
-  })
-  export class ListagemInscricaoComponent implements OnInit {
+@Component({
+  selector: 'app-listagem-inscricao',
+  templateUrl: './listagem-inscricao.component.html',
+  styleUrls: ['./listagem-inscricao.component.css']
+})
+export class ListagemInscricaoComponent implements OnInit {
 
-    @Input() edicao = true;
-    @Input() inscricao = new PreInscricao();
+  condicaoAdmin = false;
 
-    inscricoes: InscricaoListagem[] = [];
+  id:number = 0;
 
-    constructor(
-      private service:InscricaoService,
-      private messageService:MessageService
-      ) { }
+  inscricao:PreInscricao = new PreInscricao();
 
-    ngOnInit(): void {
-      this.buscarUsuarioInscricoes();
-    }
+  conjuntos:PerguntaResposta[] = []
 
-    buscarUsuarioInscricoes() {
-      this.service.getInscricao().subscribe((inscricoes: InscricaoListagem[]) =>{
-        this.inscricoes = inscricoes;
-      });
-    }
+  aprovacaoDialog = false;
 
-    aprovarInscricao(id: number){
-      this.service.getInscricaoPorId(id)
-      .subscribe((inscricao: PreInscricao) =>{
-        inscricao.idSituacao = 2;
-        this.aprovarInscricaoEditar(inscricao);
-      })
-    }
+  inscricoes: InscricaoListagem[] = [];
 
-    aprovarInscricaoEditar(insc:PreInscricao){
-			this.service.editarInscricao(insc).subscribe(inscricao =>{
-				this.addSingle("success", "Inscrição aprovada","");
-        this.buscarUsuarioInscricoes()
-			});
-      
-	}
+  loading = '';
+
+  constructor(
+    private service:InscricaoService,
+    private messageService:MessageService
+    ) { }
+
+  ngOnInit(): void {
+
+    this.condicaoAdmin = JSON.parse(localStorage.getItem("usuario")).id == 1 ? true : false;
+
+    this.buscarUsuarioInscricoes();      
+  }
+
+  buscarUsuarioInscricoes() {
+    this.service.getInscricao().subscribe((inscricoes: InscricaoListagem[]) =>{
+      this.inscricoes = inscricoes;
+    });
+  }
+
+  aprovarInscricao(id: number){
+    this.service.getInscricaoPorId(id)
+    .subscribe((inscricao: PreInscricao) =>{
+      inscricao.idSituacao = 2;
+      this.aprovarInscricaoEditar(inscricao);
+    })
+  }
+
+  aprovarInscricaoEditar(insc:PreInscricao){
+    this.service.editarInscricao(insc).subscribe(inscricao =>{
+      this.addSingle("success", "Inscrição aprovada","");
+      this.buscarUsuarioInscricoes()
+    });
+    
+  }
 
   addSingle(error,sumary, detalhes) {
     this.messageService.add({severity:error, summary:sumary, detail:detalhes});
@@ -62,6 +76,14 @@ import { MessageService } from 'primeng/api';
         })
       }
     )
+  }
 
+  openDialog(id){
+    this.id = id;
+    this.aprovacaoDialog = true;;
+  }
+
+  closeDialog(){
+    this.aprovacaoDialog = false;
   }
 }

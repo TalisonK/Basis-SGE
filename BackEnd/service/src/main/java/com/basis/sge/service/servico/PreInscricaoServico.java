@@ -1,12 +1,15 @@
 package com.basis.sge.service.servico;
 
 import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.InscricaoResposta;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
+import com.basis.sge.service.repositorio.InscricaoRespostaRepositorio;
 import com.basis.sge.service.repositorio.TipoSituacaoRepositorio;
 import com.basis.sge.service.repositorio.UsuarioRepositorio;
+import com.basis.sge.service.servico.dto.ConjuntoPerguntaRespostaDTO;
 import com.basis.sge.service.servico.dto.InscricaoListagemDTO;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
@@ -33,9 +36,10 @@ public class PreInscricaoServico {
     private final InscricaoRespostaServico irServico;
     private final TipoSituacaoRepositorio tipoSituacaoRepositorio;
 
-    private final InscricaoMapper mapper;
+    private final InscricaoMapper inscricaoMapper;
     private final InscricaoRespostaMapper inscricaoRespostaMapper;
     private final InscricaoListagemMapper inscricaoListagemMapper;
+    private final InscricaoRespostaRepositorio inscricaoRespostaRepositorio;
 
     private final EmailServico emailServico;
 
@@ -46,12 +50,12 @@ public class PreInscricaoServico {
 
     public PreInscricaoDTO obterPorId(Integer id){
         Optional<PreInscricao> dto = incrRepo.findById(id);
-        return mapper.toDto(dto.orElseThrow(() -> new RegraNegocioException("Inscrição número " + id + " não encontrada!")));
+        return inscricaoMapper.toDto(dto.orElseThrow(() -> new RegraNegocioException("Inscrição número " + id + " não encontrada!")));
     }
 
     public List<PreInscricaoDTO> obterPorUsuarioId(Integer id){
         try {
-            return mapper.toDto(incrRepo.findAllByUsuarioId(id));
+            return inscricaoMapper.toDto(incrRepo.findAllByUsuarioId(id));
         }
         catch (Exception e){
             throw new RegraNegocioException("Usuario não inscrito em eventos");
@@ -66,7 +70,7 @@ public class PreInscricaoServico {
 
     public PreInscricaoDTO criar(PreInscricaoDTO dto){
 
-        PreInscricao preInscricao = mapper.toEntity(dto);
+        PreInscricao preInscricao = inscricaoMapper.toEntity(dto);
 
         Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
         Evento evento = eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(() -> new RegraNegocioException("Evento nao Cadastrado!"));
@@ -85,13 +89,13 @@ public class PreInscricaoServico {
                      "Inscrição bem sucedida, sua chave para acesso e atualização é: " + usuario.getChave(),
                             new ArrayList<>());
 
-        return mapper.toDto(preInscricao);
+        return inscricaoMapper.toDto(preInscricao);
     }
 
     public InscricaoListagemDTO atualizar(PreInscricaoDTO dto) {
 
 
-        return inscricaoListagemMapper.toDto(incrRepo.save(mapper.toEntity(dto)));
+        return inscricaoListagemMapper.toDto(incrRepo.save(inscricaoMapper.toEntity(dto)));
     }
 
     public void deletar(Integer id) {
@@ -115,5 +119,21 @@ public class PreInscricaoServico {
         catch (Exception e){
             throw new RegraNegocioException("Impossivel deletar, inscriçao nao cadastrada!");
         }
+    }
+
+    public List<ConjuntoPerguntaRespostaDTO> buscarPerguntasRespostas(PreInscricaoDTO dto){
+
+        List<ConjuntoPerguntaRespostaDTO> conjuntos = new ArrayList<>();
+
+        PreInscricao preInscricao = incrRepo.findById(dto.getId()).orElseThrow(() -> new RegraNegocioException("Inscricao não existe"));
+        List<InscricaoResposta> inscricaoRespostaList = inscricaoRespostaRepositorio.findAllByInscricao(preInscricao);
+        inscricaoRespostaList.forEach(inscricaoResposta ->{
+            ConjuntoPerguntaRespostaDTO conjuntoPerguntaRespostaDTO = new ConjuntoPerguntaRespostaDTO();
+            conjuntoPerguntaRespostaDTO.setPergunta(inscricaoResposta.getPergunta().getTitulo());
+            conjuntoPerguntaRespostaDTO.setResposta(inscricaoResposta.getResposta());
+            conjuntos.add(conjuntoPerguntaRespostaDTO);
+        });
+
+        return conjuntos;
     }
 }
