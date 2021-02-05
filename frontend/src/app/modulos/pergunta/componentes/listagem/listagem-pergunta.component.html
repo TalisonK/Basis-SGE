@@ -22,10 +22,6 @@
 
         <ng-template pTemplate="header">
             <tr>
-                <th style="width: 3rem">
-                
-                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
                 <th>
                     <div class="p-d-flex p-jc-between p-ai-center">
                         <th>Titulo</th>
@@ -47,9 +43,6 @@
 
         <ng-template pTemplate="body" let-pergunta>
             <tr>
-                <td>
-                    <p-tableCheckbox [value]="pergunta"></p-tableCheckbox>
-                </td>
                 <td>
                     {{pergunta.titulo}}
                 </td>
