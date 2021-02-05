@@ -1,7 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import { Input,Output, EventEmitter } from '@angular/core';
 import { Evento } from 'src/app/dominios/evento';
-import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
 import { Pergunta } from 'src/app/dominios/pergunta';
 import { PerguntaService } from 'src/app/modulos/pergunta/services/pergunta.service';
 import { EventoService } from '../../services/evento-service.service';

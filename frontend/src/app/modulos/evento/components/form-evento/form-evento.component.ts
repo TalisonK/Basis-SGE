@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
 import { Pergunta } from 'src/app/dominios/pergunta';
 import { element } from 'protractor';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
@@ -35,6 +36,8 @@ export class FormEventoComponent implements OnInit {
   
   constructor(
   
+    private messageService: MessageService,
+
     private fb: FormBuilder,
   
     private servicoEvento: EventoService,
@@ -63,7 +66,6 @@ export class FormEventoComponent implements OnInit {
       idTipoEvento: 8,
       perguntas: []
     });
-    this.evento.tipoInscricao = false
     this.buscarTipoEventos();
   }
 
@@ -92,7 +94,7 @@ export class FormEventoComponent implements OnInit {
   criar(){
    
     if(this.form.invalid){
-      alert('Formulário inválido');
+      this.addSingleSuccess('Formulario Invalido!',"info");
       return;
     }
    
@@ -102,21 +104,23 @@ export class FormEventoComponent implements OnInit {
       this.servicoEvento.editarEvento(this.evento)
       
         .subscribe(evento => {
-          alert('Evento Editado com Sucesso');
+          this.addSingleSuccess('Evento Editado com Sucesso!',"success")
           this.fecharDialog(evento);
         }, (erro: HttpErrorResponse) => {
-          alert(erro.error.message);
+          this.addSingleSuccess(erro.error.message,"error")
         });
     } else {
-  
       this.getIdTipoEvento()
+      if(this.evento.tipoInscricao == null){
+        this.evento.tipoInscricao = false
+      }
       this.servicoEvento.salvarEvento(this.evento)
         .subscribe(evento => {
-          alert('Evento Salvo com Sucesso!')
+          this.addSingleSuccess('Evento Salvo com Sucesso!',"success")
           this.fecharDialog(evento);
-
         }, (erro: HttpErrorResponse) => {
-          alert(erro.error.message);
+          this.addSingleSuccess(erro.error.message,"error")
+         
         });
       }
     }
@@ -145,5 +149,9 @@ export class FormEventoComponent implements OnInit {
 
   fecharDialog(eventoSalvo: Evento) {
     this.eventoSalvo.emit(eventoSalvo);
+  }
+
+  addSingleSuccess(detalhes: string,tipo: string) {
+    this.messageService.add({severity:tipo, summary:'Mensagem de Serviço', detail:detalhes});
   }
 }
