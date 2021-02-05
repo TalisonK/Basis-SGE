@@ -9,7 +9,8 @@
 
         <ng-template pTemplate="caption">
             <div class="left" style="float: left;" >
-                <button routerLink="formulario" pButton pRipple label="Adicionar" icon="pi pi-plus" class="p-button-success" (click)="showDialogSalvar()"></button>
+                <button  pButton pRipple label="Adicionar" icon="pi pi-plus" class="p-button-success" (click)="mostrarDialogSalvar()"></button>
+                <!--routerLink="formulario"-->
             </div>
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
@@ -62,9 +63,9 @@
         </ng-template>
     </p-table>
 
-    <p-dialog header= "" [(visible)]="exibirDialog" [style]= "{width: '70vw' }">
+    <p-dialog [(visible)]="exibirDialog" > 
         <app-formulario
-            [pergunta]="pergunta"
+            [pergunta]="pergunta_one"
             (perguntaSalva)="fecharDialog($event)">
         </app-formulario>
     </p-dialog>

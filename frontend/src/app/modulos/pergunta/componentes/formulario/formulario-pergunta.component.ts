@@ -65,10 +65,8 @@ export class FormularioComponent implements OnInit {
           
         });
     }
-   
-   
   }
-
+  
   fecharDialog(perguntaSalva: Pergunta) {
     this.perguntaSalva.emit(perguntaSalva);
   }
