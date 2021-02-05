@@ -2,7 +2,6 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng';
 import { Evento } from 'src/app/dominios/evento';
 import { Pergunta } from 'src/app/dominios/pergunta';
-
 import { TipoEvento } from 'src/app/dominios/tipo-evento';
 import { EventoListagem } from '../../services/dto/evento-listagem';
 import { EventoService } from '../../services/evento-service.service';
@@ -116,9 +115,7 @@ export class ListaEventoComponent implements OnInit {
       .subscribe(evento => {
         this.evento = evento
         this.inscricaoDialog = !this.inscricaoDialog;
-        
-      }); 
-    
+      });
   }
   
   fecharInscricaoDialog(){

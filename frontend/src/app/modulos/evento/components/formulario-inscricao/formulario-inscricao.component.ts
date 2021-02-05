@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Evento } from 'src/app/dominios/evento';
@@ -83,25 +84,44 @@ export class FormularioInscricaoComponent implements OnInit {
   }
 
   enviarInscricao(){
+    console.log("inscricao");
 
-    let cond:boolean = true;
-    let cont:number = 0;
+    let cond = true;
 
-    this.respostas.forEach((resposta) => {
-      this.perguntas.forEach((pergunta) => {
-        if(pergunta.id == resposta.idPergunta && pergunta.obrigatoriedade && resposta.resposta == ""){
-          this.addSingle("error","Responda todas as questões obrigatórias","")
-          cond = false;
-        }
-      })
+    let quantObrigatorias = 0;
+    this.perguntas.forEach((pergunta) => {
+      pergunta.obrigatoriedade?quantObrigatorias++:null;
     })
-    if(cond && cont == this.perguntas.length){
+
+    console.log("quant Obrigatorias: " + quantObrigatorias);
+
+    if(quantObrigatorias > 0) {
+      this.perguntas.forEach((pergunta) => {
+
+        for(let chave in this.respostas){
+          if(pergunta.id == this.respostas[chave].idPergunta && pergunta.obrigatoriedade && this.respostas[chave].resposta != ""){
+            return;
+          }
+        }
+        console.log("passou")
+        if(pergunta.obrigatoriedade) cond = false;
+      })
+    }
+    
+    if(cond){
+      console.log("condPassou")
       this.servico.criarInscricao(this.inscricao)
       .subscribe((inscricao) => {
         this.inscricao = inscricao
         this.enviarRespostas(this.inscricao.id);
+        this.closeDialog();
+      }, (erro: HttpErrorResponse) => {
+        this.addSingle("error", erro.error.message, "");
       });
-      this.closeDialog();
+      
+    }
+    else{
+      this.addSingle("error", "Responda todas as questões obrigatórias!", "");
     }
   }
 
@@ -118,4 +138,5 @@ export class FormularioInscricaoComponent implements OnInit {
       this.messageService.clear();
   }
 
+  
 }
