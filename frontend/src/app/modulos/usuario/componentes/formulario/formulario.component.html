@@ -1,30 +1,43 @@
 <div class="card">
-<form [formGroup]="formUsuario">
+  <form [formGroup]="formUsuario">
 
-    <div class="p-grid p-dir-col">
-  
-      <input type="text" [(ngModel)]="usuario.nome" placeholder="Nome Usuário" formControlName="nome" pInputText />
-      <div *ngIf="formUsuario.get('nome').invalid">Nome inválido</div>
-     
-      <input type="text" [(ngModel)]="usuario.cpf" placeholder="CPF" formControlName="cpf" pInputText />
-      <div *ngIf="formUsuario.get('cpf').invalid">Cpf inválido</div>
-      <input type="text" [(ngModel)]="usuario.email" placeholder="Email" formControlName="email" pInputText />
-      <div *ngIf="formUsuario.get('email').invalid">Email inválido</div>
-      <input type="text" [(ngModel)]="usuario.telefone" placeholder="Telefone" formControlName="telefone" pInputText />
-      <div *ngIf="formUsuario.get('telefone').invalid">Telefone inválido</div>
+    <div class="ui-fluid" style="width: 45%;">
+
+      <div class="p-field">
+        <label for="nome">Nome</label>
+        <input id="nome" type="text" [(ngModel)]="usuario.nome" formControlName="nome" pInputText />
+        <div *ngIf="formUsuario.get('nome').invalid">Nome inválido</div>
+      </div>
+
+      <div class="p-field">
+        <label for="cpf">CPF</label>
+        <p-inputMask [(ngModel)]="usuario.cpf" size="20" mask="999.999.999-99" characterPattern="[А-Яа-я]" formControlName="cpf"></p-inputMask>
+        <div *ngIf="formUsuario.get('cpf').invalid">Cpf inválido</div>
+      </div>
+      
+      <div class="p-field">
+        <label for="email">E-mail</label>
+        <input id="email" type="text" [(ngModel)]="usuario.email" formControlName="email" pInputText/>
+        <div *ngIf="formUsuario.get('email').invalid">Email inválido</div>
+      </div>
+      
+      <div class="p-field">
+        <label for="telefone">Telefone</label>
+        <p-inputMask [(ngModel)]="usuario.telefone" size="20" mask="(99) 99999-9999" characterPattern="[А-Яа-я]" formControlName="telefone"></p-inputMask>
+        <div *ngIf="formUsuario.get('telefone').invalid">Telefone inválido</div>
+      </div>
       
       <div class="p-field ">
-        <input [(ngModel)]="usuario.dataNascimento" id="float-input" type="date" pInputText placeholder="Data de Nascimento" formControlName="dataNascimento"/>
+        <label for="dataNascimento">Data de Nascimento</label>
+        <input [(ngModel)]="usuario.dataNascimento" id="float-input" type="date" pInputText
+          placeholder="Data de Nascimento" formControlName="dataNascimento"/>
       </div>
-      <!--<p-calendar [(ngModel)]="usuario.dataNascimento" [showIcon]="true" dateFormat="dd/mm/yy" yearNavigator=true monthNavigator=true yearRange="1921:2021" placeholder="Data de Nascimento"></p-calendar>-->
 
-      <!--<p-calendar [(ngModel)]="usuario.dataNascimento" view="month" dateFormat="dd/MM/yyyy" [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
-      <input type="text" [(ngModel)]="usuario.dataNascimento" placeholder="Data de Nascimento" formControlName="dataNascimento" pInputText />-->
+      <div class="p-field-checkbox">
+        <button (click)="editar()" pButton type="button" class="ui-button-rounded ui-button-success">Salvar
+          alterações</button>
+      </div>
     </div>
-  
+
   </form>
-  
-  <div class="p-field-checkbox">
-    <button (click)="editar()" pButton type="button"  class="ui-button-rounded ui-button-success"></button>
-  </div>
 </div>
