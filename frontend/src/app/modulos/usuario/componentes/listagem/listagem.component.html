@@ -5,7 +5,7 @@
     <p-table #dt1 [value]="usuarios" dataKey="id"
         [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
         [paginator]="true" currentPageReportTemplate="Exibindo {first} a {last} de {totalRecords} usuários"
-        [globalFilterFields]="['name','country.name','representative.name','status']">
+        [globalFilterFields]="['nome','cpf', 'email','telefone','dataNascimento']">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
