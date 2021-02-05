@@ -7,9 +7,6 @@
         [paginator]="true" currentPageReportTemplate="Exibindo {first} a {last} de {totalRecords} usuários"
         [globalFilterFields]="['name','country.name','representative.name','status']">
         <ng-template pTemplate="caption">
-            <div class="left" style="float: left;" >
-                <button id="button_text" pButton pRipple label="Adicionar" icon="pi pi-plus" class="p-button-success" (click)="showDialogSalvar()"></button>
-            </div>
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
                  <i class="pi pi-search"></i>
@@ -83,5 +80,5 @@
         </ng-template>
     </p-table>
 
-<p-confirmDialog header="Confirmar remoção de usuário" icon="pi pi-exclamation-triangle"></p-confirmDialog> 
+<p-confirmDialog header="Confirmar remoção de usuário"  (usuarioRemovido) = "deletarUsuario()" icon="pi pi-exclamation-triangle"></p-confirmDialog> 
 </div>

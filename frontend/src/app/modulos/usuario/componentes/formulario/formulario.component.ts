@@ -17,6 +17,7 @@ export class FormularioComponent implements OnInit {
   @Input() usuario = new Usuario();
   @Output() usuarioSalvo = new EventEmitter<Usuario>();
   @Output() usuarioEditado = new EventEmitter<Usuario>();
+  @Output() usuarioRemovido = new EventEmitter<Usuario>();
   formUsuario: FormGroup;
 
 

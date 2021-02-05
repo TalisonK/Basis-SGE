@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ConfirmationService } from 'primeng';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng';
 import { Usuario } from 'src/app/dominios/usuario';
 import { UsuarioService } from '../../services/usuario.service';
 
@@ -16,9 +16,10 @@ export class ListagemComponent implements OnInit {
   usuarios: Usuario[] = [];
   usuario = new Usuario();
   usuarioAcoes: boolean;
+  @Output() usuarioRemovido = new EventEmitter<Usuario>();
   
   constructor( private servico: UsuarioService, 
-    private confirmatioService: ConfirmationService) { }
+    private confirmatioService: ConfirmationService, private messageService:MessageService) { }
 
   ngOnInit(): void {
     this.buscarUsuarios();
@@ -37,20 +38,6 @@ export class ListagemComponent implements OnInit {
       this.formularioEdicao = edicao;
     }
 
-    showDialogEditar(id: number){
-      this.servico.buscarUsuarioPorId(id).subscribe(usuario => {
-        this.usuario = usuario;
-        console.log(this.usuario);
-        
-        this.showDialog(true);
-      });
-    }
-
-    showDialogSalvar(){
-      this.usuario = new Usuario();
-      this.showDialog();
-    }
-
     fecharDialog(usuarioSalvo: Usuario){
       console.log(usuarioSalvo);
       this.exibirDialog = false;
@@ -67,11 +54,16 @@ export class ListagemComponent implements OnInit {
     }
     
     deletarUsuario(id: number) {
+      this.usuarioRemovido.emit(this.usuario);
       this.servico.deletarUsuario(id)
         .subscribe(() => {
-         alert('Usuário deletado');
+          this.addSingle("success", "Usuario deletado", "");
           this.buscarUsuarios();
        },
        err => alert(err));
+  }
+
+  addSingle(error,sumary, detalhes) {
+    this.messageService.add({severity:error, summary:sumary, detail:detalhes});
   }
 } 
