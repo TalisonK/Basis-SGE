@@ -21,6 +21,10 @@ export class InscricaoService {
     return this.http.get<PreInscricao[]>(`${this.url}/inscricao/usuario`);
   }
 
+  getInscricaoPorIdUsuario(id: number): Observable<InscricaoListagem[]>{
+    return this.http.get<InscricaoListagem[]>(`${this.url}/inscricao/usuario/${id}`);
+  }
+
   getInscricaoPorId(id: number): Observable<PreInscricao>{
     return this.http.get<PreInscricao>(`${this.url}/inscricao/${id}`);
   }
@@ -35,5 +39,9 @@ export class InscricaoService {
 
   editarInscricao(inscricao: PreInscricao): Observable<PreInscricao>{
     return this.http.put<PreInscricao>(this.url, inscricao);
+  }
+
+  cancelarInscricao(id: number): Observable<any>{
+    return this.http.delete(`${this.url}/inscricao/${id}`)
   }
 }

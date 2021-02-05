@@ -70,6 +70,11 @@
                     <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
                 </td>
                 </div>
+                <div>
+                <td class="p-d-flex p-jc-center" >
+                    <button (click)="dialogCancelarInscricao(inscricao.id)" class="p-ml-2" pButton type="button" icon="pi pi-trash"></button>
+                </td>
+                </div>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
@@ -78,4 +83,7 @@
             </tr>
         </ng-template>
     </p-table>
+    <p-confirmDialog header="Confirmar cancelamento de inscrição"  (inscricaoCancelada) = "cancelarInscricao()" icon="pi pi-exclamation-triangle"></p-confirmDialog> 
+
 </div>
+<p-toast position="top-right"></p-toast>

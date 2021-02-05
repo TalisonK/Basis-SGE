@@ -57,7 +57,7 @@ export class ListagemComponent implements OnInit {
       this.usuarioRemovido.emit(this.usuario);
       this.servico.deletarUsuario(id)
         .subscribe(() => {
-          this.addSingle("success", "Usuario deletado", "");
+          this.addSingle("success", "Usuário deletado", "");
           this.buscarUsuarios();
        },
        err => alert(err));
