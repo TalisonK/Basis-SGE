@@ -55,14 +55,14 @@ export class FormEventoComponent implements OnInit {
     });
     this.form = this.fb.group({
       titulo: ['', Validators.minLength(3)],
-      dataInicio: '',
-      dataFim: '',
+      dataInicio: ['',Validators.required],
+      dataFim: ['',Validators.required],
       descricao: '',
       local: '',
       quantVagas: 0,
       valor: 0.0,
       tipoInscricao:[Validators.nullValidator],
-      idTipoEvento: 8,
+      idTipoEvento: [0,Validators.required],
       perguntas: []
     });
     this.buscarTipoEventos();
@@ -100,6 +100,7 @@ export class FormEventoComponent implements OnInit {
     if (this.edicao) {
       this.getIdTipoEvento()
       this.adicionarIdEventoEmEventoPergunta()
+      if(!this.validarDatas()){return};
       this.servicoEvento.editarEvento(this.evento)
         .subscribe(evento => {
           this.addSingleSuccess('Evento Editado com Sucesso!',"success")
@@ -112,6 +113,7 @@ export class FormEventoComponent implements OnInit {
       if(this.evento.tipoInscricao == null){
         this.evento.tipoInscricao = false
       }
+      if(!this.validarDatas()){return};
       this.servicoEvento.salvarEvento(this.evento)
         .subscribe(evento => {
           this.addSingleSuccess('Evento Salvo com Sucesso!',"success")
@@ -122,6 +124,19 @@ export class FormEventoComponent implements OnInit {
         });
       }
     }
+
+  validarDatas(): boolean{
+    if(!(this.evento.dataInicio<this.evento.dataFim)){
+      this.addSingleSuccess("Duração Invalida",'info')
+      return false;
+    }
+    let dataAgora: Date = new Date()
+    if((dataAgora<this.evento.dataInicio)){
+      this.addSingleSuccess("Duração Invalida!",'info')
+      return false;
+    }
+    return true;
+  }
 
   gerarListaEventoPergunta(listaPerguntas: Pergunta[]){
     listaPerguntas.forEach(element => {
