@@ -8,7 +8,6 @@ import { EventoService } from '../../services/evento-service.service';
 import { HttpErrorResponse } from '@angular/common/http'; 
 import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
 import { Pergunta } from 'src/app/dominios/pergunta';
-import { element } from 'protractor';
 import { MessageService } from 'primeng/api';
 
 
@@ -102,7 +101,6 @@ export class FormEventoComponent implements OnInit {
       this.getIdTipoEvento()
       this.adicionarIdEventoEmEventoPergunta()
       this.servicoEvento.editarEvento(this.evento)
-      
         .subscribe(evento => {
           this.addSingleSuccess('Evento Editado com Sucesso!',"success")
           this.fecharDialog(evento);
