@@ -38,7 +38,7 @@ public class InscricaoRecurso {
     }
 
     @PutMapping
-    public ResponseEntity<PreInscricaoDTO> editar(@RequestBody PreInscricaoDTO dto){
+    public ResponseEntity<InscricaoListagemDTO> editar(@RequestBody PreInscricaoDTO dto){
 
         servico.idEmUso(dto.getId());
 

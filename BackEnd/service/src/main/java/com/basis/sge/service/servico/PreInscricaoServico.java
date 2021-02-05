@@ -88,8 +88,10 @@ public class PreInscricaoServico {
         return mapper.toDto(preInscricao);
     }
 
-    public PreInscricaoDTO atualizar(PreInscricaoDTO dto) {
-        return mapper.toDto(incrRepo.save(mapper.toEntity(dto)));
+    public InscricaoListagemDTO atualizar(PreInscricaoDTO dto) {
+
+
+        return inscricaoListagemMapper.toDto(incrRepo.save(mapper.toEntity(dto)));
     }
 
     public void deletar(Integer id) {

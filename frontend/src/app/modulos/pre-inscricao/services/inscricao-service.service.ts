@@ -33,7 +33,7 @@ export class InscricaoService {
     return this.http.post<InscricaoResposta>(`${this.url}/inscricaoResposta`,resposta);
   }
 
-  editarInscricao(inscricao: PreInscricao): Observable<PreInscricao>{
-    return this.http.put<PreInscricao>(this.url, inscricao);
+  editarInscricao(inscricao: PreInscricao): Observable<InscricaoListagem>{
+    return this.http.put<InscricaoListagem>(`${this.url}/inscricao`, inscricao);
   }
 }
