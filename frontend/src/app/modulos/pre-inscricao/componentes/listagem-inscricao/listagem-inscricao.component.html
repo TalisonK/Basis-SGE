@@ -18,6 +18,12 @@
             <tr>
                 <th>
                     <div class="p-d-flex p-jc-between p-ai-center">
+                        CPF
+                        <p-columnFilter type="text" field="usuario" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th>
+                    <div class="p-d-flex p-jc-between p-ai-center">
                         Titulo 
                         <p-columnFilter type="text" field="Evento" display="menu"></p-columnFilter>
                     </div>
@@ -51,23 +57,16 @@
         </ng-template>
         <ng-template pTemplate="body" let-inscricao>
             <tr>
-                <td>
-                    {{inscricao.evento}}
-                </td>
-                <td>
-                    {{inscricao.dataInicio | date: 'MM/dd/yyyy'}}
-                </td>
-                <td>
-                    {{inscricao.dataFim | date: 'MM/dd/yyyy'}}
-                </td>
-                <td>
-                    {{inscricao.situacao}}
-                </td>
+                <td>{{inscricao.usuario}}</td>
+                <td>{{inscricao.evento}}</td>
+                <td>{{inscricao.dataInicio}}</td>
+                <td>{{inscricao.dataFim}}</td>
+                <td>{{inscricao.situacao}}</td>
                 <div>
                 <td>
                     
-                    <button (click)="aprovarInscricao(inscricao.id)" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success p-mr-2" ></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                    <button class="p-button-rounded p-button-success p-mr-2" pButton pRipple icon="pi pi-check" (click)="aprovarInscricao(inscricao.id)" ></button>
+                    <button class="p-button-rounded p-button-success p-mr-2" pButton pRipple icon="pi pi-times"  (click)="reprovarInscricao(inscricao.id)"></button>
                 </td>
                 </div>
             </tr>

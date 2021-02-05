@@ -23,4 +23,5 @@ cd docker/
 
 sudo docker-compose down;sleep 604800'
 
+sleep 5
 exit
