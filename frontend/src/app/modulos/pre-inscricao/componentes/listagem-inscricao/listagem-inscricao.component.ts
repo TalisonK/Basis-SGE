@@ -64,9 +64,7 @@ export class ListagemInscricaoComponent implements OnInit {
     this.service.cancelarInscricao(id)
     .subscribe(() => {
       this.addSingle("success", "Mensagem de Serviço", "Inscricao Cancelada");
-      
       this.inscricaoCancelada.emit(this.inscricao);
-
     },
     err => this.addSingle("error","Mensagem de Serviço",err));
     this.service.getInscricaoPorIdUsuario(id).subscribe(inscricoes => {this.inscricoes = inscricoes});
