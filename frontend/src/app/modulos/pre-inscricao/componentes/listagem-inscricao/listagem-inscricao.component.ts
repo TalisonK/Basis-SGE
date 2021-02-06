@@ -41,7 +41,6 @@ export class ListagemInscricaoComponent implements OnInit {
   ngOnInit(): void {
 
     this.condicaoAdmin = JSON.parse(localStorage.getItem("usuario")).id == 1 ? true : false;
-    console.log(JSON.parse(localStorage.getItem("usuario")))
 
     this.buscarUsuarioInscricoes();      
   }
@@ -72,7 +71,6 @@ export class ListagemInscricaoComponent implements OnInit {
   }
 
   aprovarInscricao(id: number){
-    console.log(id)
     this.service.getInscricaoPorId(id)
     .subscribe((inscricao: PreInscricao) =>{
       inscricao.idSituacao = 2;

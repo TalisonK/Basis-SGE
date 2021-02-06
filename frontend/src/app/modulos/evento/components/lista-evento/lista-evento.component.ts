@@ -105,7 +105,6 @@ export class ListaEventoComponent implements OnInit {
   }
 
   fecharDialog(eventoSalvo: Evento) {
-    console.log(eventoSalvo);
     this.exibirDialog = false; 
     this.buscarEventos();
   }
@@ -126,11 +125,6 @@ export class ListaEventoComponent implements OnInit {
     this.messageService.add({severity:tipo, summary:'Mensagem de Serviço', detail:detalhes});
   }
   
-  addMultiple() {
-      this.messageService.addAll([{severity:'success', summary:'Service Message', detail:'Via MessageService'},
-                                  {severity:'info', summary:'Info Message', detail:'Via MessageService'}]);
-  }
-
   clear() {
       this.messageService.clear();
   }
