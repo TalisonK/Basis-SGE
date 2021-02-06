@@ -2,6 +2,9 @@ package com.basis.sge.service.servico;
 
 import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.dominio.EventoPergunta;
+import com.basis.sge.service.dominio.PreInscricao;
+import com.basis.sge.service.dominio.Usuario;
+import com.basis.sge.service.mensagem.EmailMensagem;
 import com.basis.sge.service.repositorio.*;
 import com.basis.sge.service.servico.dto.EventoDTO;
 import com.basis.sge.service.servico.dto.EventoListagemDTO;
@@ -27,6 +30,10 @@ public class EventoServico {
     private final TipoEventoRepositorio tipoEventoRepositorio;
 
     private final EventoMapper eventoMapper;
+
+    private final InscricaoRepositorio inscricaoRepositorio;
+
+    private final EmailServico emailServico;
 
     private final EventoListagemMapper eventoListagemMapper;
 
@@ -69,18 +76,40 @@ public class EventoServico {
 
         Evento evento = eventoMapper.toEntity(eventoDTO);
         Evento eventoAtualizado = eventoRepositorio.save(evento);
-
+        notificarInscritos(evento.getTitulo(),evento.getId(),0);
         return eventoMapper.toDto(eventoAtualizado);
     }
 
     public void deletar(Integer id) {
         validaIdEvento(id);
+        Evento evento = eventoRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Evento não existe"));
         eventoRepositorio.deleteById(id);
+        notificarInscritos(evento.getTitulo(),id,1);
     }
 
     //---------------------------------------------------------------------
     //funções de validação e notificação
+    //Tipo 0 evento editado e tipo 1 evento cancelado
+    public void notificarInscritos(String titulo,Integer id,Integer tipo) {
 
+        List<PreInscricao> inscricoes = inscricaoRepositorio.findAllByEventoId(id);
+        List<String> destinatarios = new ArrayList();
+        inscricoes.forEach((inscricao) -> {
+            Usuario usuarioInscrito = inscricao.getUsuario();
+            destinatarios.add(usuarioInscrito.getEmail());
+        });
+        EmailMensagem emailMensagem = new EmailMensagem();
+        if(tipo==0) {
+            emailServico.rabbitSendMail("kenouen1@gmail.com",
+                    emailMensagem.messageEventoEditado("Inscrito", titulo),
+                    "Evento Atualizado", destinatarios);
+
+        }else if(tipo==1) {
+            emailServico.rabbitSendMail("kenouen1@gmail.com",
+                    emailMensagem.messageEventoCancelado("Inscrito", titulo),
+                    "Evento Atualizado", destinatarios);
+        }
+    }
     // valida dados de evento, com exceção das datas
     public void validaEvento(EventoDTO eventoDTO){
         validaNumero(eventoDTO.getValor());

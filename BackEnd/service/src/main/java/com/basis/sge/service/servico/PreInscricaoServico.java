@@ -4,6 +4,7 @@ import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.dominio.InscricaoResposta;
 import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
+import com.basis.sge.service.mensagem.EmailMensagem;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRespostaRepositorio;
@@ -83,10 +84,10 @@ public class PreInscricaoServico {
         });
 
         incrRepo.save(preInscricao);
-
+        EmailMensagem emailMensagem = new EmailMensagem();
         emailServico.rabbitSendMail(usuario.getEmail(),
                     "Inscrição efetuado com sucesso",
-                     "Inscrição bem sucedida, sua chave para acesso e atualização é: " + usuario.getChave(),
+                     emailMensagem.messageInscricaoAceita(usuario.getNome(),evento.getTitulo()),
                             new ArrayList<>());
 
         return inscricaoMapper.toDto(preInscricao);
@@ -108,12 +109,13 @@ public class PreInscricaoServico {
 
         try{
             PreInscricao inscricao = incrRepo.findById(id).orElseThrow(() -> new RegraNegocioException("Inscrição nao cadastrada"));
-
+            Usuario usuario = inscricao.getUsuario();
+            Evento evento = inscricao.getEvento();
             incrRepo.deleteById(id);
-
+            EmailMensagem emailMensagem = new EmailMensagem();
             emailServico.rabbitSendMail(inscricao.getUsuario().getEmail(),
                     "Inscrição removida com sucesso",
-                    "Remoção da inscrição bem sucedida",
+                    emailMensagem.messageInscricaoAceita(usuario.getNome(),evento.getTitulo()),
                     new ArrayList<>());
         }
         catch (Exception e){
