@@ -6,9 +6,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { RespostaBlocoComponent } from './componentes/resposta-bloco/resposta-bloco.component';
 import { InscricaoService } from './services/inscricao-service.service';
 import { ListagemInscricaoComponent } from './componentes/listagem-inscricao/listagem-inscricao.component';
+import { AprovarInscricaoComponent } from './componentes/aprovar-inscricao/aprovar-inscricao.component';
 
 @NgModule({
-  declarations: [FormularioComponent, RespostaBlocoComponent, ListagemInscricaoComponent],
+  declarations: [FormularioComponent, RespostaBlocoComponent, ListagemInscricaoComponent, AprovarInscricaoComponent],
   imports: [
     CommonModule,
     PreInscricaoRoutingModule,

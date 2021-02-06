@@ -4,7 +4,7 @@
     <p-table #dt1 [value]="inscricoes" dataKey="id"
         [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
         [paginator]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} eventos"
-        [globalFilterFields]="['titulo']">
+        [globalFilterFields]="['evento']">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
@@ -18,64 +18,59 @@
             <tr>
                 <th>
                     <div class="p-d-flex p-jc-between p-ai-center">
+                        CPF
+                        <p-columnFilter type="text" field="usuario" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th>
+                    <div class="p-d-flex p-jc-between p-ai-center">
                         Titulo 
-                        <p-columnFilter type="text" field="Evento" display="menu"></p-columnFilter>
+                        <p-columnFilter type="text" field="evento" display="menu"></p-columnFilter>
                     </div>
                 </th>
                 <th>
                     <div class="p-d-flex p-jc-between p-ai-center">
                         Inicio
-                        <p-columnFilter type="date" field="dataInicio" display="menu"></p-columnFilter>
                     </div>
                 </th>
                 <th>
                     <div class="p-d-flex p-jc-between p-ai-center">
                         Fim
-                        <p-columnFilter type="date" field="dateFim" display="menu"></p-columnFilter>
                     </div>
                 </th>
                 <th>
                     <div class="p-d-flex p-jc-between p-ai-center">
                         Situação
-                        <p-columnFilter type="text" field="situação" display="menu"></p-columnFilter>
                     </div>
                 </th>
-                <th>
-                    <div class="p-d-flex p-jc-between p-ai-center">
-                        Ações
-                        <p-columnFilter field="acoes" display="menu"></p-columnFilter>
-                    </div>
-                </th>
+                <th style="width: 80px;">Ações</th>
                 
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-inscricao>
             <tr>
-                <td>
-                    {{inscricao.evento}}
-                </td>
-                <td>
-                    {{inscricao.dataInicio | date: 'MM/dd/yyyy'}}
-                </td>
-                <td>
-                    {{inscricao.dataFim | date: 'MM/dd/yyyy'}}
-                </td>
-                <td>
-                    {{inscricao.situacao}}
-                </td>
+                <td>{{inscricao.usuario}}</td>
+                <td>{{inscricao.evento}}</td>
+                <td>{{inscricao.dataInicio}}</td>
+                <td>{{inscricao.dataFim}}</td>
+                <td>{{inscricao.situacao}}</td>
                 <div>
-                <td>
-                    
-                    <button (click)="aprovarInscricao(inscricao.id)" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-success p-mr-2" ></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(product)"></button>
+                <td style="display: flex;flex-direction: row; justify-content: center;" *ngIf="condicaoAdmin">
+                    <button class="p-button-rounded p-button-success p-mr-2" pButton pRipple icon="pi pi-list" (click)="openDialog(inscricao.id)" ></button>
                 </td>
                 </div>
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
             <tr>
-                <td colspan="5">Não existem inscrições .</td>
+                <td colspan="5">Não existem inscrições.</td>
             </tr>
         </ng-template>
     </p-table>
 </div>
+
+<p-dialog *ngIf="aprovacaoDialog" header="Checagem de Inscrição" modal="true" [(visible)]="aprovacaoDialog" [style]="{width: '50vw' }" (onHide)="closeDialog()" >
+
+    <app-aprovar-inscricao [conjuntos]="conjuntos" [id]="id" [incricao] = "inscricao" (aprovarEvento)="aprovarInscricao($event); closeDialog()" (reprovarEvento)="reprovarInscricao($event); closeDialog()"></app-aprovar-inscricao>
+
+</p-dialog>

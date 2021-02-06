@@ -115,6 +115,7 @@ export class FormularioInscricaoComponent implements OnInit {
         this.inscricao = inscricao
         this.enviarRespostas(this.inscricao.id);
         this.closeDialog();
+        this.addSingle("success", "Inscrição bem sucedida!","");
       }, (erro: HttpErrorResponse) => {
         this.addSingle("error", erro.error.message, "");
       });
@@ -127,11 +128,6 @@ export class FormularioInscricaoComponent implements OnInit {
 
   addSingle(error,sumary, detalhes) {
     this.messageService.add({severity:error, summary:sumary, detail:detalhes});
-  }
-
-  addMultiple() {
-      this.messageService.addAll([{severity:'success', summary:'Service Message', detail:'Via MessageService'},
-                                  {severity:'info', summary:'Info Message', detail:'Via MessageService'}]);
   }
 
   clear() {

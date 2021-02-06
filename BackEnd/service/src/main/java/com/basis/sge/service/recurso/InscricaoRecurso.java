@@ -1,6 +1,7 @@
 package com.basis.sge.service.recurso;
 
 import com.basis.sge.service.servico.PreInscricaoServico;
+import com.basis.sge.service.servico.dto.ConjuntoPerguntaRespostaDTO;
 import com.basis.sge.service.servico.dto.InscricaoListagemDTO;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import java.util.List;
@@ -32,13 +33,18 @@ public class InscricaoRecurso {
         return ResponseEntity.ok().body(servico.obterPorUsuarioId(id));
     }
 
+    @PostMapping(value = "/respostas")
+    public ResponseEntity<List<ConjuntoPerguntaRespostaDTO>> obterRespostas(@RequestBody PreInscricaoDTO dto){
+        return ResponseEntity.ok().body(servico.buscarPerguntasRespostas(dto));
+    }
+
     @PostMapping
     public ResponseEntity<PreInscricaoDTO> criar(@RequestBody PreInscricaoDTO dto){
         return ResponseEntity.status(HttpStatus.CREATED).body(servico.criar(dto));
     }
 
     @PutMapping
-    public ResponseEntity<PreInscricaoDTO> editar(@RequestBody PreInscricaoDTO dto){
+    public ResponseEntity<InscricaoListagemDTO> editar(@RequestBody PreInscricaoDTO dto){
 
         servico.idEmUso(dto.getId());
 

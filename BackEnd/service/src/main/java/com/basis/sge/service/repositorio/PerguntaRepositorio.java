@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface PerguntaRepositorio extends JpaRepository<Pergunta, Integer> {
+
 }
