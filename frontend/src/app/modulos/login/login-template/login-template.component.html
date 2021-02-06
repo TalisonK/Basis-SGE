@@ -1,0 +1,25 @@
+<div id="backPlate-login">
+    <div class="card" style="width: 65%; height: 80vh; padding: 0; display: flex; flex-direction: row;justify-content: space-between;">
+        <div id="barra-esquerda" >
+            <img src="../../../../../assets/layout/images/basis.png" style="width: 100%;  height: 25%;"/>
+            <h1>Sistema de Gerenciamento de Eventos</h1>
+        </div>
+        <div class="card" id="form" style="padding: 0;">
+            <h2 style="font-size: 24px;margin: auto; margin-top: 10%;margin-bottom: 0%;" >{{cadastro?"Formulario de cadastro":"Formulario de Login"}}</h2>
+            <div style="display: flex;flex-direction: row; justify-content: center; padding: 0;">
+                <div style="display: flex;flex-direction: column; justify-content: center;">
+                    <app-login-form *ngIf="!cadastro" (loginDadosEvent)="receberLoginDados($event)" ></app-login-form>
+                    <app-cadastro-form *ngIf="cadastro" (cadastroEvento)="cadastrarUsuario($event)"></app-cadastro-form>
+                </div>
+            </div>
+            <div id="caixa-botoes" *ngIf="!cadastro">
+                <button pButton type="button" label="Cadastrar" class="ui-button-rounded ui-button-success" (click)="cadastroEventon()"></button>
+                <button pButton type="button" label="Entrar" class="ui-button-rounded ui-button-success" (click)="makeLogin()"></button>
+            </div>
+            <div id="caixa-botoes" *ngIf="cadastro">
+                <label style="padding: 5px;color: red;" (click)="cadastroEventoff()"><u>Cancelar</u></label>
+                <button pButton type="button" label="Cadastrar" class="ui-button-rounded ui-button-success" (click)="enviarCadastro()"></button>
+            </div>
+        </div>
+    </div>
+</div>

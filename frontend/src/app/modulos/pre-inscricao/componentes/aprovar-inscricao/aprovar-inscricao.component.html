@@ -1,0 +1,8 @@
+<p-tabView>
+    <p-tabPanel header="{{conjunto.pergunta}}"*ngFor="let conjunto of conjuntos; let i = index" [selected] = "i == 0">
+       {{conjunto.resposta}}
+    </p-tabPanel>
+</p-tabView>
+
+<button class="p-button-rounded p-button-success p-mr-2" pButton pRipple icon="pi pi-check" label="Aprovar" (click)="aprovarInscricao(id)" ></button>
+<button class="p-button-rounded p-button-success p-mr-2" pButton pRipple icon="pi pi-times" label="recusar" (click)="reprovarInscricao(id)"></button>
