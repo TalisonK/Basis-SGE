@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng';
 import { Evento } from 'src/app/dominios/evento';
 import { Pergunta } from 'src/app/dominios/pergunta';

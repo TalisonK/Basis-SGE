@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { Usuario } from 'src/app/dominios/usuario';
 import { UsuarioAutenticacaoDTO } from '../dto/usuarioAutenticacaoDTO';
 import { LoginServico } from '../servico/login-servico.service';
@@ -21,7 +22,8 @@ export class LoginTemplateComponent implements OnInit {
   @Input() cadastro = false;
 
   constructor(
-    private servico: LoginServico
+    private servico: LoginServico,
+    private messageService:MessageService
     
   ) { }
 
@@ -72,8 +74,19 @@ export class LoginTemplateComponent implements OnInit {
 
     this.servico.criarUsuario(this.usuario).subscribe((usuario) => {
       console.log(usuario);
+      this.cadastroEventoff();
     })
 
-    this.cadastroEventoff();
+    
+  }
+
+  addSingle(sumary:string, detalhes: string, corpo: string) {
+    this.messageService.add({severity:sumary, summary:detalhes, detail:corpo});
+  }
+
+  validacoes(){
+
+    
+
   }
 }
