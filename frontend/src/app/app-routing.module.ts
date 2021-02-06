@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DiarioErrosComponent } from './components/diario-erros/diario-erros.component';
-import { LoginSuccessComponent } from '@nuvem/angular-base';
 import { EventoModule } from './modulos/evento/evento.module';
 import { UsuarioModule } from './modulos/usuario/usuario.module';
 import { PerguntaModule } from './modulos/pergunta/pergunta.module';
@@ -23,10 +21,7 @@ const routes: Routes = [
   {
     path:'inscricao',
     loadChildren: () => PreInscricaoModule
-  },
-  
-    { path: 'diario-erros', component: DiarioErrosComponent, data: { breadcrumb: 'Diário de Erros'} },
-    { path: 'login-success', component: LoginSuccessComponent }
+  }
 ];
 
 @NgModule({

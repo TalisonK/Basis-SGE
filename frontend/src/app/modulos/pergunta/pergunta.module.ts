@@ -22,6 +22,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     SharedModule,
     HttpClientModule
+  ],
+  exports: [
+    PerguntaService
   ]
 })
 export class PerguntaModule { }

@@ -5,7 +5,7 @@
             <h1>Sistema de Gerenciamento de Eventos</h1>
         </div>
         <div class="card" id="form" style="padding: 0;">
-            <h2 style="font-size: 24px;margin: auto; margin-top: 10%;margin-bottom: 0%;" >{{titulo}}</h2>
+            <h2 style="font-size: 24px;margin: auto; margin-top: 10%;margin-bottom: 0%;" >{{cadastro?"Formulario de cadastro":"Formulario de Login"}}</h2>
             <div style="display: flex;flex-direction: row; justify-content: center; padding: 0;">
                 <div style="display: flex;flex-direction: column; justify-content: center;">
                     <app-login-form *ngIf="!cadastro" (loginDadosEvent)="receberLoginDados($event)" ></app-login-form>

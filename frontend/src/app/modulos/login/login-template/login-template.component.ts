@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Usuario } from 'src/app/dominios/usuario';
-import { UsuarioService } from '../../usuario/services/usuario.service';
 import { UsuarioAutenticacaoDTO } from '../dto/usuarioAutenticacaoDTO';
 import { LoginServico } from '../servico/login-servico.service';
 

@@ -1,10 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
-import { ConfirmationService, MessageService } from 'primeng';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { InscricaoListagem } from 'src/app/dominios/InscricaoListagem';
 import { PreInscricao } from 'src/app/dominios/PreInscricao';
 import { Usuario } from 'src/app/dominios/usuario';
+import { PerguntaResposta } from '../../dto/Conjunto';
 import { InscricaoService } from '../../services/inscricao-service.service';
+
 
 @Component({
   selector: 'app-listagem-inscricao',
@@ -14,40 +16,39 @@ import { InscricaoService } from '../../services/inscricao-service.service';
 export class ListagemInscricaoComponent implements OnInit {
 
   exibirDialog = false;
-  @Input() edicao = true;
-  @Input() inscricao: PreInscricao = new PreInscricao();
+  condicaoAdmin = false;
+      
   @Output() inscricaoCancelada = new EventEmitter<PreInscricao>();
 
-  admin: boolean;
+  id:number = 0;
 
-  private inscricoes: InscricaoListagem[] = [];
+  inscricao:PreInscricao = new PreInscricao();
 
-  constructor(private service: InscricaoService, private confirmationService: ConfirmationService, private messageService: MessageService) { }
+  conjuntos:PerguntaResposta[] = []
+
+  aprovacaoDialog = false;
+
+  inscricoes: InscricaoListagem[] = [];
+
+  loading = '';
+
+  constructor(
+    private service:InscricaoService,
+    private messageService:MessageService,
+    private confirmationService: ConfirmationService
+    ) { }
 
   ngOnInit(): void {
-    this.buscarUsuarioInscricoes();
 
-    this.admin = JSON.parse(localStorage.getItem("usuario")).id == 1 ? true : false;
+    this.condicaoAdmin = JSON.parse(localStorage.getItem("usuario")).id == 1 ? true : false;
+    console.log(JSON.parse(localStorage.getItem("usuario")))
 
+    this.buscarUsuarioInscricoes();      
   }
 
   buscarUsuarioInscricoes() {
-    this.service.getInscricao().subscribe((inscricoes: InscricaoListagem[]) => {
+    this.service.getInscricao().subscribe((inscricoes: InscricaoListagem[]) =>{
       this.inscricoes = inscricoes;
-    });
-  }
-
-  aprovarInscricao(id: number) {
-    this.service.getInscricaoPorId(id)
-      .subscribe((inscricao: PreInscricao) => {
-        this.aprovarInscricaoEditar(inscricao);
-      })
-  }
-
-  aprovarInscricaoEditar(insc: PreInscricao) {
-    console.log(insc);
-    this.service.editarInscricao(insc).subscribe(inscricao => {
-      alert('Inscrição aprovada');
     });
   }
 
@@ -69,9 +70,46 @@ export class ListagemInscricaoComponent implements OnInit {
     err => this.addSingle("error","Mensagem de Serviço",err));
     this.service.getInscricaoPorIdUsuario(id).subscribe(inscricoes => {this.inscricoes = inscricoes});
   }
-  
-  addSingle(error, sumary, detalhes) {
-    this.messageService.add({ severity: error, summary: sumary, detail: detalhes });
+
+  aprovarInscricao(id: number){
+    console.log(id)
+    this.service.getInscricaoPorId(id)
+    .subscribe((inscricao: PreInscricao) =>{
+      inscricao.idSituacao = 2;
+      this.aprovarInscricaoEditar(inscricao);
+    })
   }
 
+  aprovarInscricaoEditar(insc:PreInscricao){
+    this.service.editarInscricao(insc).subscribe(inscricao =>{
+      this.addSingle("success", "Inscrição aprovada","");
+      this.buscarUsuarioInscricoes()
+    });
+    
+  }
+
+  addSingle(error,sumary, detalhes) {
+    this.messageService.add({severity:error, summary:sumary, detail:detalhes});
+  }
+
+  reprovarInscricao(id){
+    this.service.getInscricaoPorId(id).subscribe(
+      (inscricao) => {
+        inscricao.idSituacao = 3;
+        this.service.editarInscricao(inscricao).subscribe(() => {
+          this.addSingle("warn", "Inscrição reprovada","");
+          this.buscarUsuarioInscricoes()
+        })
+      }
+    )
+  }
+
+  openDialog(id){
+    this.id = id;
+    this.aprovacaoDialog = true;;
+  }
+
+  closeDialog(){
+    this.aprovacaoDialog = false;
+  }
 }

@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ConfirmationService } from 'primeng';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { ConfirmationService, MessageService } from 'primeng';
 import { Evento } from 'src/app/dominios/evento';
+import { Pergunta } from 'src/app/dominios/pergunta';
 import { TipoEvento } from 'src/app/dominios/tipo-evento';
 import { EventoListagem } from '../../services/dto/evento-listagem';
 import { EventoService } from '../../services/evento-service.service';
@@ -13,8 +14,8 @@ import { TipoEventoService } from '../../services/tipo-evento-service.service';
 })
 export class ListaEventoComponent implements OnInit {
 
-  @Input() categorias;
-  condicao = false;
+  @Input() categorias: TipoEvento[];
+  condicao = true;
   eventos: EventoListagem[] = [];
   evento = new Evento();
   exibirDialog = false;
@@ -22,6 +23,7 @@ export class ListaEventoComponent implements OnInit {
   formEdicao: boolean;
   tipoEvento = new TipoEvento();
   loading = '';
+  perguntasEventoSalvo: Pergunta[] = []
 
   constructor(
 
@@ -29,8 +31,9 @@ export class ListaEventoComponent implements OnInit {
 
     private servicoTipoEvento: TipoEventoService,
 
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
 
+    private messageService: MessageService
     ) {}
 
   ngOnInit(): void {
@@ -69,11 +72,11 @@ export class ListaEventoComponent implements OnInit {
     this.servico.deletarEvento(id)
       .subscribe(() => {
     
-        alert('Evento Excluido');
+        this.addSingleSuccess("Evento Deletado","success")
     
         this.buscarEventos();
       },
-      err => alert(err));
+      err => {this.addSingleSuccess("Erro ao deletar o evento","error")});
   }
 
   mostrarDialogEditar(id: number) {
@@ -112,12 +115,23 @@ export class ListaEventoComponent implements OnInit {
       .subscribe(evento => {
         this.evento = evento
         this.inscricaoDialog = !this.inscricaoDialog;
-        console.log("oi");
-      }); 
-    
+      });
   }
   
   fecharInscricaoDialog(){
     this.inscricaoDialog = false;
+  }
+
+  addSingleSuccess(detalhes: string,tipo: string) {
+    this.messageService.add({severity:tipo, summary:'Mensagem de Serviço', detail:detalhes});
+  }
+  
+  addMultiple() {
+      this.messageService.addAll([{severity:'success', summary:'Service Message', detail:'Via MessageService'},
+                                  {severity:'info', summary:'Info Message', detail:'Via MessageService'}]);
+  }
+
+  clear() {
+      this.messageService.clear();
   }
 }
