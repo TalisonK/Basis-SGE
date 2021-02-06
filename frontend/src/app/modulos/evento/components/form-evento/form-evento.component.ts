@@ -8,7 +8,7 @@ import { EventoService } from '../../services/evento-service.service';
 import { HttpErrorResponse } from '@angular/common/http'; 
 import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
 import { Pergunta } from 'src/app/dominios/pergunta';
-import { element } from 'protractor';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
@@ -27,6 +27,7 @@ export class FormEventoComponent implements OnInit {
   @Input() tipoEvento = new TipoEvento(); 
 
   listaEventoPergunta: EventoPergunta[] = [];
+
   @Input() listaPerguntas: Pergunta[];
   
   @Output() eventoSalvo = new EventEmitter<Evento>();
@@ -35,6 +36,8 @@ export class FormEventoComponent implements OnInit {
   
   constructor(
   
+    private messageService: MessageService,
+
     private fb: FormBuilder,
   
     private servicoEvento: EventoService,
@@ -53,17 +56,16 @@ export class FormEventoComponent implements OnInit {
     });
     this.form = this.fb.group({
       titulo: ['', Validators.minLength(3)],
-      dataInicio: '',
-      dataFim: '',
+      dataInicio: ['',Validators.required],
+      dataFim: ['',Validators.required],
       descricao: '',
       local: '',
       quantVagas: 0,
       valor: 0.0,
       tipoInscricao:[Validators.nullValidator],
-      idTipoEvento: 8,
+      idTipoEvento: [0,Validators.required],
       perguntas: []
     });
-    this.evento.tipoInscricao = false
     this.buscarTipoEventos();
   }
 
@@ -92,34 +94,45 @@ export class FormEventoComponent implements OnInit {
   criar(){
    
     if(this.form.invalid){
-      alert('Formulário inválido');
+      this.addSingleSuccess('Formulario Invalido!',"info");
       return;
     }
    
     if (this.edicao) {
       this.getIdTipoEvento()
       this.adicionarIdEventoEmEventoPergunta()
+      if(!this.validarDatas()){return};
       this.servicoEvento.editarEvento(this.evento)
-      
         .subscribe(evento => {
-          alert('Evento Editado com Sucesso');
+          this.addSingleSuccess('Evento Editado com Sucesso!',"success")
           this.fecharDialog(evento);
         }, (erro: HttpErrorResponse) => {
-          alert(erro.error.message);
+          this.addSingleSuccess(erro.error.message,"error")
         });
     } else {
-  
       this.getIdTipoEvento()
+      if(this.evento.tipoInscricao == null){
+        this.evento.tipoInscricao = false
+      }
+      if(!this.validarDatas()){return};
       this.servicoEvento.salvarEvento(this.evento)
         .subscribe(evento => {
-          alert('Evento Salvo com Sucesso!')
+          this.addSingleSuccess('Evento Salvo com Sucesso!',"success")
           this.fecharDialog(evento);
-
         }, (erro: HttpErrorResponse) => {
-          alert(erro.error.message);
+          this.addSingleSuccess(erro.error.message,"error")
+         
         });
       }
     }
+
+  validarDatas(): boolean{
+    if(!(this.evento.dataInicio<this.evento.dataFim)){
+      this.addSingleSuccess("Duração Invalida",'info')
+      return false;
+    }
+    return true;
+  }
 
   gerarListaEventoPergunta(listaPerguntas: Pergunta[]){
     listaPerguntas.forEach(element => {
@@ -145,5 +158,9 @@ export class FormEventoComponent implements OnInit {
 
   fecharDialog(eventoSalvo: Evento) {
     this.eventoSalvo.emit(eventoSalvo);
+  }
+
+  addSingleSuccess(detalhes: string,tipo: string) {
+    this.messageService.add({severity:tipo, summary:'Mensagem de Serviço', detail:detalhes});
   }
 }

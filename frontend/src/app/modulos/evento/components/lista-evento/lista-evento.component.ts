@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { ConfirmationService } from 'primeng';
+import { ConfirmationService, MessageService } from 'primeng';
 import { Evento } from 'src/app/dominios/evento';
-import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
 import { Pergunta } from 'src/app/dominios/pergunta';
 import { TipoEvento } from 'src/app/dominios/tipo-evento';
 import { EventoListagem } from '../../services/dto/evento-listagem';
@@ -32,8 +31,9 @@ export class ListaEventoComponent implements OnInit {
 
     private servicoTipoEvento: TipoEventoService,
 
-    private confirmationService: ConfirmationService
+    private confirmationService: ConfirmationService,
 
+    private messageService: MessageService
     ) {}
 
   ngOnInit(): void {
@@ -72,11 +72,11 @@ export class ListaEventoComponent implements OnInit {
     this.servico.deletarEvento(id)
       .subscribe(() => {
     
-        alert('Evento Excluido');
+        this.addSingleSuccess("Evento Deletado","success")
     
         this.buscarEventos();
       },
-      err => alert(err));
+      err => {this.addSingleSuccess("Erro ao deletar o evento","error")});
   }
 
   mostrarDialogEditar(id: number) {
@@ -122,4 +122,16 @@ export class ListaEventoComponent implements OnInit {
     this.inscricaoDialog = false;
   }
 
+  addSingleSuccess(detalhes: string,tipo: string) {
+    this.messageService.add({severity:tipo, summary:'Mensagem de Serviço', detail:detalhes});
+  }
+  
+  addMultiple() {
+      this.messageService.addAll([{severity:'success', summary:'Service Message', detail:'Via MessageService'},
+                                  {severity:'info', summary:'Info Message', detail:'Via MessageService'}]);
+  }
+
+  clear() {
+      this.messageService.clear();
+  }
 }
