@@ -15,7 +15,7 @@ import { TipoEventoService } from '../../services/tipo-evento-service.service';
 export class ListaEventoComponent implements OnInit {
 
   @Input() categorias: TipoEvento[];
-  condicao = true;
+  condicao = JSON.parse(localStorage.getItem("usuario")).id == 1? true : false;;
   eventos: EventoListagem[] = [];
   evento = new Evento();
   exibirDialog = false;
