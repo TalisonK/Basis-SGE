@@ -73,6 +73,7 @@
         </ng-template>
     </p-table>
     <p-confirmDialog header="Confirmar cancelamento de inscrição"  (inscricaoCancelada) = "cancelarInscricao()" icon="pi pi-exclamation-triangle"></p-confirmDialog> 
+
 </div>
 
 <p-dialog *ngIf="aprovacaoDialog" header="Checagem de Inscrição" modal="true" [(visible)]="aprovacaoDialog" [style]="{width: '50vw' }" (onHide)="closeDialog()" >

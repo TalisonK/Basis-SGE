@@ -54,7 +54,7 @@ export class ListagemInscricaoComponent implements OnInit {
 
   dialogCancelarInscricao(id: number) {
     this.confirmationService.confirm({
-      message: 'Dejesa cancelar a sua inscrição no evento? ',
+      message: 'Deseja cancelar a sua inscrição no evento? ',
       accept: () => {
         this.cancelarInscricao(id);
       }
@@ -64,12 +64,15 @@ export class ListagemInscricaoComponent implements OnInit {
   cancelarInscricao(id: number) {
     this.service.cancelarInscricao(id)
     .subscribe(() => {
-      this.addSingle("success", "Mensagem de Serviço", "Inscricao Cancelada");
-      this.inscricaoCancelada.emit(this.inscricao);
+    this.inscricaoCancelada.emit(this.inscricao);
     },
+      
     err => this.addSingle("error","Mensagem de Serviço",err));
+    this.addSingle("success", "Mensagem de Serviço", "Inscrição Cancelada");
     this.service.getInscricaoPorIdUsuario(id).subscribe(inscricoes => {this.inscricoes = inscricoes});
+  
   }
+  
 
   aprovarInscricao(id: number){
     console.log(id)
@@ -84,8 +87,7 @@ export class ListagemInscricaoComponent implements OnInit {
     this.service.editarInscricao(insc).subscribe(inscricao =>{
       this.addSingle("success", "Inscrição aprovada","");
       this.buscarUsuarioInscricoes()
-    });
-    
+    }); 
   }
 
   addSingle(error,sumary, detalhes) {
