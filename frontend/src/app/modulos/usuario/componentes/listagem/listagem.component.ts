@@ -39,7 +39,7 @@ export class ListagemComponent implements OnInit {
     }
 
     fecharDialog(usuarioSalvo: Usuario){
-      console.log(usuarioSalvo);
+      
       this.exibirDialog = false;
       this.buscarUsuarios();
     }

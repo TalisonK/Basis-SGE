@@ -29,8 +29,6 @@ export class FormularioComponent implements OnInit {
     ){}
 
   ngOnInit(): void {
-
-    console.log(this.usuario);
     
     this.route.params.subscribe(params => {
       if (params.id){

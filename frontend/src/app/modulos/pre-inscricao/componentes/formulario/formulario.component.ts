@@ -24,8 +24,7 @@ import { ActivatedRoute } from '@angular/router';
 	}
 
 	ngOnInit(): void {
-		console.log(this.inscricao);
-
+		
 		this.route.params.subscribe(params => {
 			if (params.id){
 			this.edicao = true;
