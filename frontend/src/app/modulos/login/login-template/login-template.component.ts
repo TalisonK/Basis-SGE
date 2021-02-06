@@ -69,14 +69,12 @@ export class LoginTemplateComponent implements OnInit {
     if(this.validaDadoCadastro()) return;
 
     this.usuario.cpf = this.usuario.cpf.replace(".", "").replace(".", "").replace("-", "");
-
     this.usuario.telefone = this.usuario.telefone.replace("(", "").replace(")", "").replace(" ", "").replace("-", "");
-
-    console.log(this.usuario)
 
     this.servico.criarUsuario(this.usuario).subscribe((usuario) => {
       this.cadastroEventoff();
-    }, err => {
+    }, 
+    err => {
       if(err.error.errors){
         err.error.errors.forEach(element => {
           this.addSingle("error", element.message, "")
@@ -85,10 +83,7 @@ export class LoginTemplateComponent implements OnInit {
       else{
         this.addSingle("error", err.error.message, "")
       }
-      
     })
-
-    
   }
 
   validaDadosLogin(){

@@ -72,7 +72,6 @@ export class FormularioInscricaoComponent implements OnInit {
   }
 
   enviarRespostas(id){
-
     for(let i in this.respostas){
       this.respostas[i].idInscricao = id;
       this.servico.salvarResposta(this.respostas[i])
@@ -103,8 +102,9 @@ export class FormularioInscricaoComponent implements OnInit {
     }
     
     if(cond){
-      this.servico.criarInscricao(this.inscricao)
-      .subscribe((inscricao) => {
+      this.inscricao.idUsuario = JSON.parse(localStorage.getItem("usuario")).id;
+
+      this.servico.criarInscricao(this.inscricao).subscribe((inscricao) => {
         this.inscricao = inscricao
         this.enviarRespostas(this.inscricao.id);
         this.closeDialog();

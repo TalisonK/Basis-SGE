@@ -25,4 +25,8 @@ export class ServicoPergutaService {
     criarInscricao(inscricao:PreInscricao): Observable<any> {
     return this.http.post(`${this.url}/inscricao`, inscricao);
   }
+
+  editarInscricao(inscricao:PreInscricao):Observable<any> {
+    return this.http.put(`${this.url}/inscricao`, inscricao)
+  }
 }

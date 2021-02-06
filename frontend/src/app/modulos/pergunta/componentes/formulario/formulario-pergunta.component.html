@@ -3,8 +3,7 @@
     <form [formGroup]="formPergunta">
        <!--<div class="p-formgroup-inline">-->
             <div class="p-field">
-                <textarea id="float-input" type="text" pInputText placeholder="Digite aqui a Pergunta" formControlName="titulo" rows="1" cols="50" pInputTextarea autoResize="autoResize"></textarea>
-            <!--><input [(ngModel)]="pergunta.titulo" id="float-input" type="text" pInputText placeholder="Digite aqui a Pergunta" formControlName="titulo"/>-->
+                <textarea [(ngModel)]="pergunta.titulo" id="float-input" type="text" pInputText placeholder="Digite aqui a Pergunta" formControlName="titulo" rows="1" cols="50" pInputTextarea autoResize="autoResize"></textarea>
             </div>
             <div class="p-field">
                 <label style="margin-right: 1%;">Pergunta obrigatória?</label>
