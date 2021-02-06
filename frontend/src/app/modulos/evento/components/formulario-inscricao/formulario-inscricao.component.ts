@@ -68,7 +68,6 @@ export class FormularioInscricaoComponent implements OnInit {
       resposta.idEvento = this.evento.id;
       resposta.resposta = respostas[i].resposta;
       this.respostas[index] = resposta;
-      console.log(this.respostas);
     }
   }
 
@@ -84,7 +83,7 @@ export class FormularioInscricaoComponent implements OnInit {
   }
 
   enviarInscricao(){
-    console.log("inscricao");
+   
 
     let cond = true;
 
@@ -93,7 +92,6 @@ export class FormularioInscricaoComponent implements OnInit {
       pergunta.obrigatoriedade?quantObrigatorias++:null;
     })
 
-    console.log("quant Obrigatorias: " + quantObrigatorias);
 
     if(quantObrigatorias > 0) {
       this.perguntas.forEach((pergunta) => {

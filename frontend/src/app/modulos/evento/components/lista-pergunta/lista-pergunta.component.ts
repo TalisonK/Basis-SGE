@@ -67,7 +67,6 @@ export class ListaPerguntaComponent implements OnInit {
       this.addSingleSuccess('Formulário inválido','info')
       return;
     }else {this.servico.criarPergunta(this.pergunta).subscribe(pergunta => {
-        console.log(this.pergunta)  
         this.addSingleSuccess('Pergunta Salva','success')
         this.buscarPergunta()
         }, (erro: HttpErrorResponse) => {

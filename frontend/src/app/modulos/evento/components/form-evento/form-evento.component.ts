@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
 import { Pergunta } from 'src/app/dominios/pergunta';
 import { MessageService } from 'primeng/api';
+import * as moment from 'moment';
 
 
 @Component({
@@ -131,6 +132,10 @@ export class FormEventoComponent implements OnInit {
       this.addSingleSuccess("Duração Invalida",'info')
       return false;
     }
+    if(!(moment(this.evento.dataInicio).isAfter(moment()))){
+      this.addSingleSuccess("Duração Invalida",'info')
+      return false;
+    }
     return true;
   }
 
@@ -142,7 +147,6 @@ export class FormEventoComponent implements OnInit {
       this.listaEventoPergunta.push(eventoPergunta);
     });
     this.evento.perguntas=this.listaEventoPergunta;
-    console.log(this.evento.perguntas)
     this.listaEventoPergunta = []
   }
 
