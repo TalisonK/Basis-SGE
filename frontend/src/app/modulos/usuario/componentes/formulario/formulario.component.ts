@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Usuario } from 'src/app/dominios/usuario';
 import { UsuarioService } from '../../services/usuario.service';
 
@@ -15,11 +16,15 @@ export class FormularioComponent implements OnInit {
   @Input() edicao = false;
   @Input() usuario = new Usuario();
   @Output() usuarioSalvo = new EventEmitter<Usuario>();
+  @Output() usuarioEditado = new EventEmitter<Usuario>();
+  @Output() usuarioRemovido = new EventEmitter<Usuario>();
   formUsuario: FormGroup;
+
 
   constructor( 
     private fb: FormBuilder, 
     private usuarioService: UsuarioService,
+    private messageService: MessageService,
     private route: ActivatedRoute
     ){}
 
@@ -46,33 +51,17 @@ export class FormularioComponent implements OnInit {
     this.usuarioService.buscarUsuarioPorId(id)
     .subscribe(usuario => this.usuario = usuario);
   }
-  criar(){
-   
-    if(this.formUsuario.invalid){
-      alert('Formulário inválido');
-      return;
-    }
-   
-    if (this.edicao) {
-      this.usuarioService.editarUsuario(this.usuario)
-        .subscribe(usuario => {
-          alert('Usuário Editado');
-          this.fecharDialog(usuario);
-        }, (erro: HttpErrorResponse) => {
-          alert(erro.error.message);
-        });
-    } else {
-      this.usuarioService.criarUsuario(this.usuario)
-        .subscribe(usuario => {
-          alert('Usuário Salvo');
-          this.fecharDialog(usuario);
-        }, (erro: HttpErrorResponse) => {
-          alert(erro.error.message);
-        });
-      }
-    }
-
+  
   fecharDialog(usuarioSalvo: Usuario) {
     this.usuarioSalvo.emit(usuarioSalvo);
     }
+
+  editar(){
+    this.usuarioEditado.emit(this.usuario);
+    this.addSingle("success", "Usuário editado com sucesso", "");
+    
+  }
+  addSingle(error,sumary, detalhes) {
+    this.messageService.add({severity:error, summary:sumary, detail:detalhes});
+  }
   }

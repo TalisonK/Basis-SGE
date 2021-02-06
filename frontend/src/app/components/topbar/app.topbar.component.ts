@@ -27,4 +27,8 @@ export class AppTopbarComponent {
         this.sairEvento.emit(null);
         this.router.navigate(["/"]);
     }
+
+    editarPerfil(){
+        this.router.navigate(["/usuarios/editar"])
+    }
 }

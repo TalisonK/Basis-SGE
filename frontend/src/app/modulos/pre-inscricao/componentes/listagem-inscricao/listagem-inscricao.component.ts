@@ -1,9 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MessageService } from 'primeng/api';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { InscricaoListagem } from 'src/app/dominios/InscricaoListagem';
 import { PreInscricao } from 'src/app/dominios/PreInscricao';
+import { Usuario } from 'src/app/dominios/usuario';
 import { PerguntaResposta } from '../../dto/Conjunto';
 import { InscricaoService } from '../../services/inscricao-service.service';
+
 
 @Component({
   selector: 'app-listagem-inscricao',
@@ -12,7 +15,10 @@ import { InscricaoService } from '../../services/inscricao-service.service';
 })
 export class ListagemInscricaoComponent implements OnInit {
 
+  exibirDialog = false;
   condicaoAdmin = false;
+      
+  @Output() inscricaoCancelada = new EventEmitter<PreInscricao>();
 
   id:number = 0;
 
@@ -28,7 +34,8 @@ export class ListagemInscricaoComponent implements OnInit {
 
   constructor(
     private service:InscricaoService,
-    private messageService:MessageService
+    private messageService:MessageService,
+    private confirmationService: ConfirmationService
     ) { }
 
   ngOnInit(): void {
@@ -43,6 +50,25 @@ export class ListagemInscricaoComponent implements OnInit {
     this.service.getInscricao().subscribe((inscricoes: InscricaoListagem[]) =>{
       this.inscricoes = inscricoes;
     });
+  }
+
+  dialogCancelarInscricao(id: number) {
+    this.confirmationService.confirm({
+      message: 'Dejesa cancelar a sua inscrição no evento? ',
+      accept: () => {
+        this.cancelarInscricao(id);
+      }
+    });
+  }
+
+  cancelarInscricao(id: number) {
+    this.service.cancelarInscricao(id)
+    .subscribe(() => {
+      this.addSingle("success", "Mensagem de Serviço", "Inscricao Cancelada");
+      this.inscricaoCancelada.emit(this.inscricao);
+    },
+    err => this.addSingle("error","Mensagem de Serviço",err));
+    this.service.getInscricaoPorIdUsuario(id).subscribe(inscricoes => {this.inscricoes = inscricoes});
   }
 
   aprovarInscricao(id: number){
