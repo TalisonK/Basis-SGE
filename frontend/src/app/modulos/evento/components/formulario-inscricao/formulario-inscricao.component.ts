@@ -47,7 +47,7 @@ export class FormularioInscricaoComponent implements OnInit {
     )
 
     this.inscricao.idEvento = this.evento.id;
-    this.inscricao.idUsuario = 1;
+    this.inscricao.idUsuario = JSON.parse(localStorage.getItem("usuario")).id;
     this.inscricao.idSituacao = 1;
   }
 
@@ -56,7 +56,7 @@ export class FormularioInscricaoComponent implements OnInit {
     for(let j in respostas){
       let index:number = Number.parseInt(j.slice(1))-1;
       if(respostas[j].resposta == "" && this.perguntas[index].obrigatoriedade){
-        this.addSingle("error","necessita de uma resposta", "pergunta "+ index + 1);
+        this.addSingle("error","Pergunta Obrigatória", "Responda todas perguntas obrigatórias!");
         return;
       }
     }
@@ -72,26 +72,28 @@ export class FormularioInscricaoComponent implements OnInit {
   }
 
   enviarRespostas(id){
-
     for(let i in this.respostas){
       this.respostas[i].idInscricao = id;
       this.servico.salvarResposta(this.respostas[i])
       .subscribe(() => {
-        console.log(this.respostas[i]);
       })
     }
   }
 
   enviarInscricao(){
-   
 
     let cond = true;
+
+    if(this.evento.quantVagas == 0){
+      this.addSingle("error", "Mensagem do servidor", "Vagas insuficientes");
+      this.closeDialog();
+      return;
+    }
 
     let quantObrigatorias = 0;
     this.perguntas.forEach((pergunta) => {
       pergunta.obrigatoriedade?quantObrigatorias++:null;
     })
-
 
     if(quantObrigatorias > 0) {
       this.perguntas.forEach((pergunta) => {
@@ -101,15 +103,12 @@ export class FormularioInscricaoComponent implements OnInit {
             return;
           }
         }
-        console.log("passou")
         if(pergunta.obrigatoriedade) cond = false;
       })
     }
     
     if(cond){
-      console.log("condPassou")
-      this.servico.criarInscricao(this.inscricao)
-      .subscribe((inscricao) => {
+      this.servico.criarInscricao(this.inscricao).subscribe((inscricao) => {
         this.inscricao = inscricao
         this.enviarRespostas(this.inscricao.id);
         this.closeDialog();
@@ -117,7 +116,6 @@ export class FormularioInscricaoComponent implements OnInit {
       }, (erro: HttpErrorResponse) => {
         this.addSingle("error", erro.error.message, "");
       });
-      
     }
     else{
       this.addSingle("error", "Responda todas as questões obrigatórias!", "");

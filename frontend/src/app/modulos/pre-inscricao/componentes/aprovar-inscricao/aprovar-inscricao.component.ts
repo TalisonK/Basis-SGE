@@ -27,11 +27,9 @@ export class AprovarInscricaoComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.id)
     this.inscricaoService.getInscricaoPorId(this.id).subscribe(inscricao => {
       this.inscricaoService.getRespostas(inscricao).subscribe( conjuntos => {
         this.conjuntos = conjuntos;
-        console.log(conjuntos)
       })
     })
     

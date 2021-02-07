@@ -1,9 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, Input, OnInit, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter } from '@angular/core';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { InscricaoListagem } from 'src/app/dominios/InscricaoListagem';
 import { PreInscricao } from 'src/app/dominios/PreInscricao';
-import { Usuario } from 'src/app/dominios/usuario';
+import { EventoService } from 'src/app/modulos/evento/services/evento-service.service';
 import { PerguntaResposta } from '../../dto/Conjunto';
 import { InscricaoService } from '../../services/inscricao-service.service';
 
@@ -35,13 +34,13 @@ export class ListagemInscricaoComponent implements OnInit {
   constructor(
     private service:InscricaoService,
     private messageService:MessageService,
+    private eventoService:EventoService,
     private confirmationService: ConfirmationService
     ) { }
 
   ngOnInit(): void {
 
     this.condicaoAdmin = JSON.parse(localStorage.getItem("usuario")).id == 1 ? true : false;
-    console.log(JSON.parse(localStorage.getItem("usuario")))
 
     this.buscarUsuarioInscricoes();      
   }
@@ -54,7 +53,7 @@ export class ListagemInscricaoComponent implements OnInit {
 
   dialogCancelarInscricao(id: number) {
     this.confirmationService.confirm({
-      message: 'Dejesa cancelar a sua inscrição no evento? ',
+      message: 'Deseja cancelar a sua inscrição no evento? ',
       accept: () => {
         this.cancelarInscricao(id);
       }
@@ -62,21 +61,41 @@ export class ListagemInscricaoComponent implements OnInit {
   }
 
   cancelarInscricao(id: number) {
-    this.service.cancelarInscricao(id)
-    .subscribe(() => {
-      this.addSingle("success", "Mensagem de Serviço", "Inscricao Cancelada");
-      this.inscricaoCancelada.emit(this.inscricao);
+
+    this.service.getInscricaoPorId(id).subscribe(inscricao => {
+
+      this.eventoService.obterEventoPorId(inscricao.idEvento).subscribe(evento => {
+        if(evento.quantVagas != null && inscricao.idSituacao == 2){
+          evento.quantVagas++;
+          this.eventoService.editarEvento(evento).subscribe();
+        }
+        inscricao.idSituacao = 4;
+
+        this.service.editarInscricao(inscricao).subscribe(() => {
+          this.addSingle("success", "Inscrição cancelada com sucesso!", "")
+        });
+      })
     },
-    err => this.addSingle("error","Mensagem de Serviço",err));
-    this.service.getInscricaoPorIdUsuario(id).subscribe(inscricoes => {this.inscricoes = inscricoes});
+    err => this.addSingle("error","Mensagem de Serviço",err.message));
+    this.service.getInscricaoPorIdUsuario(id).subscribe(inscricoes => {this.inscricoes = inscricoes});    
   }
 
   aprovarInscricao(id: number){
-    console.log(id)
     this.service.getInscricaoPorId(id)
     .subscribe((inscricao: PreInscricao) =>{
-      inscricao.idSituacao = 2;
-      this.aprovarInscricaoEditar(inscricao);
+      if(inscricao.idSituacao == 1){
+        inscricao.idSituacao = 2;
+        this.aprovarInscricaoEditar(inscricao);
+        this.eventoService.obterEventoPorId(inscricao.idEvento).subscribe(evento => {
+          if(evento.quantVagas > 0){
+            evento.quantVagas--;
+            this.eventoService.editarEvento(evento).subscribe(() => {})
+          }
+        })
+      }
+      else{
+        this.addSingle("error", "Impossivel modificar inscrições após aprovadas ou recusadas", "");
+      }  
     })
   }
 
@@ -95,11 +114,17 @@ export class ListagemInscricaoComponent implements OnInit {
   reprovarInscricao(id){
     this.service.getInscricaoPorId(id).subscribe(
       (inscricao) => {
-        inscricao.idSituacao = 3;
-        this.service.editarInscricao(inscricao).subscribe(() => {
-          this.addSingle("warn", "Inscrição reprovada","");
-          this.buscarUsuarioInscricoes()
-        })
+        if(inscricao.idSituacao == 1){
+          inscricao.idSituacao = 3;
+          this.service.editarInscricao(inscricao).subscribe(() => {
+            this.addSingle("warn", "Inscrição reprovada","");
+            this.buscarUsuarioInscricoes()
+          })
+        }
+        else{
+          this.addSingle("error", "Impossivel modificar inscrições após aprovadas ou recusadas", "");
+        }
+        
       }
     )
   }

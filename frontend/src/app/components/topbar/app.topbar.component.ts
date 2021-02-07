@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AppComponent } from '../../app.component';
-import { Authentication, User } from '@nuvem/angular-base';
 import { Router } from '@angular/router';
-import { Usuario } from 'src/app/dominios/usuario';
 
 @Component({
     selector: 'app-topbar',

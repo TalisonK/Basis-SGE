@@ -39,7 +39,6 @@ export class ListagemComponent implements OnInit {
     }
 
     fecharDialog(usuarioSalvo: Usuario){
-      console.log(usuarioSalvo);
       this.exibirDialog = false;
       this.buscarUsuarios();
     }
@@ -60,7 +59,7 @@ export class ListagemComponent implements OnInit {
           this.addSingle("success", "Usuário deletado", "");
           this.buscarUsuarios();
        },
-       err => alert(err));
+       err => {this.addSingle("error","Usuário não pode ser deletado","Proibido excluir usuários inscritos em eventos")});
   }
 
   addSingle(error,sumary, detalhes) {
