@@ -79,9 +79,7 @@ export class ListagemInscricaoComponent implements OnInit {
         this.eventoService.obterEventoPorId(inscricao.idEvento).subscribe(evento => {
           if(evento.quantVagas > 0){
             evento.quantVagas--;
-
-            this.eventoService.editarEvento(evento).subscribe(() => {
-            })
+            this.eventoService.editarEvento(evento).subscribe(() => {})
           }
         })
       }
