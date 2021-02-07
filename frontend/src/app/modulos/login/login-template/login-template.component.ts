@@ -73,6 +73,7 @@ export class LoginTemplateComponent implements OnInit {
 
     this.servico.criarUsuario(this.usuario).subscribe((usuario) => {
       this.cadastroEventoff();
+      this.addSingle("success", "Cadastro concluido", "Cadastrado com sucesso");
     }, 
     err => {
       if(err.error.errors){

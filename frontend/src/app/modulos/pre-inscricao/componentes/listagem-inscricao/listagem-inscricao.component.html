@@ -3,7 +3,7 @@
     <p>Use os filtros e encontre os melhores Eventos para você.</p>
     <p-table #dt1 [value]="inscricoes" dataKey="id"
         [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
-        [paginator]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} eventos"
+        [paginator]="true" currentPageReportTemplate="Exibindo {first} a {last} de {totalRecords} eventos"
         [globalFilterFields]="['evento']">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">

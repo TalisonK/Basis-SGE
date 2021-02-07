@@ -75,8 +75,8 @@ public class EventoServico {
         validaIdEvento(eventoDTO.getId());
 
         Evento evento = eventoMapper.toEntity(eventoDTO);
-        Evento eventoAtualizado = eventoRepositorio.save(evento);
         notificarInscritos(evento.getTitulo(),evento.getId(),0);
+        Evento eventoAtualizado = eventoRepositorio.save(evento);
         return eventoMapper.toDto(eventoAtualizado);
     }
 
