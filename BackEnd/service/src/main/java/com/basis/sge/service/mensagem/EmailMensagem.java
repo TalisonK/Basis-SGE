@@ -16,7 +16,7 @@ public class EmailMensagem {
                 "   </td>\n" +
                 "  </tr>\n" +
                 "  <tr>\n" +
-                "     <td align=\"center\" style=\"padding: 10px 0 10px 0; font-size: 22px\" />\n" +
+                "     <td align=\"center\" style=\"padding: 10px 0 10px 0; font-size: 22px\">\n" +
                 "\tOlá "+nome+"! É um prazer tê-lo(a) conosco. A sua CHAVE de acesso é "+chave+"\n" +
                 "     </td>\n" +
                 "   </tr>\n" +
@@ -44,7 +44,7 @@ public class EmailMensagem {
                 "   </td>\n" +
                 "  </tr>\n" +
                 "  <tr>\n" +
-                "     <td align=\"center\" style=\"padding: 10px 0 10px 0; font-size: 22px\"/>\n" +
+                "     <td align=\"center\" style=\"padding: 10px 0 10px 0; font-size: 22px\">\n" +
                 "\tOlá "+nome+"!\n" +
                 "     </td>\n" +
                 "   </tr>\n" +
@@ -72,7 +72,7 @@ public class EmailMensagem {
                 "   </td>\n" +
                 "  </tr>\n" +
                 "  <tr>\n" +
-                "     <td align=\"center\" style=\"padding: 10px 0 10px 0; font-size: 22px\"/>\n" +
+                "     <td align=\"center\" style=\"padding: 10px 0 10px 0; font-size: 22px\">\n" +
                 "\tOlá "+nome+"!\n" +
                 "     </td>\n" +
                 "   </tr>\n" +

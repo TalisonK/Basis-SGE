@@ -31,6 +31,9 @@ public class PerguntaServico {
     }
 
     public PerguntaDTO criar(PerguntaDTO novaPergunta) {
+        if(perguntaRepositorio.existsByTituloAndObrigatoriedade(novaPergunta.getTitulo(),novaPergunta.getObrigatoriedade())){
+            throw new RegraNegocioException("Pergunta já cadastrada!");
+        }
         validaTitulo(novaPergunta.getTitulo());
         validaObrigatoriedade(novaPergunta.getObrigatoriedade());
         Pergunta pergunta = perguntaMapper.toEntity(novaPergunta);
