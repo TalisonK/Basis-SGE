@@ -54,39 +54,77 @@ export class LoginTemplateComponent implements OnInit {
     this.login.cpf = this.login.cpf.replace(".", "").replace(".", "").replace("-", "");
   }
 
-  getUserFromLocalStorage(){
-    const usuario = JSON.parse(window.localStorage.getItem("usuario"));
-    this.UsuarioEvent.emit(usuario);
-  } 
   makeLogin(){
-
+    if(this.validaDadosLogin()){return}
     this.servico.findUserByCpfAndChave(this.login).subscribe((usuario: Usuario) =>{
       localStorage.setItem("usuario",JSON.stringify(usuario));
+      this.addSingle("success", "login efetuado com sucesso!","")
       this.UsuarioEvent.emit(usuario);      
+    }, err => {
+      this.addSingle("error", "Dados inválidos", "")
     })
   }
 
   enviarCadastro(){
+    if(this.validaDadoCadastro()) return;
 
     this.usuario.cpf = this.usuario.cpf.replace(".", "").replace(".", "").replace("-", "");
-
     this.usuario.telefone = this.usuario.telefone.replace("(", "").replace(")", "").replace(" ", "").replace("-", "");
 
     this.servico.criarUsuario(this.usuario).subscribe((usuario) => {
-      console.log(usuario);
       this.cadastroEventoff();
+    }, 
+    err => {
+      if(err.error.errors){
+        err.error.errors.forEach(element => {
+          this.addSingle("error", element.message, "")
+        });
+      }
+      else{
+        this.addSingle("error", err.error.message, "")
+      }
     })
-
-    
   }
 
-  addSingle(sumary:string, detalhes: string, corpo: string) {
-    this.messageService.add({severity:sumary, summary:detalhes, detail:corpo});
+  validaDadosLogin(){
+    if(this.login.cpf == ""){
+      this.addSingle("error", "Insira um CPF válido","");
+      return true;
+    }
+    if(this.login.chave == ""){
+      this.addSingle("error", "Insira uma chave válida","");
+      return true;
+    }
   }
 
-  validacoes(){
+  validaDadoCadastro(){
+    if(!this.usuario.nome){
+      this.addSingle("error", "Insira um nome", "");
+      return true;
+    }
 
-    
+    if(!this.usuario.cpf){
+      this.addSingle("error", "Insira um cpf válido", "");
+      return true;
+    }
 
+    if(!this.usuario.email){
+      this.addSingle("error", "Insira um email válido", "");
+      return true;
+    }
+
+    if(!this.usuario.telefone){
+      this.addSingle("error", "Insira um telefone válido", "");
+      return true;
+    }
+
+    if(!this.usuario.dataNascimento){
+      this.addSingle("error", "Insira uma data de nascimento válida", "");
+      return true;
+    }
+  }
+
+  addSingle(error, summary, detail) {
+    this.messageService.add({severity:error, summary:summary, detail:detail});
   }
 }

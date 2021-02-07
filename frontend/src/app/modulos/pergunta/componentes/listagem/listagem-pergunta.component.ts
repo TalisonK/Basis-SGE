@@ -63,7 +63,6 @@ export class ListagemComponent implements OnInit {
   }
 
   fecharDialog(perguntaSalva: Pergunta) {
-    console.log(perguntaSalva);
     this.exibirDialog = false; 
     this.buscarPergunta();
   }

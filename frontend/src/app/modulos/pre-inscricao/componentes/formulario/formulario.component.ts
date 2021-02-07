@@ -1,15 +1,15 @@
-	import { HttpErrorResponse } from '@angular/common/http';
-	import { Component, Input, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-	import { PreInscricao } from 'src/app/dominios/PreInscricao';
-	import { InscricaoService } from '../../services/inscricao-service.service';
+import { PreInscricao } from 'src/app/dominios/PreInscricao';
+import { InscricaoService } from '../../services/inscricao-service.service';
 
-	@Component({
-	selector: 'app-formulario-inscricao',
-	templateUrl: './formulario.component.html',
-	styleUrls: ['./formulario.component.css']
-	})
-	export class FormularioComponent implements OnInit {
+@Component({
+selector: 'app-formulario-inscricao',
+templateUrl: './formulario.component.html',
+styleUrls: ['./formulario.component.css']
+})
+export class FormularioComponent implements OnInit {
 
 	@Input() edicao = false;
 	@Input() inscricao = new PreInscricao();
@@ -24,7 +24,6 @@ import { ActivatedRoute } from '@angular/router';
 	}
 
 	ngOnInit(): void {
-		console.log(this.inscricao);
 
 		this.route.params.subscribe(params => {
 			if (params.id){

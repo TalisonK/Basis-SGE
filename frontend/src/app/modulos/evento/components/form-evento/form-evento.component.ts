@@ -142,7 +142,6 @@ export class FormEventoComponent implements OnInit {
       this.listaEventoPergunta.push(eventoPergunta);
     });
     this.evento.perguntas=this.listaEventoPergunta;
-    console.log(this.evento.perguntas)
     this.listaEventoPergunta = []
   }
 

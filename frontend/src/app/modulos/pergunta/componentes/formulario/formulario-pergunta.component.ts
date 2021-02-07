@@ -57,7 +57,6 @@ export class FormularioComponent implements OnInit {
         });
     } else {
       this.perguntaService.criarPergunta(this.pergunta).subscribe(pergunta => {
-        console.log(this.pergunta)  
         this.addSingleSuccess("Pergunta Salva!",'success')
         this.fecharDialog(this.pergunta)
         }, (erro: HttpErrorResponse) => {

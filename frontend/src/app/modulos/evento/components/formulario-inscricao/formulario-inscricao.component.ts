@@ -68,23 +68,19 @@ export class FormularioInscricaoComponent implements OnInit {
       resposta.idEvento = this.evento.id;
       resposta.resposta = respostas[i].resposta;
       this.respostas[index] = resposta;
-      console.log(this.respostas);
     }
   }
 
   enviarRespostas(id){
-
     for(let i in this.respostas){
       this.respostas[i].idInscricao = id;
       this.servico.salvarResposta(this.respostas[i])
       .subscribe(() => {
-        console.log(this.respostas[i]);
       })
     }
   }
 
   enviarInscricao(){
-    console.log("inscricao");
 
     let cond = true;
 
@@ -92,8 +88,6 @@ export class FormularioInscricaoComponent implements OnInit {
     this.perguntas.forEach((pergunta) => {
       pergunta.obrigatoriedade?quantObrigatorias++:null;
     })
-
-    console.log("quant Obrigatorias: " + quantObrigatorias);
 
     if(quantObrigatorias > 0) {
       this.perguntas.forEach((pergunta) => {
@@ -103,15 +97,14 @@ export class FormularioInscricaoComponent implements OnInit {
             return;
           }
         }
-        console.log("passou")
         if(pergunta.obrigatoriedade) cond = false;
       })
     }
     
     if(cond){
-      console.log("condPassou")
-      this.servico.criarInscricao(this.inscricao)
-      .subscribe((inscricao) => {
+      this.inscricao.idUsuario = JSON.parse(localStorage.getItem("usuario")).id;
+
+      this.servico.criarInscricao(this.inscricao).subscribe((inscricao) => {
         this.inscricao = inscricao
         this.enviarRespostas(this.inscricao.id);
         this.closeDialog();

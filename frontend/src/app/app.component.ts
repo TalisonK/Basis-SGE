@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, OnInit, NgZone } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, OnInit, NgZone, Output, EventEmitter } from '@angular/core';
 import { ScrollPanel } from 'primeng';
 import { MenusService, MenuOrientation } from '@nuvem/primeng-components';
 import { Usuario } from './dominios/usuario';
@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
     templateUrl: './app.component.html'
 })
 export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
+
+    @Output() usuarioLogadoEvent = new EventEmitter();
 
     usuarioLogado: boolean = false;
 
@@ -288,13 +290,12 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
     }
 
     logar(usuario){
+        
         this.usuario = usuario;
         this.usuarioLogado = true;
         let id = JSON.parse(localStorage.getItem("usuario")).id;
-
-        console.log(id);
+        this.usuarioLogadoEvent.emit(usuario);
         if(id == 1){
-            console.log("if")
             this.menuService.itens = [
                 { label: 'Perguntas', icon: 'help', routerLink: ['/pergunta'] },
                 { label: 'Eventos', icon: 'event', routerLink: ['/eventos'] },
@@ -303,7 +304,6 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
             ];
         }
         else{
-            console.log("else")
             this.menuService.itens = [
                 { label: 'Eventos', icon: 'event', routerLink: ['/eventos'] },
                 { label: 'Inscrição', icon: 'loupe', routerLink: ['/inscricao'] }

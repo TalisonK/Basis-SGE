@@ -105,7 +105,6 @@ export class ListaEventoComponent implements OnInit {
   }
 
   fecharDialog(eventoSalvo: Evento) {
-    console.log(eventoSalvo);
     this.exibirDialog = false; 
     this.buscarEventos();
   }
