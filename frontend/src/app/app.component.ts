@@ -62,7 +62,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ngOnInit() {
         this.zone.runOutsideAngular(() => { this.bindRipple(); });
-        this.router.navigate(["/eventos"])
+        this.router.navigate(["/eventos"]);
     }
 
     bindRipple() {
@@ -291,11 +291,13 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     logar(usuario){
         
+        this.router.navigate["/eventos"];
         this.usuario = usuario;
         this.usuarioLogado = true;
-        let id = JSON.parse(localStorage.getItem("usuario")).id;
+        let localUsuario = JSON.parse(localStorage.getItem("usuario"));
+        this.usuario = localUsuario;
         this.usuarioLogadoEvent.emit(usuario);
-        if(id == 1){
+        if(localUsuario.id == 1){
             this.menuService.itens = [
                 { label: 'Perguntas', icon: 'help', routerLink: ['/pergunta'] },
                 { label: 'Eventos', icon: 'event', routerLink: ['/eventos'] },

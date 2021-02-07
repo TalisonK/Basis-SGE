@@ -45,8 +45,4 @@ export class InscricaoService {
   getRespostas(inscricao: PreInscricao): Observable<PerguntaResposta[]>{
     return this.http.post<PerguntaResposta[]>(`${this.url}/inscricao/respostas`, inscricao);
   }
-
-  cancelarInscricao(id: number): Observable<any>{
-    return this.http.delete(`${this.url}/inscricao/${id}`)
-  }
 }

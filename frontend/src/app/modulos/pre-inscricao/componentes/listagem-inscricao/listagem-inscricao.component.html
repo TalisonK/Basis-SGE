@@ -4,7 +4,7 @@
     <p-table #dt1 [value]="inscricoes" dataKey="id"
         [rows]="5" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
         [paginator]="true" currentPageReportTemplate="Exibindo {first} a {last} de {totalRecords} eventos"
-        [globalFilterFields]="['evento']">
+        [globalFilterFields]="['usuario','evento']">
         <ng-template pTemplate="caption">
             <div class="p-d-flex">
                 <span class="p-input-icon-left p-ml-auto">
@@ -51,8 +51,8 @@
             <tr>
                 <td>{{inscricao.usuario}}</td>
                 <td>{{inscricao.evento}}</td>
-                <td>{{inscricao.dataInicio}}</td>
-                <td>{{inscricao.dataFim}}</td>
+                <td>{{inscricao.dataInicio  | date:  'dd/MM/yyyy - hh:mm'}}</td>
+                <td>{{inscricao.dataFim  | date:  'dd/MM/yyyy - hh:mm'}}</td>
                 <td>{{inscricao.situacao}}</td>
                 <div>
                 <td style="display: flex;flex-direction: row; justify-content: center;" *ngIf="condicaoAdmin">
