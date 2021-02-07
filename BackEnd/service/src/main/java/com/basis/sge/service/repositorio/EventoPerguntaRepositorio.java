@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EventoPerguntaRepositorio extends JpaRepository<EventoPergunta, IdEventoPergunta> {
 
-    List<EventoPergunta> findAllByEvento(Evento evento);
+    List<EventoPergunta> findAllByEventoId(Integer id);
 
 }

@@ -16,4 +16,5 @@ public interface InscricaoRepositorio extends JpaRepository<PreInscricao, Intege
     List<PreInscricao> findAllByUsuarioId(Integer id);
 
     void deleteByUsuario(Usuario usuario);
+
 }
