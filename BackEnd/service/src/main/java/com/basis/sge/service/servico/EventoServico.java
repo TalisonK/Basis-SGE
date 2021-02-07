@@ -1,16 +1,15 @@
 package com.basis.sge.service.servico;
 
-import com.basis.sge.service.dominio.Evento;
-import com.basis.sge.service.dominio.EventoPergunta;
-import com.basis.sge.service.dominio.PreInscricao;
-import com.basis.sge.service.dominio.Usuario;
+import com.basis.sge.service.dominio.*;
 import com.basis.sge.service.mensagem.EmailMensagem;
 import com.basis.sge.service.repositorio.*;
 import com.basis.sge.service.servico.dto.EventoDTO;
 import com.basis.sge.service.servico.dto.EventoListagemDTO;
+import com.basis.sge.service.servico.dto.PerguntaDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.EventoListagemMapper;
 import com.basis.sge.service.servico.mapper.EventoMapper;
+import com.basis.sge.service.servico.mapper.PerguntaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -29,6 +28,8 @@ public class EventoServico {
 
     private final TipoEventoRepositorio tipoEventoRepositorio;
 
+    private final PerguntaMapper perguntaMapper;
+
     private final EventoMapper eventoMapper;
 
     private final InscricaoRepositorio inscricaoRepositorio;
@@ -37,9 +38,17 @@ public class EventoServico {
 
     private final EventoListagemMapper eventoListagemMapper;
 
+    public List<PerguntaDTO> listarPerguntaEvento(Integer id){
+        List<PerguntaDTO> perguntas = new ArrayList<PerguntaDTO>();
+        List<EventoPergunta> eventoPerguntaList= eventoPerguntaRepositorio.findAllByEventoId(id);
+        eventoPerguntaList.forEach((eventoPergunta) -> {
+            perguntas.add(perguntaMapper.toDto(eventoPergunta.getPergunta()));
+        });
+        return perguntas;
+    }
+
     public List<EventoListagemDTO> listar() {
         List<Evento> listaEvento = eventoRepositorio.findAll();
-
         return eventoListagemMapper.toDto(listaEvento);
     }
 
@@ -83,16 +92,20 @@ public class EventoServico {
     public void deletar(Integer id) {
         validaIdEvento(id);
         Evento evento = eventoRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Evento não existe"));
-        eventoRepositorio.deleteById(id);
+        List<PreInscricao> inscricao = inscricaoRepositorio.findAllByEvento(evento);
+        if(!inscricao.isEmpty()){
+            throw new RegraNegocioException("Este evento possui inscrições");
+        }
         notificarInscritos(evento.getTitulo(),id,1);
+        eventoRepositorio.deleteById(id);
     }
 
     //---------------------------------------------------------------------
     //funções de validação e notificação
     //Tipo 0 evento editado e tipo 1 evento cancelado
     public void notificarInscritos(String titulo,Integer id,Integer tipo) {
-
-        List<PreInscricao> inscricoes = inscricaoRepositorio.findAllByEventoId(id);
+        Evento evento = eventoRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Evento não existe"));
+        List<PreInscricao> inscricoes = inscricaoRepositorio.findAllByEvento(evento);
         List<String> destinatarios = new ArrayList();
         inscricoes.forEach((inscricao) -> {
             Usuario usuarioInscrito = inscricao.getUsuario();
@@ -101,13 +114,10 @@ public class EventoServico {
         EmailMensagem emailMensagem = new EmailMensagem();
         if(tipo==0) {
             emailServico.rabbitSendMail("kenouen1@gmail.com",
-                    emailMensagem.messageEventoEditado("Inscrito", titulo),
-                    "Evento Atualizado", destinatarios);
-
+                    "Evento Atualizado",emailMensagem.messageEventoEditado("Inscrito(a)", titulo), destinatarios);
         }else if(tipo==1) {
             emailServico.rabbitSendMail("kenouen1@gmail.com",
-                    emailMensagem.messageEventoCancelado("Inscrito", titulo),
-                    "Evento Atualizado", destinatarios);
+                    "Evento Atualizado",emailMensagem.messageEventoCancelado("Inscrito(a)", titulo), destinatarios);
         }
     }
     // valida dados de evento, com exceção das datas

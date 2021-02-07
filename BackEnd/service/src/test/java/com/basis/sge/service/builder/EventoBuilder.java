@@ -1,6 +1,7 @@
 package com.basis.sge.service.builder;
 
 import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.EventoPergunta;
 import com.basis.sge.service.dominio.TipoEvento;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.servico.EventoServico;
@@ -40,7 +41,8 @@ public class EventoBuilder extends ConstrutorDeEntidade<Evento> {
         TipoEvento tipoEvento = new TipoEvento();
         tipoEvento.setId(1);
         evento.setTipoEvento(tipoEvento);
-        evento.setPerguntas(new ArrayList<>());
+        List<EventoPergunta> eventoPerguntas = new ArrayList<EventoPergunta>();
+        evento.setPerguntas(eventoPerguntas);
 
         return evento;
     }

@@ -3,6 +3,7 @@ package com.basis.sge.service.recurso;
 import com.basis.sge.service.servico.EventoServico;
 import com.basis.sge.service.servico.dto.EventoDTO;
 import com.basis.sge.service.servico.dto.EventoListagemDTO;
+import com.basis.sge.service.servico.dto.PerguntaDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -26,6 +27,11 @@ public class EventoRecurso {
     private final EventoServico eventoServico;
 
 
+    @GetMapping("/{id}/perguntas")
+    public ResponseEntity<List<PerguntaDTO>> listarPerguntasEvento(@PathVariable Integer id){
+        return ResponseEntity.ok(eventoServico.listarPerguntaEvento(id));
+    }
+
     @GetMapping
     public ResponseEntity<List<EventoListagemDTO>> listar() {
         return ResponseEntity.ok(eventoServico.listar());
@@ -41,7 +47,7 @@ public class EventoRecurso {
     @PostMapping
     public ResponseEntity<EventoDTO> criar(@RequestBody @Valid EventoDTO eventodto) {
         EventoDTO eventoDtoCriado = eventoServico.criar(eventodto);
-        return ResponseEntity.created(URI.create("/api/evento")).body(eventoDtoCriado);
+        return ResponseEntity.created(URI.create("/api/eventos")).body(eventoDtoCriado);
     }
 
     @PutMapping

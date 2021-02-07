@@ -55,6 +55,6 @@ public class Evento implements Serializable {
     @JoinColumn(name="id_tipo_evento",referencedColumnName = "id")
     private TipoEvento tipoEvento;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "evento")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL,orphanRemoval = true,  mappedBy = "evento")
     private List<EventoPergunta> perguntas;
 }

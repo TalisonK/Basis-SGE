@@ -71,7 +71,6 @@ class EventoRecursoTest extends IntTestComum{
 
         Evento evento = eventoBuilder.construir();
         evento.setTitulo("Atualizado");
-
         getMockMvc().perform(put("/api/eventos")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(eventoMapper.toDto(evento))))
