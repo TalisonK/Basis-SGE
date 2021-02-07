@@ -28,6 +28,7 @@ export class LoginTemplateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    if(localStorage.getItem("usuario")){this.UsuarioEvent.emit(null);}
   }
 
   makeLogout(){
@@ -57,7 +58,8 @@ export class LoginTemplateComponent implements OnInit {
   makeLogin(){
     if(this.validaDadosLogin()){return}
     this.servico.findUserByCpfAndChave(this.login).subscribe((usuario: Usuario) =>{
-      localStorage.setItem("usuario",JSON.stringify(usuario));
+
+      if(!localStorage.getItem("usuario"))localStorage.setItem("usuario",JSON.stringify(usuario));
       this.addSingle("success", "login efetuado com sucesso!","")
       this.UsuarioEvent.emit(usuario);      
     }, err => {

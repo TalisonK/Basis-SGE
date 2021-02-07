@@ -61,13 +61,23 @@ export class ListagemInscricaoComponent implements OnInit {
   }
 
   cancelarInscricao(id: number) {
-    this.service.cancelarInscricao(id)
-    .subscribe(() => {
-      this.addSingle("success", "Mensagem de Serviço", "Inscricao Cancelada");
-      this.inscricaoCancelada.emit(this.inscricao);
+
+    this.service.getInscricaoPorId(id).subscribe(inscricao => {
+
+      this.eventoService.obterEventoPorId(inscricao.idEvento).subscribe(evento => {
+        if(evento.quantVagas != null && inscricao.idSituacao == 2){
+          evento.quantVagas++;
+          this.eventoService.editarEvento(evento).subscribe();
+        }
+        inscricao.idSituacao = 4;
+
+        this.service.editarInscricao(inscricao).subscribe(() => {
+          this.addSingle("success", "Inscrição cancelada com sucesso!", "")
+        });
+      })
     },
-    err => this.addSingle("error","Mensagem de Serviço",err));
-    this.service.getInscricaoPorIdUsuario(id).subscribe(inscricoes => {this.inscricoes = inscricoes});
+    err => this.addSingle("error","Mensagem de Serviço",err.message));
+    this.service.getInscricaoPorIdUsuario(id).subscribe(inscricoes => {this.inscricoes = inscricoes});    
   }
 
   aprovarInscricao(id: number){
