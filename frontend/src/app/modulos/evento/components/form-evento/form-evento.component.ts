@@ -9,6 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
 import { Pergunta } from 'src/app/dominios/pergunta';
 import { MessageService } from 'primeng/api';
+import * as moment from 'moment';
 
 
 @Component({
@@ -128,6 +129,10 @@ export class FormEventoComponent implements OnInit {
 
   validarDatas(): boolean{
     if(!(this.evento.dataInicio<this.evento.dataFim)){
+      this.addSingleSuccess("Duração Invalida",'info')
+      return false;
+    }
+    if(!(moment(this.evento.dataInicio).isAfter(moment()))){
       this.addSingleSuccess("Duração Invalida",'info')
       return false;
     }

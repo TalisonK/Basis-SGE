@@ -16,11 +16,9 @@ import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.InscricaoListagemMapper;
 import com.basis.sge.service.servico.mapper.InscricaoMapper;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import com.basis.sge.service.servico.mapper.InscricaoRespostaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,17 +29,16 @@ import javax.transaction.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class PreInscricaoServico {
+
     private final InscricaoRepositorio incrRepo;
     private final EventoRepositorio eventoRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
     private final InscricaoRespostaServico irServico;
     private final TipoSituacaoRepositorio tipoSituacaoRepositorio;
-
     private final InscricaoMapper inscricaoMapper;
     private final InscricaoRespostaMapper inscricaoRespostaMapper;
     private final InscricaoListagemMapper inscricaoListagemMapper;
     private final InscricaoRespostaRepositorio inscricaoRespostaRepositorio;
-
     private final EmailServico emailServico;
 
 
@@ -83,12 +80,13 @@ public class PreInscricaoServico {
             }
         });
 
-        incrRepo.save(preInscricao);
         EmailMensagem emailMensagem = new EmailMensagem();
         emailServico.rabbitSendMail(usuario.getEmail(),
-                    "Inscrição efetuado com sucesso",
-                     emailMensagem.messageInscricaoAceita(usuario.getNome(),evento.getTitulo()),
-                            new ArrayList<>());
+                "Inscrição efetuado com sucesso",
+                emailMensagem.messageInscricaoAceita(usuario.getNome(),evento.getTitulo()),
+                new ArrayList<>());
+        incrRepo.save(preInscricao);
+
 
         return inscricaoMapper.toDto(preInscricao);
     }
@@ -115,7 +113,7 @@ public class PreInscricaoServico {
             EmailMensagem emailMensagem = new EmailMensagem();
             emailServico.rabbitSendMail(inscricao.getUsuario().getEmail(),
                     "Inscrição removida com sucesso",
-                    emailMensagem.messageInscricaoAceita(usuario.getNome(),evento.getTitulo()),
+                    emailMensagem.messageInscricaoRejeitado(usuario.getNome(),evento.getTitulo()),
                     new ArrayList<>());
         }
         catch (Exception e){
