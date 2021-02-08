@@ -2,6 +2,7 @@ package com.basis.sge.service.servico;
 
 import com.basis.sge.service.configuracao.ApplicationProperties;
 import com.basis.sge.service.servico.dto.EmailDTO;
+import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.producer.SgeProducer;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +43,7 @@ public class EmailServico {
             message.setText(emailDTO.getCorpo(), true);
             javaMailSender.send(mimeMessage);
         } catch (MessagingException | UnsupportedEncodingException e) {
-            throw new RuntimeException(ERROR_TITLE);
+            throw new RegraNegocioException(ERROR_TITLE);
         }
     }
 

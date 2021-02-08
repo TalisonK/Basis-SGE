@@ -5,7 +5,7 @@ import com.basis.sge.service.servico.dto.EventoListagemDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring",uses = {})
+@Mapper(componentModel = "spring")
 public interface EventoListagemMapper extends  EntityMapper<EventoListagemDTO, Evento> {
 
         @Override

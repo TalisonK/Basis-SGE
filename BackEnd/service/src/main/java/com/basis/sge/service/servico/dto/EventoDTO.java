@@ -1,6 +1,5 @@
 package com.basis.sge.service.servico.dto;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,9 +31,6 @@ public class EventoDTO implements Serializable {
     @NotNull
     @Valid
     private LocalDateTime dataFim;
-
-
-   // private String chaveUsuario;
 
     private String descricao;
 

@@ -14,13 +14,16 @@ import { SecurityModule, VersionTagModule } from '@nuvem/angular-base';
 import { DiarioErrosComponent } from './components/diario-erros/diario-erros.component';
 import { BlockUIModule } from 'ng-block-ui';
 import { TableModule } from 'primeng/table';
+import { LoginModule } from './modulos/login/login.module';
+import { LoginTemplateComponent } from './modulos/login/login-template/login-template.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         AppTopbarComponent,
         AppFooterComponent,
-        DiarioErrosComponent
+        DiarioErrosComponent,
+        
     ],
     imports: [
         BlockUIModule.forRoot({
@@ -39,9 +42,10 @@ import { TableModule } from 'primeng/table';
         SecurityModule.forRoot(environment.auth),
         MenuModule,
         TableModule,
+        LoginModule
     ],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy }
+        { provide: LocationStrategy, useClass: HashLocationStrategy }, LoginTemplateComponent
     ],
     bootstrap: [AppComponent]
 })

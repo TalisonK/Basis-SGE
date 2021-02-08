@@ -1,8 +1,7 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <changeSet id="3" author="thayane.nunes">
         <createTable tableName="usuario">
@@ -31,17 +30,15 @@
         <insert tableName="usuario">
             <column name="id">1</column>
             <column name="nome">admin</column>
-            <column name="cpf">00000000000</column>
+            <column name="cpf">08502610406</column>
             <column name="email">kenouen1@gmail.com</column>
             <column name="telefone">83998899898</column>
             <column name="data_nascimento">2000-10-13</column>
             <column name="chave">admin</column>
         </insert>
 
-
-
         <addPrimaryKey tableName="usuario" columnNames="id" constraintName="pk_usuario"/>
-        <createSequence sequenceName="sq_usuario" cycle="false" cacheSize="20" incrementBy="1" startValue="1"/>
+        <createSequence sequenceName="sq_usuario" cycle="false" cacheSize="20" incrementBy="1" startValue="2"/>
 
     </changeSet>
 

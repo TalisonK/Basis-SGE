@@ -1,0 +1,8 @@
+<p-accordion>
+    <p-accordionTab header="pergunta {{numero}} {{obrigatoriedade}}">
+        <p>{{pergunta.titulo}}</p>
+            <span class="p-float-label">
+                <textarea [rows]="1" id="resposta_text_area" [(ngModel)]="resposta" pInputTextarea autoResize="autoResize" placeholder="Resposta" (focusout)="salvaResposta(pergunta, numero)"></textarea>
+            </span>    
+    </p-accordionTab>
+</p-accordion>

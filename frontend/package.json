@@ -29,6 +29,7 @@
         "@nuvem/angular-base": "~9.1.2",
         "@nuvem/primeng-components": "~9.1.2",
         "chart.js": "2.7.1",
+        "moment": "^2.29.1",
         "ng-block-ui": "^2.1.8",
         "primeflex": "^2.0.0",
         "primeicons": "^4.1.0",

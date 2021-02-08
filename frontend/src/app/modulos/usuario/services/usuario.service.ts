@@ -25,12 +25,11 @@ export class UsuarioService {
   }
 
   editarUsuario(usuario: Usuario): Observable<Usuario>{
-    return this.http.put<Usuario>(this.url, usuario);
+    return this.http.put<Usuario>(`${this.url}`, usuario);
   }
 
   deletarUsuario(id: number): Observable<any>{
     return this.http.delete(`${this.url}/${id}`);
 
   }
-
 }

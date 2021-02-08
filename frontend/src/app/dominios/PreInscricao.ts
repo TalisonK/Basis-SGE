@@ -1,8 +1,8 @@
 export class PreInscricao{
 
-    id:Number;
-    idEvento:Number;
-    idUsuario:Number;
-    idStiruacao:Number;
+    id:number;
+    idEvento:number;
+    idUsuario:number;
+    idSituacao:number;
 
 }

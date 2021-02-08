@@ -1,17 +1,11 @@
 package com.basis.sge.service.servico.mapper;
 
-import com.basis.sge.service.dominio.Evento;
 import com.basis.sge.service.dominio.PreInscricao;
-import com.basis.sge.service.dominio.TipoSituacao;
-import com.basis.sge.service.dominio.Usuario;
-import com.basis.sge.service.servico.dto.EventoDTO;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
-import com.basis.sge.service.servico.dto.TipoSituacaoDTO;
-import com.basis.sge.service.servico.dto.UsuarioDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring",uses = {})
+@Mapper(componentModel = "spring")
 public interface InscricaoMapper extends EntityMapper<PreInscricaoDTO, PreInscricao> {
 
     @Override

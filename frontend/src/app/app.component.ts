@@ -1,12 +1,20 @@
-import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, OnInit, NgZone } from '@angular/core';
+import { Component, AfterViewInit, ElementRef, Renderer2, ViewChild, OnDestroy, OnInit, NgZone, Output, EventEmitter } from '@angular/core';
 import { ScrollPanel } from 'primeng';
 import { MenusService, MenuOrientation } from '@nuvem/primeng-components';
+import { Usuario } from './dominios/usuario';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html'
 })
 export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
+
+    @Output() usuarioLogadoEvent = new EventEmitter();
+
+    usuarioLogado: boolean = false;
+
+    usuario:Usuario = new Usuario();
 
     layoutCompact = true;
 
@@ -45,18 +53,16 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     rippleMouseDownListener: EventListenerOrEventListenerObject;
 
-    constructor(public renderer2: Renderer2, public zone: NgZone, public menuService: MenusService) { }
+    constructor(
+        public renderer2: Renderer2,
+        public zone: NgZone, 
+        public menuService: MenusService,
+        public router: Router
+        ) { }
 
     ngOnInit() {
         this.zone.runOutsideAngular(() => { this.bindRipple(); });
-
-        this.menuService.itens = [
-            { label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] },
-            { label: 'Pergunta', icon: 'dashboard', routerLink: ['/pergunta'] },
-            { label: 'Eventos', icon: 'event', routerLink: ['/eventos'] },
-            { label: 'Usuarios', icon: 'person', routerLink: ['/usuarios'] },
-            { label: 'inscricao', icon: 'loupe', routerLink: ['/inscricao'] }
-        ];
+        this.router.navigate(["/eventos"]);
     }
 
     bindRipple() {
@@ -281,6 +287,38 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
     ngOnDestroy() {
         this.unbindRipple();
+    }
+
+    logar(usuario){
+        
+        this.router.navigate["/eventos"];
+        this.usuario = usuario;
+        this.usuarioLogado = true;
+        let localUsuario = JSON.parse(localStorage.getItem("usuario"));
+        this.usuario = localUsuario;
+        this.usuarioLogadoEvent.emit(usuario);
+        if(localUsuario.id == 1){
+            this.menuService.itens = [
+                { label: 'Perguntas', icon: 'help', routerLink: ['/pergunta'] },
+                { label: 'Eventos', icon: 'event', routerLink: ['/eventos'] },
+                { label: 'Usuários', icon: 'person', routerLink: ['/usuarios'] },
+                { label: 'Inscrição', icon: 'loupe', routerLink: ['/inscricao'] }
+            ];
+        }
+        else{
+            this.menuService.itens = [
+                { label: 'Eventos', icon: 'event', routerLink: ['/eventos'] },
+                { label: 'Inscrição', icon: 'loupe', routerLink: ['/inscricao'] }
+            ];
+        }
+    }
+
+    logOut(){
+        this.usuario = new Usuario();
+        this.usuarioLogado = false;
+        localStorage.clear();
+        this.menuService = new MenusService();
+        window.location.reload();
     }
 
 }

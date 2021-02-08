@@ -1,17 +1,15 @@
 package com.basis.sge.service.servico;
 
-import com.basis.sge.service.dominio.Evento;
-import com.basis.sge.service.dominio.Pergunta;
-import com.basis.sge.service.dominio.PreInscricao;
-import com.basis.sge.service.dominio.Usuario;
-import com.basis.sge.service.dominio.EventoPergunta;
+import com.basis.sge.service.dominio.*;
+import com.basis.sge.service.mensagem.EmailMensagem;
 import com.basis.sge.service.repositorio.*;
-import com.basis.sge.service.servico.dto.EmailDTO;
 import com.basis.sge.service.servico.dto.EventoDTO;
 import com.basis.sge.service.servico.dto.EventoListagemDTO;
+import com.basis.sge.service.servico.dto.PerguntaDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
 import com.basis.sge.service.servico.mapper.EventoListagemMapper;
 import com.basis.sge.service.servico.mapper.EventoMapper;
+import com.basis.sge.service.servico.mapper.PerguntaMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
@@ -30,19 +28,27 @@ public class EventoServico {
 
     private final TipoEventoRepositorio tipoEventoRepositorio;
 
+    private final PerguntaMapper perguntaMapper;
+
     private final EventoMapper eventoMapper;
 
     private final InscricaoRepositorio inscricaoRepositorio;
 
     private final EmailServico emailServico;
 
-    private final UsuarioRepositorio usuarioRepositorio;
-
     private final EventoListagemMapper eventoListagemMapper;
+
+    public List<PerguntaDTO> listarPerguntaEvento(Integer id){
+        List<PerguntaDTO> perguntas = new ArrayList<PerguntaDTO>();
+        List<EventoPergunta> eventoPerguntaList= eventoPerguntaRepositorio.findAllByEventoId(id);
+        eventoPerguntaList.forEach((eventoPergunta) -> {
+            perguntas.add(perguntaMapper.toDto(eventoPergunta.getPergunta()));
+        });
+        return perguntas;
+    }
 
     public List<EventoListagemDTO> listar() {
         List<Evento> listaEvento = eventoRepositorio.findAll();
-
         return eventoListagemMapper.toDto(listaEvento);
     }
 
@@ -55,7 +61,7 @@ public class EventoServico {
 
     public EventoDTO criar(EventoDTO eventoDTO) {
         validaEvento(eventoDTO);
-        //validaChaveUsuario(eventoDTO.getChaveUsuario());
+
         validaTitulo(eventoDTO.getTitulo());
         eventoDTO.setId(null);
         Evento evento = eventoMapper.toEntity(eventoDTO);
@@ -66,9 +72,7 @@ public class EventoServico {
         eventoRepositorio.save(evento);
 
         if (perguntas != null && !perguntas.isEmpty()) {
-            perguntas.forEach(pergunta -> {
-                pergunta.setEvento(evento);
-            });
+            perguntas.forEach(pergunta -> pergunta.setEvento(evento));
             eventoPerguntaRepositorio.saveAll(perguntas);
         }
         return eventoMapper.toDto(evento);
@@ -80,35 +84,42 @@ public class EventoServico {
         validaIdEvento(eventoDTO.getId());
 
         Evento evento = eventoMapper.toEntity(eventoDTO);
+        notificarInscritos(evento.getTitulo(),evento.getId(),0);
         Evento eventoAtualizado = eventoRepositorio.save(evento);
-
-        //notificarInscritos(evento.getTitulo(),evento.getId());
-
         return eventoMapper.toDto(eventoAtualizado);
     }
 
     public void deletar(Integer id) {
         validaIdEvento(id);
+        Evento evento = eventoRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Evento não existe"));
+        List<PreInscricao> inscricao = inscricaoRepositorio.findAllByEvento(evento);
+        if(!inscricao.isEmpty()){
+            throw new RegraNegocioException("Este evento possui inscrições");
+        }
+        notificarInscritos(evento.getTitulo(),id,1);
         eventoRepositorio.deleteById(id);
     }
 
     //---------------------------------------------------------------------
     //funções de validação e notificação
-
-    public void notificarInscritos(String titulo,Integer id) {
-
-        List<PreInscricao> inscricoes = inscricaoRepositorio.findAllByEventoId(id);
+    //Tipo 0 evento editado e tipo 1 evento cancelado
+    public void notificarInscritos(String titulo,Integer id,Integer tipo) {
+        Evento evento = eventoRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Evento não existe"));
+        List<PreInscricao> inscricoes = inscricaoRepositorio.findAllByEvento(evento);
         List<String> destinatarios = new ArrayList();
         inscricoes.forEach((inscricao) -> {
             Usuario usuarioInscrito = inscricao.getUsuario();
             destinatarios.add(usuarioInscrito.getEmail());
         });
-
-        emailServico.rabbitSendMail("kenouen1@gmail.com",
-                " O evento " + titulo + " foi atualizado, verifique sua inscrição.",
-                "Evento Atualizado",destinatarios);
+        EmailMensagem emailMensagem = new EmailMensagem();
+        if(tipo==0) {
+            emailServico.rabbitSendMail("kenouen1@gmail.com",
+                    "Evento Atualizado",emailMensagem.messageEventoEditado("Inscrito(a)", titulo), destinatarios);
+        }else if(tipo==1) {
+            emailServico.rabbitSendMail("kenouen1@gmail.com",
+                    "Evento Atualizado",emailMensagem.messageEventoCancelado("Inscrito(a)", titulo), destinatarios);
+        }
     }
-
     // valida dados de evento, com exceção das datas
     public void validaEvento(EventoDTO eventoDTO){
         validaNumero(eventoDTO.getValor());
@@ -126,12 +137,12 @@ public class EventoServico {
 
     //Verifica se o titulo do evento já existe
     public void validaTitulo(String titulo,Integer id){
-        if (eventoRepositorio.existsByTituloAndIdNot(titulo,id)){
+        if (eventoRepositorio.existsByTituloAndIdNot(titulo,id).equals(true)){
             throw new RegraNegocioException("Um evento com esse titulo já existe");
         }
     }
     public void validaTitulo(String titulo){
-        if (eventoRepositorio.existsByTitulo(titulo)){
+        if (eventoRepositorio.existsByTitulo(titulo).equals(true)){
             throw new RegraNegocioException("Um evento com esse titulo já existe");
         }
     }

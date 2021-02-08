@@ -1,0 +1,15 @@
+<div class="card">  
+    <h3 style="text-align: center; color: gray;">Cadastre a sua Pergunta!</h3>
+    <form [formGroup]="formPergunta">
+       <!--<div class="p-formgroup-inline">-->
+            <div class="p-field">
+                <textarea [(ngModel)]="pergunta.titulo" id="float-input" type="text" pInputText placeholder="Digite aqui a Pergunta" formControlName="titulo" rows="1" cols="50" pInputTextarea autoResize="autoResize"></textarea>
+            </div>
+            <div class="p-field">
+                <label style="margin-right: 1%;">Pergunta obrigatória?</label>
+                <p-inputSwitch [(ngModel)]="pergunta.obrigatoriedade" formControlName="obrigatoriedade"></p-inputSwitch>     
+            </div>
+            <button (click)="criar()" pButton type="button" [label]="edicao ? 'Atualizar' : 'Salvar'" class="ui-button-rounded ui-button-success"></button>          
+       <!-- </div> -->
+    </form>
+</div>

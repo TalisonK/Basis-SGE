@@ -1,25 +1,26 @@
 package com.basis.sge.service.servico;
+
 import com.basis.sge.service.dominio.Evento;
+import com.basis.sge.service.dominio.InscricaoResposta;
 import com.basis.sge.service.dominio.PreInscricao;
-import com.basis.sge.service.dominio.TipoSituacao;
 import com.basis.sge.service.dominio.Usuario;
+import com.basis.sge.service.mensagem.EmailMensagem;
 import com.basis.sge.service.repositorio.EventoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
 import com.basis.sge.service.repositorio.InscricaoRespostaRepositorio;
 import com.basis.sge.service.repositorio.TipoSituacaoRepositorio;
 import com.basis.sge.service.repositorio.UsuarioRepositorio;
-import com.basis.sge.service.servico.dto.EmailDTO;
+import com.basis.sge.service.servico.dto.ConjuntoPerguntaRespostaDTO;
+import com.basis.sge.service.servico.dto.InscricaoListagemDTO;
 import com.basis.sge.service.servico.dto.PreInscricaoDTO;
 import com.basis.sge.service.servico.exception.RegraNegocioException;
+import com.basis.sge.service.servico.mapper.InscricaoListagemMapper;
 import com.basis.sge.service.servico.mapper.InscricaoMapper;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import com.basis.sge.service.servico.mapper.InscricaoRespostaMapper;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
@@ -28,30 +29,31 @@ import javax.transaction.Transactional;
 @Transactional
 @RequiredArgsConstructor
 public class PreInscricaoServico {
+
     private final InscricaoRepositorio incrRepo;
     private final EventoRepositorio eventoRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
     private final InscricaoRespostaServico irServico;
-    private final TipoSituacaoRepositorio tsrepo;
-
-    private final InscricaoMapper mapper;
+    private final TipoSituacaoRepositorio tipoSituacaoRepositorio;
+    private final InscricaoMapper inscricaoMapper;
     private final InscricaoRespostaMapper inscricaoRespostaMapper;
-
+    private final InscricaoListagemMapper inscricaoListagemMapper;
+    private final InscricaoRespostaRepositorio inscricaoRespostaRepositorio;
     private final EmailServico emailServico;
 
 
-    public List<PreInscricaoDTO> listar(){
-        return mapper.toDto(incrRepo.findAll());
+    public List<InscricaoListagemDTO> listar(){
+        return inscricaoListagemMapper.toDto(incrRepo.findAll());
     }
 
     public PreInscricaoDTO obterPorId(Integer id){
         Optional<PreInscricao> dto = incrRepo.findById(id);
-        return mapper.toDto(dto.orElseThrow(() -> new RegraNegocioException("Inscrição número " + id + " não encontrada!")));
+        return inscricaoMapper.toDto(dto.orElseThrow(() -> new RegraNegocioException("Inscrição número " + id + " não encontrada!")));
     }
 
     public List<PreInscricaoDTO> obterPorUsuarioId(Integer id){
         try {
-            return mapper.toDto(incrRepo.findAllByUsuarioId(id));
+            return inscricaoMapper.toDto(incrRepo.findAllByUsuarioId(id));
         }
         catch (Exception e){
             throw new RegraNegocioException("Usuario não inscrito em eventos");
@@ -66,11 +68,11 @@ public class PreInscricaoServico {
 
     public PreInscricaoDTO criar(PreInscricaoDTO dto){
 
-        PreInscricao preInscricao = mapper.toEntity(dto);
+        PreInscricao preInscricao = inscricaoMapper.toEntity(dto);
 
         Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
         Evento evento = eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(() -> new RegraNegocioException("Evento nao Cadastrado!"));
-        TipoSituacao situacao = tsrepo.findById(dto.getIdSituacao()).orElseThrow(() -> new RegraNegocioException("Inscrição inexistente!"));
+        if(!tipoSituacaoRepositorio.existsById(dto.getIdSituacao())){ throw new RegraNegocioException("Inscrição inexistente!");}
 
         incrRepo.findAllByUsuarioId(usuario.getId()).forEach(inscricao -> {
             if (inscricao.getEvento().getId().equals(evento.getId())){
@@ -78,42 +80,68 @@ public class PreInscricaoServico {
             }
         });
 
+        EmailMensagem emailMensagem = new EmailMensagem();
+        emailServico.rabbitSendMail(usuario.getEmail(),
+                "Inscrição efetuado com sucesso",
+                emailMensagem.messageInscricaoAceita(usuario.getNome(),evento.getTitulo()),
+                new ArrayList<>());
         incrRepo.save(preInscricao);
 
-        emailServico.rabbitSendMail(usuario.getEmail(),
-                    "Inscrição efetuado com sucesso",
-                     "Inscrição bem sucedida, sua chave para acesso e atualização é: " + usuario.getChave(),
-                            new ArrayList<>());
 
-        return mapper.toDto(preInscricao);
+        return inscricaoMapper.toDto(preInscricao);
     }
 
-    public PreInscricaoDTO atualizar(PreInscricaoDTO dto) {
-        return mapper.toDto(incrRepo.save(mapper.toEntity(dto)));
+    public InscricaoListagemDTO atualizar(PreInscricaoDTO dto) {
+
+        if(dto.getIdSituacao() == 4){
+            PreInscricao preInscricao = inscricaoMapper.toEntity(dto);
+            Evento evento = eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(() -> new RegraNegocioException("Evento nao Cadastrado!"));
+            Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
+            if(!tipoSituacaoRepositorio.existsById(dto.getIdSituacao())){ throw new RegraNegocioException("Inscrição inexistente!");}
+
+            EmailMensagem emailMensagem = new EmailMensagem();
+            emailServico.rabbitSendMail(usuario.getEmail(),
+                    "Inscrição efetuado com sucesso",
+                    emailMensagem.messageInscricaoRejeitado(usuario.getNome(),evento.getTitulo()),
+                    new ArrayList<>());
+        }
+
+        return inscricaoListagemMapper.toDto(incrRepo.save(inscricaoMapper.toEntity(dto)));
     }
 
     public void deletar(Integer id) {
 
-        inscricaoRespostaMapper.toEntity(irServico.listar()).forEach(inscricaoResposta -> {
-            if (inscricaoResposta.getInscricao().getId().equals(id)) {
-                irServico.deletar(inscricaoResposta.getPergunta().getId(), inscricaoResposta.getInscricao().getId());
-            }
-        });
-
         try{
             PreInscricao inscricao = incrRepo.findById(id).orElseThrow(() -> new RegraNegocioException("Inscrição nao cadastrada"));
-
+            inscricaoRespostaRepositorio.deleteAllByInscricaoId(inscricao.getId());
             incrRepo.deleteById(id);
+            Usuario usuario = inscricao.getUsuario();
+            Evento evento = inscricao.getEvento();
 
-
-
+            EmailMensagem emailMensagem = new EmailMensagem();
             emailServico.rabbitSendMail(inscricao.getUsuario().getEmail(),
-                    "Inscrição efetuado com sucesso",
-                    "Inscrição bem sucedida, sua chave para acesso e atualização é: " + inscricao.getUsuario().getChave(),
+                    "Inscrição removida com sucesso",
+                    emailMensagem.messageInscricaoRejeitado(usuario.getNome(),evento.getTitulo()),
                     new ArrayList<>());
         }
         catch (Exception e){
-            throw new RegraNegocioException("Impossivel detar, inscriçao nao cadastrada!");
+            throw new RegraNegocioException("Impossivel deletar, inscriçao nao cadastrada!");
         }
+    }
+
+    public List<ConjuntoPerguntaRespostaDTO> buscarPerguntasRespostas(PreInscricaoDTO dto){
+
+        List<ConjuntoPerguntaRespostaDTO> conjuntos = new ArrayList<>();
+
+        PreInscricao preInscricao = incrRepo.findById(dto.getId()).orElseThrow(() -> new RegraNegocioException("Inscricao não existe"));
+        List<InscricaoResposta> inscricaoRespostaList = inscricaoRespostaRepositorio.findAllByInscricao(preInscricao);
+        inscricaoRespostaList.forEach(inscricaoResposta ->{
+            ConjuntoPerguntaRespostaDTO conjuntoPerguntaRespostaDTO = new ConjuntoPerguntaRespostaDTO();
+            conjuntoPerguntaRespostaDTO.setPergunta(inscricaoResposta.getPergunta().getTitulo());
+            conjuntoPerguntaRespostaDTO.setResposta(inscricaoResposta.getResposta());
+            conjuntos.add(conjuntoPerguntaRespostaDTO);
+        });
+
+        return conjuntos;
     }
 }

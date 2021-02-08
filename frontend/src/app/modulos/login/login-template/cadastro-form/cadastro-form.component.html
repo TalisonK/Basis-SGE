@@ -1,0 +1,24 @@
+<span id="inputs" class="ui-float-label" style="margin-top: 30px;">
+    <input [(ngModel)]="usuario.nome" id="float-input" type="text" size="20" (focusout)="loginFocusOut()" pInputText style=""> 
+    <label for="float-input">Nome</label>
+</span>
+
+<span id="inputs" class="ui-float-label" style="margin-top: 30px;">
+    <p-inputMask [(ngModel)]="usuario.cpf" size="20" mask="999.999.999-99" characterPattern="[А-Яа-я]" (focusout)="loginFocusOut()"></p-inputMask>
+    <label for="float-input">CPF</label>
+</span>
+    
+<span id="inputs" class="ui-float-label" style="margin-top: 30px;">
+    <input [(ngModel)]="usuario.email" id="float-input" type="text" size="20" (focusout)="loginFocusOut()" pInputText> 
+    <label for="float-input">Email</label>
+</span>
+    
+<span id="inputs" class="ui-float-label" style="margin-top: 30px;">
+    <p-inputMask [(ngModel)]="usuario.telefone" size="20" mask="(99) 99999-9999" characterPattern="[А-Яа-я]" (focusout)="loginFocusOut()"></p-inputMask>
+    <label for="float-input">Número de Telefone</label>
+</span>
+    
+<span id="inputs" class="ui-float-label" style="margin-top: 30px;">
+    <p-calendar [(ngModel)]="usuario.dataNascimento" dateFormat="dd/mm/yy" [yearNavigator]="true" yearRange="1900:2020" (focusout)="loginFocusOut()"></p-calendar>
+    <label for="float-input">Data de nascimento</label>
+</span>

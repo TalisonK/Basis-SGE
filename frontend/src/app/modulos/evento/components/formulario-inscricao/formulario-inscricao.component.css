@@ -1,0 +1,23 @@
+.submit_button_div{
+    float: right;
+    margin-top: 4px;
+}
+
+#submit-button{
+    margin: auto;
+    display: flex;   
+    flex-direction: column;
+    justify-content: center;
+}
+
+#resposta_text_area{
+    width: 100%;
+}
+
+.formularioInscricao{
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

@@ -1,0 +1,73 @@
+<div class="card">
+    <h3>Lista de Perguntas</h3>
+    <p>Use os filtros e encontre os melhores Perguntas para você.</p>
+    
+    <p-table #dt1 [value]="pergunta" dataKey="id"
+        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading" styleClass="p-datatable-customers p-datatable-gridlines"
+        [paginator]="true" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} perguntas"
+        [globalFilterFields]="['titulo']" [(selection)]="listaIdPergunta">
+
+        <ng-template pTemplate="caption">
+            <div class="left" style="float: left;" >
+                <button  pButton pRipple label="Adicionar" icon="pi pi-plus" class="p-button-success" (click)="mostrarDialogSalvar()"></button>
+                <!--routerLink="formulario"-->
+            </div>
+            <div class="p-d-flex">
+                <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Pesquisar Palavra-Chave"/>
+                </span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th>
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        <th>Titulo</th>
+                        <p-columnFilter type="text" field="titulo" display="menu"></p-columnFilter>
+                    </div>
+                </th>
+                <th>
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                       <th>Obrigatoriedade</th>
+                    </div>
+                </th>    
+                <!--<th>
+                    <div class="text-align:center">
+                       Ação
+                    </div>
+                </th>-->
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-pergunta>
+            <tr>
+                <td>
+                    {{pergunta.titulo}}
+                </td>
+                <td *ngIf="pergunta.obrigatoriedade">Pergunta Obrigatória </td>
+                <td *ngIf="!pergunta.obrigatoriedade">Pergunta Não Obrigatória </td>
+                
+                <!--<td class="p-d-flex p-jc-center">
+                    <button (click)="dialogDeletarPergunta(pergunta.id)" class="p-ml-2" pButton type="button" icon="pi pi-trash"></button>
+                </td>-->
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="2">Não existem perguntas.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <p-dialog [(visible)]="exibirDialog" > 
+        <app-formulario
+            [pergunta]="pergunta_one"
+            (perguntaSalva)="fecharDialog($event)">
+        </app-formulario>
+    </p-dialog>
+
+    <!--<p-confirmDialog header="Confirmar remoção de pergunta" icon="pi pi-exclamation-triangle"></p-confirmDialog>-->
+</div>
