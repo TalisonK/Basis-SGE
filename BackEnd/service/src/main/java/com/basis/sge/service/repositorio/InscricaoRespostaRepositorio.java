@@ -17,4 +17,5 @@ public interface InscricaoRespostaRepositorio extends JpaRepository<InscricaoRes
 
     List<InscricaoResposta> findAllByInscricao(PreInscricao inscricao);
 
+    void deleteAllByInscricaoId(Integer id);
 }

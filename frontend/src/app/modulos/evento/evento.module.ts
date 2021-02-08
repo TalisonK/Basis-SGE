@@ -15,6 +15,7 @@ import { PerguntasRespostasComponent } from './components/formulario-inscricao/p
 import { ListaPerguntaComponent } from './components/lista-pergunta/lista-pergunta.component';
 import { PerguntaService } from '../pergunta/services/pergunta.service';
 import { PerguntaModule } from '../pergunta/pergunta.module';
+import { InscricaoService } from '../pre-inscricao/services/inscricao-service.service';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { PerguntaModule } from '../pergunta/pergunta.module';
   providers: [
     EventoService,
     PerguntaService,
-    TipoEventoService
+    TipoEventoService,
+    InscricaoService
   ],
   imports: [
     CommonModule,

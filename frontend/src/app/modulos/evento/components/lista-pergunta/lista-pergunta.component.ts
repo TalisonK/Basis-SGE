@@ -54,7 +54,7 @@ export class ListaPerguntaComponent implements OnInit {
     if(this.editar){
       this.serviceEvento.obterPerguntasPorIdEvento(this.eventoEditar.id).subscribe((perguntas: Pergunta[])=>{
         this.listaPergunta = perguntas;
-        console.log(perguntas)
+        this.listaPerguntaEvent.emit(this.listaPergunta)
       });
       
     }

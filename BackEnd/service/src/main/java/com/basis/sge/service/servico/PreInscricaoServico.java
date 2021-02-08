@@ -93,23 +93,31 @@ public class PreInscricaoServico {
 
     public InscricaoListagemDTO atualizar(PreInscricaoDTO dto) {
 
+        if(dto.getIdSituacao() == 4){
+            PreInscricao preInscricao = inscricaoMapper.toEntity(dto);
+            Evento evento = eventoRepositorio.findById(dto.getIdEvento()).orElseThrow(() -> new RegraNegocioException("Evento nao Cadastrado!"));
+            Usuario usuario = usuarioRepositorio.findById(dto.getIdUsuario()).orElseThrow(() -> new RegraNegocioException("Usuário não encontrado"));
+            if(!tipoSituacaoRepositorio.existsById(dto.getIdSituacao())){ throw new RegraNegocioException("Inscrição inexistente!");}
+
+            EmailMensagem emailMensagem = new EmailMensagem();
+            emailServico.rabbitSendMail(usuario.getEmail(),
+                    "Inscrição efetuado com sucesso",
+                    emailMensagem.messageInscricaoRejeitado(usuario.getNome(),evento.getTitulo()),
+                    new ArrayList<>());
+        }
 
         return inscricaoListagemMapper.toDto(incrRepo.save(inscricaoMapper.toEntity(dto)));
     }
 
     public void deletar(Integer id) {
 
-        inscricaoRespostaMapper.toEntity(irServico.listar()).forEach(inscricaoResposta -> {
-            if (inscricaoResposta.getInscricao().getId().equals(id)) {
-                irServico.deletar(inscricaoResposta.getPergunta().getId(), inscricaoResposta.getInscricao().getId());
-            }
-        });
-
         try{
             PreInscricao inscricao = incrRepo.findById(id).orElseThrow(() -> new RegraNegocioException("Inscrição nao cadastrada"));
+            inscricaoRespostaRepositorio.deleteAllByInscricaoId(inscricao.getId());
+            incrRepo.deleteById(id);
             Usuario usuario = inscricao.getUsuario();
             Evento evento = inscricao.getEvento();
-            incrRepo.deleteById(id);
+
             EmailMensagem emailMensagem = new EmailMensagem();
             emailServico.rabbitSendMail(inscricao.getUsuario().getEmail(),
                     "Inscrição removida com sucesso",
