@@ -24,8 +24,10 @@ export class EdicaoUsuarioComponent implements OnInit {
   }
   
   editar(){
+    localStorage.setItem("usuario",JSON.stringify(this.usuario));
     this.servico.editarUsuario(this.usuario).subscribe(usuario => {
       this.usuario = usuario;
     })
+    window.location.reload();
   }
 }

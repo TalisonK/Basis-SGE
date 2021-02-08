@@ -10,6 +10,7 @@ import { EventoPergunta } from 'src/app/dominios/eventoPergunta';
 import { Pergunta } from 'src/app/dominios/pergunta';
 import { MessageService } from 'primeng/api';
 import * as moment from 'moment';
+import { InscricaoService } from 'src/app/modulos/pre-inscricao/services/inscricao-service.service';
 
 
 @Component({
@@ -44,6 +45,8 @@ export class FormEventoComponent implements OnInit {
     private servicoEvento: EventoService,
   
     private servicoTipoEvento: TipoEventoService,
+
+    private inscricaoServico:InscricaoService,
   
     private route: ActivatedRoute
     ) {}
@@ -103,14 +106,25 @@ export class FormEventoComponent implements OnInit {
       this.getIdTipoEvento()
       this.adicionarIdEventoEmEventoPergunta()
       if(!this.validarDatas()){return};
-      this.servicoEvento.editarEvento(this.evento)
+      
+      this.inscricaoServico.getInscricao().subscribe(inscricoes => {
+        inscricoes.forEach(incricao => {
+          if(incricao.evento == this.evento.titulo) {
+            this.evento.quantVagas--;
+          }
+        })
+        this.servicoEvento.editarEvento(this.evento)
         .subscribe(evento => {
+          console.log(evento.quantVagas)
           this.addSingleSuccess('Evento Editado com Sucesso!',"success")
           this.fecharDialog(evento);
         }, (erro: HttpErrorResponse) => {
           this.addSingleSuccess(erro.error.message,"error")
         });
-    } else {
+      })
+    } 
+    
+    else {
       this.getIdTipoEvento()
       if(this.evento.tipoInscricao == null){
         this.evento.tipoInscricao = false

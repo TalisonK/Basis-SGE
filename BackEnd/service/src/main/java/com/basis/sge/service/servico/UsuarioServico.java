@@ -1,5 +1,6 @@
 package com.basis.sge.service.servico;
 
+import com.basis.sge.service.dominio.PreInscricao;
 import com.basis.sge.service.dominio.Usuario;
 import com.basis.sge.service.mensagem.EmailMensagem;
 import com.basis.sge.service.repositorio.InscricaoRepositorio;
@@ -23,6 +24,7 @@ public class UsuarioServico {
     private final UsuarioRepositorio usuarioRepositorio;
     private final InscricaoRepositorio inscricaoRepositorio;
     private final UsuarioMapper usuarioMapper;
+    private final PreInscricaoServico preInscricaoServico;
     
 
     public List<UsuarioDTO> listar() {
@@ -65,7 +67,9 @@ public class UsuarioServico {
 
     public void deletar(Integer id) {
 
-        inscricaoRepositorio.deleteByUsuario(usuarioRepositorio.findById(id).orElseThrow(() -> new RegraNegocioException("Usuario não cadastrado!")));
+        inscricaoRepositorio.findAllByUsuarioId(id).forEach(inscricao -> {
+            preInscricaoServico.deletar(inscricao.getId());
+        });
 
         if(!usuarioRepositorio.existsById(id)) { throw new RegraNegocioException("Usuário inexistente");}
 
